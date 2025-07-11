@@ -16,7 +16,7 @@ angular
                 if (window.innerWidth < 768) $scope.sidebarOpen = false;
             });
         });
-        $http.get("../assets/data/menu-data.json").then(function (response) {
+        $http.get("./assets/data/menu-data.json").then(function (response) {
             $scope.menu = response.data;
         });
         $scope.toggle = function (item) {
