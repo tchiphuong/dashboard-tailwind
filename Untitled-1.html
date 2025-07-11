@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Dropdown with Dark Mode</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!-- Flag Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css" integrity="sha512-XXXXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body x-data="app()" :class="{ 'dark': darkMode }" class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+
+    <!-- Sidebar Example (Optional) -->
+    <aside x-bind:class="{
+                                'translate-x-0 opacity-100 lg:w-64': sidebarOpen,
+                                '-translate-x-full opacity-0 lg:w-0': !sidebarOpen
+                            }" class="transition-all duration-300 fixed left-0 top-0 z-10 flex h-full flex-col bg-white shadow-md dark:bg-gray-800 lg:relative lg:left-auto lg:right-auto lg:w-64 w-full">
+        <!-- Your Sidebar Content -->
+    </aside>
+
+    <!-- Language Dropdown Component -->
+    <div x-data="languageDropdown()" class="relative px-4 py-2">
+        <!-- Button to toggle dropdown -->
+        <button @click="open = !open" class="flex w-full items-center justify-between text-left px-4 py-2 bg-white dark:bg-gray-700 rounded-md shadow-md focus:outline-none">
+            <span class="flex items-center">
+                <svg class="mr-2 h-5 w-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+                </svg>
+                <!-- Display selected language's native name -->
+                <span x-text="languages[selectedLang]" class="text-sm text-gray-700 dark:text-gray-300"></span>
+            </span>
+            <svg class="h-4 w-4 text-gray-500 dark:text-gray-300 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform translate-y-2" class="absolute inset-x-0 mt-2 w-full rounded-md bg-white dark:bg-gray-800 py-2 border border-gray-200 dark:border-gray-700 max-h-60 overflow-y-auto shadow-lg z-20">
+            <!-- Language Options -->
+            <template x-for="(name, code) in languages" :key="code">
+                <a @click="selectedLang = code; open = false" href="#" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                    <span :class="'fi fi-' + code"></span>
+                    <span x-text="name"></span>
+                </a>
+            </template>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle (Optional) -->
+    <div class="fixed bottom-4 right-4">
+        <button @click="toggleDarkMode" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md shadow-md focus:outline-none">
+            Toggle Dark Mode
+        </button>
+    </div>
+
+    <script>
+        function app() {
+            return {
+                darkMode: localStorage.getItem('darkMode') === 'true',
+                toggleDarkMode() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('darkMode', this.darkMode);
+                }
+            }
+        }
+
+        function languageDropdown() {
+            return {
+                open: false,
+                selectedLang: localStorage.getItem('selectedLang') || 'en',
+                languages: {
+                    'en': 'English',
+                    'vi': 'Tiếng Việt',
+                    'pt': 'Português',
+                    'id': 'Bahasa Indonesia',
+                    'ms': 'Bahasa Melayu',
+                    'th': 'ภาษาไทย',
+                    'km': 'ភាសាខ្មែរ',
+                    'my': 'ဗမာစာ',
+                    'tl': 'Filipino',
+                    'es': 'Español',
+                    'fr': 'Français',
+                    'de': 'Deutsch',
+                    'it': 'Italiano',
+                    'ja': '日本語',
+                    'ko': '한국어',
+                    'zh': '中文'
+                },
+                init() {
+                    this.$watch('selectedLang', value => {
+                        localStorage.setItem('selectedLang', value);
+                    });
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+[
+    {
+        "title": "Dashboard",
+        "icon": "fa fa-tachometer-alt",
+        "children": [
+            { "title": "Overview", "link": "/dashboard/overview" },
+            { "title": "Analytics", "link": "/dashboard/analytics" }
+        ]
+    },
+    {
+        "title": "Projects",
+        "icon": "fa fa-folder-open",
+        "children": [
+            { "title": "List", "link": "/projects/list" },
+            { "title": "Create New", "link": "/projects/create" }
+        ]
+    },
+    {
+        "title": "Users",
+        "icon": "fa fa-users",
+        "children": [
+            { "title": "List", "link": "/users/list" },
+            { "title": "Roles", "link": "/users/roles" }
+        ]
+    },
+    {
+        "title": "Assets",
+        "icon": "fa fa-box",
+        "children": [
+            { "title": "Asset List", "link": "/assets/list" },
+            { "title": "Requests", "link": "/assets/requests" }
+        ]
+    },
+    {
+        "title": "Finance",
+        "icon": "fa fa-dollar-sign",
+        "children": [
+            { "title": "Budget", "link": "/finance/budgets" },
+            { "title": "Invoices", "link": "/finance/invoices" }
+        ]
+    },
+    {
+        "title": "Settings",
+        "icon": "fa fa-cogs",
+        "link": "/settings"
+    }
+]

@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Dashboard 2024</title>
+    <link rel="stylesheet" href="../assets/libs/kendo/css/default-main.css" />
+    <link rel="stylesheet" href="../assets/libs/kendo/css/classic-silver.css" />
+    <link rel="stylesheet" href="../assets/css/inter.css" />
+    <link rel="stylesheet" href="../assets/libs/flag-icons/css/flag-icons.min.css" />
+    <link rel="stylesheet" href="../assets/libs/select2/select2.min.css" />
+    <!-- Include Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+</head>
+<body class="bg-gray-100 transition-colors duration-300 dark:bg-zinc-900 " x-data="{ 
+        darkMode: localStorage.getItem('darkMode') === 'true',
+        sidebarOpen: window.innerWidth >= 768 ? (localStorage.getItem('sidebarOpen') === 'true') : false 
+    }" x-bind:class="{'dark': darkMode}" x-init="
+        $watch('darkMode', value => localStorage.setItem('darkMode', value));
+        $watch('sidebarOpen', value => localStorage.setItem('sidebarOpen', value));
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 768) {
+                sidebarOpen = false;
+            }
+        });">
+    <div class="flex h-screen flex-col overflow-hidden">
+        <!-- Header -->
+        <header class="h-18 z-50 bg-white shadow-md dark:bg-zinc-900 dark:text-white">
+            <div class="mx-auto px-4 py-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <button @click="sidebarOpen = !sidebarOpen" class="text-gray-600 hover:text-gray-800 focus:outline-none dark:text-white dark:hover:text-gray-200">
+                            <svg x-show="!sidebarOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <svg x-show="sidebarOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                        <a href="#" class="flex space-x-2 items-center">
+                            <img src="https://avatar.iran.liara.run/username?username=Tailwind+Dashboard" alt="Tailwind Dashboard" class="h-8 max-w-20 object-contain" />
+                            <span class="font-semibold">Tailwind Dashboard</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Dark mode -->
+                        <div class="relative">
+                            <button @click="darkMode = !darkMode" class="p-1 text-gray-400 hover:text-gray-500 focus:outline-none dark:text-white dark:hover:text-gray-200">
+                                <svg x-show="darkMode" class="w-6 h-6 text-gray-800 dark:text-yellow-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                                </svg>
+                                <svg x-show="!darkMode" class="w-6 h-6 text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 0 1-.5-17.986V3c-.354.966-.5 1.911-.5 3a9 9 0 0 0 9 9c.239 0 .254.018.488 0A9.004 9.004 0 0 1 12 21Z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Notification Bell -->
+                        <div x-data="{ 
+                                    open: false, 
+                                    notifications: [],
+                                    initNotifications() {
+                                        const randomLimit = Math.floor(Math.random() * 200) + 1; // Random số từ 1 đến 5
+                                        fetch(`https://jsonplaceholder.typicode.com/comments?_limit=${randomLimit}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            this.notifications = data.map(comment => ({
+                                                id: comment.id,
+                                                name: comment.name,
+                                                email: comment.email,
+                                                body: comment.body
+                                            }));
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                    },
+                                    markAllAsRead() {
+                                        // Trong thực tế, bạn sẽ gửi một request đến server để đánh dấu tất cả là đã đọc
+                                        // Ở đây, chúng ta chỉ xóa danh sách thông báo
+                                        this.notifications = [];
+                                    }
+                                }" x-init="initNotifications()" @click.away="open = false" class="relative">
+                            <button @click="open = !open" class="p-1 text-gray-400 hover:text-gray-500 focus:outline-none dark:text-white dark:hover:text-gray-200">
+                                <span class="sr-only">View notifications</span>
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                            </button>
+                            <span x-show="notifications.length > 0" x-text="notifications.length > 99 ? '99+' : notifications.length" class="absolute right-1 top-1 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold leading-none text-red-100"></span>
+                            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-95" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <div class="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    Notifications
+                                </div>
+                                <div class="max-h-60 overflow-y-auto">
+                                    <template x-for="notification in notifications" :key="notification.id">
+                                        <a href="#" class="block border-t border-gray-100 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                            <p class="line-clamp-1 font-medium" x-text="notification.name" x-bind:title="notification.name"></p>
+                                            <p class="line-clamp-1 text-xs italic text-gray-500" x-text="notification.email"></p>
+                                            <p class="line-clamp-3 text-xs text-gray-500" x-text="notification.body"></p>
+                                        </a>
+                                    </template>
+                                </div>
+                                <div class="border-t border-gray-100"></div>
+                                <div class="px-4 py-2 text-center text-sm text-gray-500">
+                                    You have
+                                    <span class="font-semibold text-blue-600" x-text="notifications.length"></span>
+                                    unread notifications
+                                </div>
+                                <div class="border-t border-gray-100"></div>
+                                <button @click="markAllAsRead()" class="block w-full px-4 py-2 text-center text-sm text-blue-600 hover:bg-gray-100" role="menuitem">
+                                    Mark all as read
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- User Info -->
+                        <div x-data="{ 
+                                    open: false, 
+                                    user: {} 
+                                }" x-init="
+                                    fetch('https://randomuser.me/api/')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            user = data.results[0];
+                                            $refs.userImage.src = user.picture.medium;
+                                            $refs.userNameButton.textContent = user.name.first + ' ' + user.name.last;
+                                            $refs.userEmailButton.textContent = user.email;
+                                            $refs.userNameDropdown.textContent = user.name.first + ' ' + user.name.last;
+                                            $refs.userEmailDropdown.textContent = user.email;
+                                        })
+                                " class="relative">
+                            <button @click="open = !open" class="flex items-center focus:outline-none lg:space-x-2">
+                                <img x-ref="userImage" class="h-10 w-10 rounded-full border-2 border-gray-300 object-cover dark:border-gray-700" src="https://ui-avatars.com/api/?name=Dashboard" alt="User avatar" />
+                                <div class="hidden flex-col items-start lg:flex">
+                                    <span x-ref="userNameButton" class="line-clamp-1 text-left text-sm font-medium text-gray-900 dark:text-gray-200">Loading...</span>
+                                    <span x-ref="userEmailButton" class="line-clamp-1 text-left text-xs text-gray-500 dark:text-gray-400">Loading...</span>
+                                </div>
+                                <span class="ml-1 h-3 w-3 font-semibold lg:h-4 lg:w-4 text-gray-400 dark:text-gray-300 absolute rounded-full lg:relative bottom-0 right-0 bg-white shadow-sm dark:bg-zinc-900">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                            <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-95" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+                                <div class="flex flex-col items-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 lg:hidden">
+                                    <span x-ref="userNameDropdown" class="line-clamp-1 text-sm font-medium text-gray-900">Loading...</span>
+                                    <span x-ref="userEmailDropdown" class="line-clamp-1 text-xs text-gray-500">Loading...</span>
+                                </div>
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    Your Profile
+                                </a>
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Settings
+                                </a>
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Sign out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside x-bind:class="{
+                'translate-x-0 opacity-100 lg:w-64': sidebarOpen,
+                '-translate-x-full opacity-0 lg:w-0': !sidebarOpen
+            }" class="transition-all duration-300 top-18 fixed left-0 z-10 flex h-full flex-col bg-white shadow-md lg:relative lg:left-auto lg:right-auto lg:w-64 w-full dark:bg-zinc-900 dark:text-white">
+                <nav class="flex-1 overflow-y-auto py-4">
+                    <div x-data="{ open: false }">
+                        <a @click="open = !open" class="flex cursor-pointer items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="flex items-center">
+                                <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                Dashboard
+                            </span>
+                            <svg :class="{'rotate-180': open}" class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </a>
+                        <div x-show="open" class="pl-4">
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Overview</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Analytics</a>
+                        </div>
+                    </div>
+
+                    <!-- Other links here with dark mode classes added -->
+                    <div x-data="{ open: false }">
+                        <a @click="open = !open" class="flex cursor-pointer items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="flex items-center">
+                                <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Reports
+                            </span>
+                            <svg :class="{'rotate-180': open}" class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </a>
+                        <div x-show="open" class="pl-4">
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Daily</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Weekly</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Monthly</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Quarterly</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Yearly</a>
+                        </div>
+                    </div>
+                    <a href="#" class="dark:hover:bg-gray-700 flex items-center px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 dark:text-gray-300">
+                        <svg class="mr-2 h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="7" stroke-width="2" />
+                            <rect x="3" y="14" width="7" height="7" stroke-width="2" />
+                            <rect x="14" y="3" width="7" height="7" stroke-width="2" />
+                            <rect x="14" y="14" width="7" height="7" stroke-width="2" />
+                        </svg>
+                        Components
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        Users
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10l-8 4"></path>
+                        </svg>
+                        Products
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                        Orders
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        Inventory
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+                        </svg>
+                        Marketing
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2M9 19l6-6-6-6"></path>
+                        </svg>
+                        Analytics
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Integrations
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        Help & Support
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Profile
+                    </a>
+                </nav>
+
+                <div class="my-2 border-t border-gray-100 dark:border-gray-700"></div>
+                <div x-data="{ open: false, selectedLang: 'English' }" class="relative px-4 py-2">
+                    <button @click="open = !open" class="flex w-full items-center justify-between text-left">
+                        <span class="flex items-center">
+                            <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+                            </svg>
+                            <span x-text="selectedLang" class="text-sm text-gray-700 dark:text-gray-300"></span>
+                        </span>
+                        <svg class="h-4 w-4 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" @click.away="open = false" class="absolute inset-x-0 bottom-full z-20 mt-2 w-full rounded-md bg-white py-2 shadow-xl dark:bg-gray-800">
+                        <a @click="selectedLang = 'en'; open = false" href="#" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="fi fi-us"></span>
+                            <span>English</span>
+                        </a>
+                        <a @click="selectedLang = 'vi'; open = false" href="#" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="fi fi-vn"></span>
+                            <span>Tiếng Việt</span>
+                        </a>
+                        <a @click="selectedLang = 'fr'; open = false" href="#" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="fi fi-fr"></span>
+                            <span>Français</span>
+                        </a>
+                        <a @click="selectedLang = 'es'; open = false" href="#" class="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                            <span class="fi fi-es"></span>
+                            <span>Español</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto overflow-x-hidden bg-gray-100 dark:bg-zinc-900">
+                <div class="container mx-auto gap-3 p-3">
+                    <!-- Breadcrumb (existing code) -->
+                    <nav aria-label="Breadcrumb" class="py-3 ">
+                        <ol class="inline-flex list-none p-0">
+                            <li class="flex items-center">
+                                <a href="#" class="flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+                                    <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                    </svg>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="mx-2 h-4 w-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <a href="#" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">System</a>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="mx-2 h-4 w-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-gray-800 dark:text-gray-400 dark:hover:text-white font-semibold" aria-current="page">Users</span>
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <!-- Dashboard Title -->
+                    <h1 class="mb-4 text-3xl font-semibold text-gray-900 dark:text-white">
+                        Components
+                    </h1>
+
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <div>
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
+                            <input type="text" id="first_name" class="" value="Phuong" required />
+                        </div>
+                        <div>
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+                            <select id="channelSelect" class="w-full">
+                                <option value="1">Channel 1</option>
+                                <option value="2">Channel 2</option>
+                                <option value="3">Channel 3</option>
+                                <option value="4">Channel 4</option>
+                                <option value="5">Channel 5</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                            <input id="myDatePicker" type="text" placeholder="Chọn ngày">
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../assets/libs/alpinejs/alpinejs.min.js"></script>
+    <script src="../assets/libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="../assets/libs/select2/select2.min.js"></script>
+    <script src="../assets/libs/flatpickr/flatpickr.min.js"></script>
+    <script src="../assets/libs/flatpickr/flatpickr.vn.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').select2();
+
+            $('#myDatePicker').flatpickr({
+                locale: 'vn',
+                dateFormat: 'd/m/Y',
+                enableTime: false,
+                defaultDate: new Date(),
+            });
+        });
+    </script>
+</body>
+</html>

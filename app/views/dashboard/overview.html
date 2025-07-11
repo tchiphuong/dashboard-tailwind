@@ -1,0 +1,86 @@
+<div class="container mx-auto gap-3 p-3">
+    <!-- Breadcrumb (existing code) -->
+    <nav aria-label="Breadcrumb" class="bg-gray-100 dark:bg-gray-800 py-3">
+        <ol class="inline-flex list-none p-0">
+            <li class="flex items-center">
+                <a href="#" class="flex items-center text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">
+                    <svg class="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="flex items-center">
+                <svg class="mx-2 h-4 w-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="#" class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">Dashboard</a>
+            </li>
+            <li class="flex items-center">
+                <svg class="mx-2 h-4 w-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-800 dark:text-gray-200" aria-current="page">Current Page</span>
+            </li>
+        </ol>
+    </nav>
+    <!-- Dashboard Title -->
+    <h1 class="mb-6 text-3xl font-semibold text-gray-800 dark:text-gray-200">
+        Dashboard Overview
+    </h1>
+    <!-- Stats Cards -->
+    <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg bg-white p-6 shadow-md">
+            <h3 class="mb-2 text-lg font-semibold text-gray-700">
+                Total Users
+            </h3>
+            <p class="text-3xl font-bold text-blue-600">
+                <span class="counter" data-target="10245">0</span>
+            </p>
+            <p class="mt-2 text-sm text-gray-500">
+                ↑ 12% from last month
+            </p>
+        </div>
+        <div class="rounded-lg bg-white p-6 shadow-md">
+            <h3 class="mb-2 text-lg font-semibold text-gray-700">
+                Revenue
+            </h3>
+            <p class="text-3xl font-bold text-green-600">
+                $<span class="counter" data-target="84320">0</span>
+            </p>
+            <p class="mt-2 text-sm text-gray-500">
+                ↑ 8% from last month
+            </p>
+        </div>
+        <div class="rounded-lg bg-white p-6 shadow-md">
+            <h3 class="mb-2 text-lg font-semibold text-gray-700">
+                Orders
+            </h3>
+            <p class="text-3xl font-bold text-purple-600">
+                <span class="counter" data-target="1325">0</span>
+            </p>
+            <p class="mt-2 text-sm text-gray-500">
+                ↓ 3% from last month
+            </p>
+        </div>
+        <div class="rounded-lg bg-white p-6 shadow-md">
+            <h3 class="mb-2 text-lg font-semibold text-gray-700">
+                Conversion Rate
+            </h3>
+            <p class="text-3xl font-bold text-yellow-600">
+                <span class="counter" data-target="3.8">0</span>%
+            </p>
+            <p class="mt-2 text-sm text-gray-500">
+                ↑ 1.2% from last month
+            </p>
+        </div>
+    </div>
+    <!-- Charts (nếu cần, có thể ng-include hoặc ng-if ở đây) -->
+    <!-- Recent Orders Table -->
+    <div class="rounded-lg bg-white p-6 shadow-md">
+        <h3 class="mb-4 text-lg font-semibold text-gray-700">
+            Recent Orders
+        </h3>
+        <div id="recentOrdersGrid"></div>
+    </div>
+</div>

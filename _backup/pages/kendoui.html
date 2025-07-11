@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kendo UI với Tailwind Layout</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Kendo UI styles -->
+        <link
+            rel="stylesheet"
+            href="https://kendo.cdn.telerik.com/themes/6.4.0/default/default-main.css"
+        />
+        <!-- <link rel="stylesheet" href="https://unpkg.com/@progress/kendo-theme-material@9.0.0/dist/material-main.css"> -->
+        <!-- <link rel="stylesheet" href="https://unpkg.com/@progress/kendo-theme-fluent@9.0.0/dist/fluent-main.css" /> -->
+        <!-- <link rel="stylesheet" href="https://unpkg.com/@progress/kendo-theme-bootstrap@9.0.0/dist/bootstrap-main.css" /> -->
+        <!-- <link rel="stylesheet" href="https://unpkg.com/@progress/kendo-theme-classic@9.0.0/dist/classic-main.css" /> -->
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Kendo UI JavaScript -->
+        <script src="https://kendo.cdn.telerik.com/2023.2.829/js/kendo.all.min.js"></script>
+
+        <!-- Thêm file ngôn ngữ tiếng Việt -->
+        <script src="https://kendo.cdn.telerik.com/2023.2.829/js/messages/kendo.messages.vi-VN.min.js"></script>
+
+        <!-- Thêm link font Inter -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            body,
+            .k-widget {
+                font-family: "Inter", sans-serif;
+            }
+
+            .k-loading-mask {
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+
+            .custom-loader {
+                width: 50px;
+                height: 50px;
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #3498db;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-gray-100 font-sans">
+        <div class="container mx-auto px-4 py-8">
+            <div class="mb-4 rounded bg-white px-4 pb-8 pt-6 shadow-md sm:px-8">
+                <h2 class="mb-6 text-2xl font-bold">Kendo UI Form Example</h2>
+                <div id="exampleForm" class="space-y-6">
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div>
+                            <label
+                                for="name"
+                                class="mb-2 block text-sm font-bold text-gray-700"
+                                >Tên:</label
+                            >
+                            <input id="name" class="w-full" />
+                        </div>
+                        <div>
+                            <label
+                                for="email"
+                                class="mb-2 block text-sm font-bold text-gray-700"
+                                >Email:</label
+                            >
+                            <input id="email" class="w-full" />
+                        </div>
+                        <div>
+                            <label
+                                for="birthdate"
+                                class="mb-2 block text-sm font-bold text-gray-700"
+                                >Ngày sinh:</label
+                            >
+                            <input id="birthdate" class="w-full" />
+                        </div>
+                        <div>
+                            <label
+                                for="country"
+                                class="mb-2 block text-sm font-bold text-gray-700"
+                                >Quốc gia:</label
+                            >
+                            <input id="country" class="w-full" />
+                        </div>
+                    </div>
+                    <div>
+                        <label
+                            for="notes"
+                            class="mb-2 block text-sm font-bold text-gray-700"
+                            >Ghi chú:</label
+                        >
+                        <textarea id="notes" class="w-full"></textarea>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="agree" type="checkbox" class="mr-2" />
+                        <label
+                            for="agree"
+                            class="text-sm font-bold text-gray-700"
+                            >Đồng ý với điều khoản</label
+                        >
+                    </div>
+                    <div
+                        class="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+                    >
+                        <button id="submitBtn" class="w-full sm:w-auto">
+                            Gửi
+                        </button>
+                        <button id="loginBtn" class="w-full sm:w-auto">
+                            Đăng nhập
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="mb-6 text-2xl font-bold">Kendo UI Grid Example</h2>
+                <div id="grid" class="mb-4 rounded bg-white shadow-md"></div>
+                <div
+                    id="treeList"
+                    class="mb-4 rounded bg-white shadow-md"
+                ></div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                kendo.culture("vi-VN");
+
+                $("#name").kendoTextBox();
+                $("#email").kendoTextBox({ type: "email" });
+                $("#birthdate").kendoDatePicker({
+                    format: "dd/MM/yyyy",
+                    footer: "Hôm nay: #= kendo.toString(data.now, 'dd/MM/yyyy') #",
+                });
+                $("#country").kendoDropDownList({
+                    dataSource: [
+                        { text: "Việt Nam", value: "VN" },
+                        { text: "Hoa Kỳ", value: "US" },
+                        { text: "Nhật Bản", value: "JP" },
+                        { text: "Hàn Quốc", value: "KR" },
+                    ],
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    placeholder: "Chọn quốc gia...",
+                });
+                $("#notes").kendoTextArea({ rows: 3 });
+                $("#agree").kendoSwitch();
+
+                $("#submitBtn").kendoButton({
+                    click: function () {
+                        alert("Đã gửi biểu mẫu!");
+                    },
+                });
+
+                $("#loginBtn").kendoButton();
+
+                // Add Kendo UI Grid
+                $("#grid").kendoGrid({
+                    dataSource: {
+                        type: "odata-v4",
+                        transport: {
+                            read: "https://services.odata.org/V4/Northwind/Northwind.svc/Orders",
+                            update: {
+                                url: function (data) {
+                                    return (
+                                        "https://services.odata.org/V4/Northwind/Northwind.svc/Orders(" +
+                                        data.OrderID +
+                                        ")"
+                                    );
+                                },
+                                type: "PUT",
+                            },
+                        },
+                        schema: {
+                            model: {
+                                id: "OrderID",
+                                fields: {
+                                    OrderID: {
+                                        type: "number",
+                                        editable: false,
+                                    },
+                                    ShipName: { type: "string" },
+                                    ShipCity: { type: "string" },
+                                    ShipCountry: { type: "string" },
+                                    OrderDate: { type: "date" },
+                                },
+                            },
+                        },
+                        pageSize: 20,
+                        serverPaging: true,
+                        serverFiltering: true,
+                        serverSorting: true,
+                    },
+                    height: 550,
+                    scrollable: {
+                        endless: true,
+                    },
+                    filterable: {
+                        mode: "row",
+                    },
+                    sortable: true,
+                    resizable: true, // Enable column resizing for Grid
+                    editable: {
+                        mode: "inline",
+                        template: $("#inline-template").html(),
+                    },
+                    columns: [
+                        {
+                            field: "OrderID",
+                            title: "Mã đơn hàng",
+                            width: 120,
+                            filterable: {
+                                cell: {
+                                    operator: "eq",
+                                },
+                            },
+                        },
+                        {
+                            field: "ShipName",
+                            title: "Tên người nhận",
+                            width: 200,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "ShipCity",
+                            title: "Thành phố",
+                            width: 150,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "ShipCountry",
+                            title: "Quốc gia",
+                            width: 150,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "OrderDate",
+                            title: "Ngày đặt hàng",
+                            format: "{0:dd/MM/yyyy}",
+                            width: 150,
+                            filterable: {
+                                cell: {
+                                    operator: "gte",
+                                },
+                            },
+                        },
+                        {
+                            command: [
+                                {
+                                    name: "edit",
+                                    text: {
+                                        edit: " ",
+                                        update: " ",
+                                        cancel: " ",
+                                    },
+                                },
+                            ],
+                            title: "&nbsp;",
+                            width: 100,
+                        },
+                    ],
+                    toolbar: [
+                        {
+                            name: "excel",
+                            text: " ",
+                            iconClass: "k-icon k-i-file-excel",
+                        },
+                    ],
+                    excel: {
+                        fileName: "Danh sách đơn hàng.xlsx",
+                        allPages: true,
+                        filterable: true,
+                    },
+                    excelExport: function (e) {
+                        e.preventDefault();
+                        var grid = this;
+                        var progress = $.Deferred();
+
+                        grid.showLoading();
+
+                        var dataSource = grid.dataSource;
+                        var take = dataSource.take();
+
+                        dataSource.take(dataSource.total());
+
+                        dataSource.fetch(function () {
+                            grid.saveAsExcel();
+                            dataSource.take(take);
+                            progress.resolve();
+                        });
+
+                        progress.done(function () {
+                            grid.hideLoading();
+                        });
+                    },
+                });
+
+                // New TreeList configuration
+                $("#treeList").kendoTreeList({
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "https://demos.telerik.com/kendo-ui/service/EmployeeDirectory/All",
+                                dataType: "jsonp",
+                            },
+                        },
+                        schema: {
+                            model: {
+                                id: "EmployeeId",
+                                parentId: "ReportsTo",
+                                fields: {
+                                    EmployeeId: {
+                                        type: "number",
+                                        nullable: false,
+                                    },
+                                    ReportsTo: {
+                                        field: "ReportsTo",
+                                        nullable: true,
+                                    },
+                                    FirstName: { field: "FirstName" },
+                                    LastName: { field: "LastName" },
+                                    Position: { field: "Position" },
+                                    Phone: { field: "Phone" },
+                                    Extension: { field: "Extension" },
+                                    HireDate: {
+                                        field: "HireDate",
+                                        type: "date",
+                                    },
+                                },
+                                expanded: true,
+                            },
+                        },
+                    },
+                    height: 540,
+                    filterable: true,
+                    sortable: true,
+                    resizable: true, // Enable column resizing for TreeList
+                    columns: [
+                        {
+                            field: "FirstName",
+                            title: "Tên",
+                            width: 150,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "LastName",
+                            title: "Họ",
+                            width: 150,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "Position",
+                            title: "Chức vụ",
+                            width: 200,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "Phone",
+                            title: "Điện thoại",
+                            width: 200,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "Extension",
+                            title: "Số máy nhánh",
+                            width: 140,
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                        {
+                            field: "HireDate",
+                            title: "Ngày thuê",
+                            width: 200,
+                            format: "{0:dd/MM/yyyy}",
+                            attributes: {
+                                style: "text-overflow: ellipsis; overflow: hidden",
+                            },
+                        },
+                    ],
+                });
+            });
+        </script>
+    </body>
+</html>

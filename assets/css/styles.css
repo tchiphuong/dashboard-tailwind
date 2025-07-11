@@ -1,0 +1,287 @@
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af #f3f4f6;
+}
+
+body,
+.k-widget {
+    font-family: "Inter", sans-serif;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.sidebar-transition {
+    transition-property: transform, opacity, width;
+    transition-duration: 300ms;
+}
+
+:root {
+    /* Existing Kendo UI Variables */
+    --kendo-elevation-1: 0 2px 3px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-2: 0 4px 6px rgba(0, 0, 0, 0.06),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-3: 0 6px 8px rgba(0, 0, 0, 0.08),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-4: 0 8px 10px rgba(0, 0, 0, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-5: 0 10px 12px rgba(0, 0, 0, 0.16),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-6: 0 12px 14px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-7: 0 14px 16px rgba(0, 0, 0, 0.24),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-8: 0 16px 18px rgba(0, 0, 0, 0.28),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+    --kendo-elevation-9: 0 32px 34px rgba(0, 0, 0, 0.32),
+        0 4px 16px rgba(0, 0, 0, 0.12);
+
+    /* Font */
+    --kendo-font-family: inherit;
+    --kendo-font-size: 0.875rem;
+    --kendo-line-height: 1.4285714286;
+    --kendo-font-weight: 400;
+    --kendo-letter-spacing: 0px;
+    --kendo-font-size-xxs: 0.5rem;
+    --kendo-font-size-xs: 0.625rem;
+    --kendo-font-size-sm: 0.75rem;
+    --kendo-font-size-md: 0.875rem;
+    --kendo-font-size-lg: 1rem;
+    --kendo-font-size-xl: 1.25rem;
+    --kendo-line-height-xs: 1;
+    --kendo-line-height-sm: 1.25;
+    --kendo-line-height-md: 1.4285714286;
+    --kendo-line-height-lg: 1.5;
+    --kendo-font-weight-thin: 100;
+    --kendo-font-weight-extra-light: 200;
+    --kendo-font-weight-light: 300;
+    --kendo-font-weight-normal: 400;
+    --kendo-font-weight-medium: 500;
+    --kendo-font-weight-semibold: 600;
+    --kendo-font-weight-bold: 700;
+    --kendo-letter-spacing-tightest: -0.15px;
+    --kendo-letter-spacing-tighter: -0.1px;
+    --kendo-letter-spacing-tight: -0.5px;
+    --kendo-letter-spacing-normal: 0px;
+    --kendo-letter-spacing-wide: 0.5px;
+    --kendo-letter-spacing-wider: 0.1px;
+    --kendo-letter-spacing-widest: 0.15px;
+    --kendo-font-family-sans: Arial, Verdana, Tahoma, Trebuchet MS, Helvetica,
+        Impact, Gill Sans;
+    --kendo-font-family-serif: Times New Roman, Georgia, Garamond, Palatino,
+        Baskerville;
+    --kendo-font-family-sans-serif: system-ui, -apple-system, Segoe UI, Roboto,
+        Helvetica Neue, Noto Sans, Liberation Sans, Arial, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --kendo-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+        Roboto Mono, Ubuntu Mono, Lucida Console, Courier New, monospace;
+
+    /* Spacing */
+    --kendo-spacing-0: 0px;
+    --kendo-spacing-1px: 1px;
+    --kendo-spacing-\.5: 0.125rem;
+    --kendo-spacing-1: 0.25rem;
+    --kendo-spacing-1\.5: 0.375rem;
+    --kendo-spacing-2: 0.5rem;
+    --kendo-spacing-2\.5: 0.625rem;
+    --kendo-spacing-3: 0.75rem;
+    --kendo-spacing-3\.5: 0.875rem;
+    --kendo-spacing-4: 1rem;
+    --kendo-spacing-4\.5: 1.125rem;
+    --kendo-spacing-5: 1.25rem;
+    --kendo-spacing-5\.5: 1.375rem;
+    --kendo-spacing-6: 1.5rem;
+    --kendo-spacing-6\.5: 1.625rem;
+    --kendo-spacing-7: 1.75rem;
+    --kendo-spacing-7\.5: 1.875rem;
+    --kendo-spacing-8: 2rem;
+    --kendo-spacing-9: 2.25rem;
+    --kendo-spacing-10: 2.5rem;
+    --kendo-spacing-11: 2.75rem;
+    --kendo-spacing-12: 3rem;
+    --kendo-spacing-13: 3.25rem;
+    --kendo-spacing-14: 3.5rem;
+    --kendo-spacing-15: 3.75rem;
+    --kendo-spacing-16: 4rem;
+    --kendo-spacing-17: 4.25rem;
+    --kendo-spacing-18: 4.5rem;
+    --kendo-spacing-19: 4.75rem;
+    --kendo-spacing-20: 5rem;
+    --kendo-spacing-21: 5.25rem;
+    --kendo-spacing-22: 5.5rem;
+    --kendo-spacing-23: 5.75rem;
+    --kendo-spacing-24: 6rem;
+    --kendo-spacing-25: 7rem;
+    --kendo-spacing-26: 8rem;
+    --kendo-spacing-27: 9rem;
+    --kendo-spacing-28: 10rem;
+    --kendo-spacing-29: 11rem;
+    --kendo-spacing-30: 12rem;
+
+    /* Border Radius */
+    --kendo-border-radius-none: 0px;
+    --kendo-border-radius-xs: 1px;
+    --kendo-border-radius-sm: 0.125rem;
+    --kendo-border-radius-md: 0.25rem;
+    --kendo-border-radius-lg: 0.375rem;
+    --kendo-border-radius-xl: 0.5rem;
+    --kendo-border-radius-xxl: 0.75rem;
+    --kendo-border-radius-xxxl: 1rem;
+    --kendo-border-radius-full: 9999px;
+
+    /* Color Variables */
+    --kendo-color-app-surface: #f8fafc; /* Tailwind slate-50 */
+    --kendo-color-on-app-surface: #1e293b; /* Tailwind slate-800 */
+    --kendo-color-subtle: #64748b; /* Tailwind slate-500 */
+    --kendo-color-surface: #e2e8f0; /* Tailwind slate-200 */
+    --kendo-color-surface-alt: #f8fafc; /* Tailwind slate-50 */
+    --kendo-color-border: #cbd5e1; /* Tailwind slate-300 */
+    --kendo-color-border-alt: #94a3b8; /* Tailwind slate-400 */
+    --kendo-color-base-subtle: #f1f5f9; /* Tailwind slate-100 */
+    --kendo-color-base-subtle-hover: #e2e8f0; /* Tailwind slate-200 */
+    --kendo-color-base-subtle-active: #cbd5e1; /* Tailwind slate-300 */
+    --kendo-color-base: #e2e8f0; /* Tailwind slate-200 */
+    --kendo-color-base-hover: #cbd5e1; /* Tailwind slate-300 */
+    --kendo-color-base-active: #94a3b8; /* Tailwind slate-400 */
+    --kendo-color-base-emphasis: #64748b; /* Tailwind slate-500 */
+    --kendo-color-base-on-subtle: #1e293b; /* Tailwind slate-800 */
+    --kendo-color-on-base: #1e293b; /* Tailwind slate-800 */
+    --kendo-color-base-on-surface: #1e293b; /* Tailwind slate-800 */
+    --kendo-color-primary-subtle: #dbeafe; /* Tailwind blue-100 */
+    --kendo-color-primary-subtle-hover: #bfdbfe; /* Tailwind blue-200 */
+    --kendo-color-primary-subtle-active: #93c5fd; /* Tailwind blue-300 */
+    --kendo-color-primary: #3b82f6; /* Tailwind blue-500 */
+    --kendo-color-primary-hover: #2563eb; /* Tailwind blue-600 */
+    --kendo-color-primary-active: #1d4ed8; /* Tailwind blue-700 */
+    --kendo-color-primary-emphasis: #60a5fa; /* Tailwind blue-400 */
+    --kendo-color-primary-on-subtle: #1e3a8a; /* Tailwind blue-800 */
+    --kendo-color-on-primary: #ffffff; /* White */
+    --kendo-color-primary-on-surface: #1e40af; /* Tailwind blue-900 */
+    --kendo-color-secondary-subtle: #fef3c7; /* Tailwind yellow-100 */
+    --kendo-color-secondary-subtle-hover: #fde68a; /* Tailwind yellow-200 */
+    --kendo-color-secondary-subtle-active: #fcd34d; /* Tailwind yellow-300 */
+    --kendo-color-secondary: #fbbf24; /* Tailwind yellow-500 */
+    --kendo-color-secondary-hover: #f59e0b; /* Tailwind yellow-600 */
+    --kendo-color-secondary-active: #d97706; /* Tailwind yellow-700 */
+    --kendo-color-secondary-emphasis: #facc15; /* Tailwind yellow-400 */
+    --kendo-color-secondary-on-subtle: #78350f; /* Tailwind yellow-800 */
+    --kendo-color-on-secondary: #000000; /* Black */
+    --kendo-color-secondary-on-surface: #92400e; /* Tailwind yellow-900 */
+    --kendo-color-tertiary-subtle: #ecfdf5; /* Tailwind emerald-100 */
+    --kendo-color-tertiary-subtle-hover: #d1fae5; /* Tailwind emerald-200 */
+    --kendo-color-tertiary-subtle-active: #a7f3d0; /* Tailwind emerald-300 */
+    --kendo-color-tertiary: #10b981; /* Tailwind emerald-500 */
+    --kendo-color-tertiary-hover: #059669; /* Tailwind emerald-600 */
+    --kendo-color-tertiary-active: #047857; /* Tailwind emerald-700 */
+    --kendo-color-tertiary-emphasis: #34d399; /* Tailwind emerald-400 */
+    --kendo-color-tertiary-on-subtle: #064e3b; /* Tailwind emerald-800 */
+    --kendo-color-on-tertiary: #ffffff; /* White */
+    --kendo-color-tertiary-on-surface: #065f46; /* Tailwind emerald-900 */
+    --kendo-color-info-subtle: #e0f2fe; /* Tailwind sky-100 */
+    --kendo-color-info-subtle-hover: #bae6fd; /* Tailwind sky-200 */
+    --kendo-color-info-subtle-active: #7dd3fc; /* Tailwind sky-300 */
+    --kendo-color-info: #0ea5e9; /* Tailwind sky-500 */
+    --kendo-color-info-hover: #0284c7; /* Tailwind sky-600 */
+    --kendo-color-info-active: #0369a1; /* Tailwind sky-700 */
+    --kendo-color-info-emphasis: #38bdf8; /* Tailwind sky-400 */
+    --kendo-color-info-on-subtle: #075985; /* Tailwind sky-800 */
+    --kendo-color-on-info: #ffffff; /* White */
+    --kendo-color-info-on-surface: #0c4a6e; /* Tailwind sky-900 */
+    --kendo-color-success-subtle: #dcfce7; /* Tailwind green-100 */
+    --kendo-color-success-subtle-hover: #bbf7d0; /* Tailwind green-200 */
+    --kendo-color-success-subtle-active: #86efac; /* Tailwind green-300 */
+    --kendo-color-success: #22c55e; /* Tailwind green-500 */
+    --kendo-color-success-hover: #16a34a; /* Tailwind green-600 */
+    --kendo-color-success-active: #15803d; /* Tailwind green-700 */
+    --kendo-color-success-emphasis: #4ade80; /* Tailwind green-400 */
+    --kendo-color-success-on-subtle: #14532d; /* Tailwind green-800 */
+    --kendo-color-on-success: #ffffff; /* White */
+    --kendo-color-success-on-surface: #166534; /* Tailwind green-900 */
+    --kendo-color-warning-subtle: #fef9c3; /* Tailwind amber-100 */
+    --kendo-color-warning-subtle-hover: #fef08a; /* Tailwind amber-200 */
+    --kendo-color-warning-subtle-active: #fde047; /* Tailwind amber-300 */
+    --kendo-color-warning: #f59e0b; /* Tailwind amber-500 */
+    --kendo-color-warning-hover: #d97706; /* Tailwind amber-600 */
+    --kendo-color-warning-active: #b45309; /* Tailwind amber-700 */
+    --kendo-color-warning-emphasis: #fbbf24; /* Tailwind amber-400 */
+    --kendo-color-warning-on-subtle: #78350f; /* Tailwind amber-800 */
+    --kendo-color-on-warning: #ffffff; /* White */
+    --kendo-color-warning-on-surface: #92400e; /* Tailwind amber-900 */
+    --kendo-color-error-subtle: #fee2e2; /* Tailwind red-100 */
+    --kendo-color-error-subtle-hover: #fecaca; /* Tailwind red-200 */
+    --kendo-color-error-subtle-active: #fca5a5; /* Tailwind red-300 */
+    --kendo-color-error: #ef4444; /* Tailwind red-500 */
+    --kendo-color-error-hover: #dc2626; /* Tailwind red-600 */
+    --kendo-color-error-active: #b91c1c; /* Tailwind red-700 */
+    --kendo-color-error-emphasis: #f87171; /* Tailwind red-400 */
+    --kendo-color-error-on-subtle: #7f1d1d; /* Tailwind red-800 */
+    --kendo-color-on-error: #ffffff; /* White */
+    --kendo-color-error-on-surface: #991b1b; /* Tailwind red-900 */
+    --kendo-color-light-subtle: #f3f4f6; /* Tailwind gray-100 */
+    --kendo-color-light-subtle-hover: #e5e7eb; /* Tailwind gray-200 */
+    --kendo-color-light-subtle-active: #d1d5db; /* Tailwind gray-300 */
+    --kendo-color-light: #e5e7eb; /* Tailwind gray-200 */
+    --kendo-color-light-hover: #d1d5db; /* Tailwind gray-300 */
+    --kendo-color-light-active: #9ca3af; /* Tailwind gray-400 */
+    --kendo-color-light-emphasis: #6b7280; /* Tailwind gray-500 */
+    --kendo-color-light-on-subtle: #1f2937; /* Tailwind gray-800 */
+    --kendo-color-on-light: #000000; /* Black */
+    --kendo-color-light-on-surface: #e5e7eb; /* Tailwind gray-200 */
+    --kendo-color-dark-subtle: #9ca3af; /* Tailwind gray-400 */
+    --kendo-color-dark-subtle-hover: #6b7280; /* Tailwind gray-500 */
+    --kendo-color-dark-subtle-active: #4b5563; /* Tailwind gray-600 */
+    --kendo-color-dark: #374151; /* Tailwind gray-700 */
+    --kendo-color-dark-hover: #1f2937; /* Tailwind gray-800 */
+    --kendo-color-dark-active: #111827; /* Tailwind gray-900 */
+    --kendo-color-dark-emphasis: #4b5563; /* Tailwind gray-600 */
+    --kendo-color-dark-on-subtle: #ffffff; /* White */
+    --kendo-color-on-dark: #ffffff; /* White */
+    --kendo-color-dark-on-surface: #1f2937; /* Tailwind gray-800 */
+    --kendo-color-inverse-subtle: #9ca3af; /* Tailwind gray-400 */
+    --kendo-color-inverse-subtle-hover: #6b7280; /* Tailwind gray-500 */
+    --kendo-color-inverse-subtle-active: #4b5563; /* Tailwind gray-600 */
+    --kendo-color-inverse: #374151; /* Tailwind gray-700 */
+    --kendo-color-inverse-hover: #1f2937; /* Tailwind gray-800 */
+    --kendo-color-inverse-active: #111827; /* Tailwind gray-900 */
+    --kendo-color-inverse-emphasis: #4b5563; /* Tailwind gray-600 */
+    --kendo-color-inverse-on-subtle: #ffffff; /* White */
+    --kendo-color-on-inverse: #ffffff; /* White */
+    --kendo-color-inverse-on-surface: #1f2937; /* Tailwind gray-800 */
+    --kendo-color-series-a: #3b82f6; /* Tailwind blue-500 */
+    --kendo-color-series-a-bold: #2563eb; /* Tailwind blue-600 */
+    --kendo-color-series-a-bolder: #1d4ed8; /* Tailwind blue-700 */
+    --kendo-color-series-a-subtle: #60a5fa; /* Tailwind blue-400 */
+    --kendo-color-series-a-subtler: #93c5fd; /* Tailwind blue-300 */
+    --kendo-color-series-b: #22c55e; /* Tailwind green-500 */
+    --kendo-color-series-b-bold: #16a34a; /* Tailwind green-600 */
+    --kendo-color-series-b-bolder: #15803d; /* Tailwind green-700 */
+    --kendo-color-series-b-subtle: #4ade80; /* Tailwind green-400 */
+    --kendo-color-series-b-subtler: #86efac; /* Tailwind green-300 */
+    --kendo-color-series-c: #f59e0b; /* Tailwind amber-500 */
+    --kendo-color-series-c-bold: #d97706; /* Tailwind amber-600 */
+    --kendo-color-series-c-bolder: #b45309; /* Tailwind amber-700 */
+    --kendo-color-series-c-subtle: #fbbf24; /* Tailwind amber-400 */
+    --kendo-color-series-c-subtler: #fde047; /* Tailwind amber-300 */
+    --kendo-color-series-d: #ef4444; /* Tailwind red-500 */
+    --kendo-color-series-d-bold: #dc2626; /* Tailwind red-600 */
+    --kendo-color-series-d-bolder: #b91c1c; /* Tailwind red-700 */
+    --kendo-color-series-d-subtle: #f87171; /* Tailwind red-400 */
+    --kendo-color-series-d-subtler: #fca5a5; /* Tailwind red-300 */
+    --kendo-color-series-e: #a855f7; /* Tailwind purple-500 */
+    --kendo-color-series-e-bold: #9333ea; /* Tailwind purple-600 */
+    --kendo-color-series-e-bolder: #7e22ce; /* Tailwind purple-700 */
+    --kendo-color-series-e-subtle: #c084fc; /* Tailwind purple-400 */
+    --kendo-color-series-e-subtler: #d8b4fe; /* Tailwind purple-300 */
+    --kendo-color-series-f: #ec4899; /* Tailwind pink-500 */
+    --kendo-color-series-f-bold: #db2777; /* Tailwind pink-600 */
+    --kendo-color-series-f-bolder: #be185d; /* Tailwind pink-700 */
+    --kendo-color-series-f-subtle: #f472b6; /* Tailwind pink-400 */
+    --kendo-color-series-f-subtler: #f9a8d4; /* Tailwind pink-300 */
+}
