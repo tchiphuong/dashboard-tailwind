@@ -1,9 +1,6 @@
 module.exports = {
-    // content: ["src/**/*.{html,js}", "assets/**/*.js"],
-    // content: ["./node_modules/flyonui/dist/js/*.js"],
-    // content: ["./node_modules/flyonui/dist/js/accordion.js"],
-    content: ["*.html", "./app/views/**/*.html", "./app/controllers/**/*.js"],
-    darkMode: "class", // Bật chế độ dark mode bằng lớp
+    content: ["*.html", "./app/views/**/*.html", "./app/controllers/*.js"],
+    darkMode: "class",
     theme: {
         fontFamily: {
             sans: ["Inter", "sans-serif"],
@@ -11,5 +8,12 @@ module.exports = {
         },
         extend: {},
     },
+    safelist: [
+        {
+            pattern:
+                /^(border|ring|outline|bg|text)-(red|blue|green|yellow|purple|pink|indigo|gray|teal|lime|orange|cyan)-(50|100|200|300|400|500|600|700|800|900)$/,
+            variants: ["hover", "focus", "dark"],
+        },
+    ],
     plugins: [],
 };
