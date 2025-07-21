@@ -307,14 +307,14 @@ angular
                                 fill: true,
                                 tension: 0.4,
                             },
-                            {
+                            /*{
                                 label: "Target Revenue",
                                 data: $scope.charts.revenueChart.target,
                                 borderWidth: 2,
                                 fill: false,
                                 borderDash: [5, 5],
                                 tension: 0.4,
-                            },
+                            },*/
                         ],
                     },
                     options: {
