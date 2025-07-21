@@ -296,7 +296,7 @@ angular
             const revenueCtx = document.getElementById("revenueChart");
             if (revenueCtx && $scope.charts && $scope.charts.revenueChart) {
                 new Chart(revenueCtx, {
-                    type: "line",
+                    type: "pie",
                     data: {
                         labels: $scope.charts.revenueChart.labels,
                         datasets: [
