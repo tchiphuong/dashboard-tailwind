@@ -296,7 +296,7 @@ angular
             const revenueCtx = document.getElementById("revenueChart");
             if (revenueCtx && $scope.charts && $scope.charts.revenueChart) {
                 new Chart(revenueCtx, {
-                    type: "line",
+                    type: "pie",
                     data: {
                         labels: $scope.charts.revenueChart.labels,
                         datasets: [
@@ -307,14 +307,14 @@ angular
                                 fill: true,
                                 tension: 0.4,
                             },
-                            {
+                            /*{
                                 label: "Target Revenue",
                                 data: $scope.charts.revenueChart.target,
                                 borderWidth: 2,
                                 fill: false,
                                 borderDash: [5, 5],
                                 tension: 0.4,
-                            },
+                            },*/
                         ],
                     },
                     options: {
