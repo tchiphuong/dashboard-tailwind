@@ -24,6 +24,16 @@
         ]
     },
     {
+        "title": "Products",
+        "icon": "fa fa-box",
+        "children": [{ "title": "Product List", "link": "/products/list" }]
+    },
+    {
+        "title": "Posts",
+        "icon": "fa fa-file-alt",
+        "children": [{ "title": "Post List", "link": "/posts/list" }]
+    },
+    {
         "title": "Assets",
         "icon": "fa fa-box",
         "children": [

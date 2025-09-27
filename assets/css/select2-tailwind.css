@@ -1,0 +1,523 @@
+/* Select2 Tailwind CSS Custom Styles using @apply */
+
+/* ===== BASE SELECT2 CONTAINER ===== */
+.select2-container--tailwind {
+    font-family: inherit;
+    @apply relative m-0 box-border inline-block align-middle text-sm leading-5;
+}
+
+/* ===== SELECTION CONTAINER ===== */
+.select2-container--tailwind .select2-selection--single {
+    @apply flex h-10 cursor-pointer select-none items-center rounded-md border border-gray-300 bg-white shadow-sm transition-all duration-150 ease-in-out;
+}
+
+.select2-container--tailwind .select2-selection--single:hover {
+    @apply border-gray-400;
+}
+
+.select2-container--tailwind.select2-container--focus
+    .select2-selection--single {
+    @apply border-blue-500 ring-2 ring-blue-500/10;
+}
+
+/* ===== SELECTION RENDERED ===== */
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply pl-4 pr-10 font-sans text-base text-gray-900;
+}
+
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__placeholder {
+    @apply text-gray-500;
+}
+
+/* ===== SELECTION ARROW ===== */
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__arrow {
+    @apply absolute right-0 top-0 flex h-full w-8 items-center justify-center;
+}
+
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__arrow::after {
+    content: "";
+    @apply h-0 w-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-500 transition-transform duration-150 ease-in-out;
+}
+
+.select2-container--tailwind.select2-container--open
+    .select2-selection--single
+    .select2-selection__arrow::after {
+    @apply rotate-180;
+}
+
+/* ===== DROPDOWN ===== */
+.select2-dropdown--tailwind {
+    @apply absolute left-[-100000px] z-[1051] mt-1 box-border block w-full rounded-lg border border-gray-300 bg-white shadow-lg;
+}
+
+.select2-container--tailwind.select2-container--open
+    .select2-dropdown--tailwind {
+    @apply left-0;
+}
+
+/* ===== SEARCH BOX ===== */
+.select2-container--tailwind .select2-search--dropdown {
+    @apply block p-2;
+}
+
+.select2-container--tailwind .select2-search--dropdown .select2-search__field {
+    @apply w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm leading-5 text-gray-900 outline-none transition-all duration-150 ease-in-out;
+}
+
+.select2-container--tailwind
+    .select2-search--dropdown
+    .select2-search__field:focus {
+    @apply border-blue-500 ring-2 ring-blue-500/10;
+}
+
+.select2-container--tailwind
+    .select2-search--dropdown
+    .select2-search__field::placeholder {
+    @apply text-gray-400;
+}
+
+/* ===== RESULTS ===== */
+.select2-container--tailwind .select2-results {
+    @apply block max-h-[200px] overflow-y-auto;
+}
+
+.select2-container--tailwind .select2-results__options {
+    @apply m-0 list-none p-0;
+}
+
+.select2-container--tailwind .select2-results__option {
+    @apply cursor-pointer select-none px-4 py-2 text-base text-gray-900 transition-colors duration-150 ease-in-out;
+}
+
+.select2-container--tailwind .select2-results__option:hover {
+    @apply bg-gray-100;
+}
+
+.select2-container--tailwind
+    .select2-results__option--highlighted[aria-selected] {
+    @apply bg-blue-500 text-white;
+}
+
+.select2-container--tailwind .select2-results__option[aria-selected="true"] {
+    @apply bg-blue-50 font-medium text-blue-700;
+}
+
+.select2-container--tailwind
+    .select2-results__option[aria-selected="true"]:hover {
+    @apply bg-blue-100;
+}
+
+/* ===== MULTIPLE SELECT ===== */
+.select2-container--tailwind .select2-selection--multiple {
+    @apply min-h-10 cursor-text rounded-lg border border-gray-300 bg-white transition-all duration-150 ease-in-out;
+}
+
+.select2-container--tailwind .select2-selection--multiple:hover {
+    @apply border-gray-400;
+}
+
+.select2-container--tailwind.select2-container--focus
+    .select2-selection--multiple {
+    @apply border-blue-500 outline-none ring-2 ring-blue-500/10;
+}
+
+.select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__rendered {
+    @apply m-0 flex list-none flex-wrap gap-1 px-3 py-1.5;
+}
+
+.select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice {
+    @apply m-0 flex items-center gap-1 rounded-md bg-blue-500 px-2 py-0.5 text-xs font-medium text-white;
+}
+
+.select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice__remove {
+    @apply ml-1 cursor-pointer font-bold text-white opacity-80 transition-opacity duration-150 ease-in-out;
+}
+
+.select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice__remove:hover {
+    @apply opacity-100;
+}
+
+.select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice__remove::before {
+    content: "×";
+    @apply text-base leading-none;
+}
+
+/* ===== CLEAR BUTTON ===== */
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__clear {
+    @apply absolute right-8 top-1/2 flex h-4 w-4 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-gray-500 opacity-60 transition-opacity duration-150 ease-in-out;
+}
+
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__clear:hover {
+    @apply opacity-100;
+}
+
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__clear::before {
+    content: "×";
+    @apply text-xs font-bold leading-none text-white;
+}
+
+/* ===== LOADING STATE ===== */
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__loading {
+    @apply absolute right-8 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin rounded-full border-2 border-gray-200 border-t-blue-500;
+}
+
+/* ===== DISABLED STATE ===== */
+.select2-container--tailwind.select2-container--disabled
+    .select2-selection--single,
+.select2-container--tailwind.select2-container--disabled
+    .select2-selection--multiple {
+    @apply cursor-not-allowed border-gray-200 bg-gray-50 text-gray-500 opacity-60;
+}
+
+.select2-container--tailwind.select2-container--disabled
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply text-gray-500;
+}
+
+/* ===== DARK MODE ===== */
+.dark .select2-container--tailwind .select2-selection--single {
+    @apply border-gray-600 bg-gray-800 text-gray-100;
+}
+
+.dark .select2-container--tailwind .select2-selection--single:hover {
+    @apply border-gray-500;
+}
+
+.dark
+    .select2-container--tailwind.select2-container--focus
+    .select2-selection--single {
+    @apply border-blue-400 ring-2 ring-blue-400/20;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply text-gray-100;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__placeholder {
+    @apply text-gray-400;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__arrow::after {
+    @apply border-t-gray-400;
+}
+
+.dark .select2-dropdown--tailwind {
+    @apply border-gray-600 bg-gray-700 shadow-2xl;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-search--dropdown
+    .select2-search__field {
+    @apply border-gray-500 bg-gray-600 text-gray-100;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-search--dropdown
+    .select2-search__field:focus {
+    @apply border-blue-400 ring-2 ring-blue-400/20;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-search--dropdown
+    .select2-search__field::placeholder {
+    @apply text-gray-400;
+}
+
+.dark .select2-container--tailwind .select2-results__option {
+    @apply text-gray-100;
+}
+
+.dark .select2-container--tailwind .select2-results__option:hover {
+    @apply bg-gray-600;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-results__option--highlighted[aria-selected] {
+    @apply bg-blue-400 text-gray-800;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-results__option[aria-selected="true"] {
+    @apply bg-blue-900 text-blue-300;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-results__option[aria-selected="true"]:hover {
+    @apply bg-blue-800;
+}
+
+.dark .select2-container--tailwind .select2-selection--multiple {
+    @apply border-gray-600 bg-gray-700;
+}
+
+.dark .select2-container--tailwind .select2-selection--multiple:hover {
+    @apply border-gray-500;
+}
+
+.dark
+    .select2-container--tailwind.select2-container--focus
+    .select2-selection--multiple {
+    @apply border-blue-400 ring-2 ring-blue-400/20;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice {
+    @apply bg-blue-400 text-gray-800;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-selection--multiple
+    .select2-selection__choice__remove {
+    @apply text-gray-800;
+}
+
+.dark
+    .select2-container--tailwind.select2-container--disabled
+    .select2-selection--single,
+.dark
+    .select2-container--tailwind.select2-container--disabled
+    .select2-selection--multiple {
+    @apply border-gray-600 bg-gray-700 text-gray-400;
+}
+
+.dark
+    .select2-container--tailwind.select2-container--disabled
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply text-gray-400;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 640px) {
+    .select2-container--tailwind {
+        @apply w-full;
+    }
+
+    .select2-container--tailwind .select2-selection--single {
+        @apply h-11;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__rendered {
+        @apply pl-4 pr-10;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__arrow {
+        @apply w-10;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__clear {
+        @apply right-10;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__loading {
+        @apply right-10;
+    }
+}
+
+@media (max-width: 480px) {
+    .select2-container--tailwind .select2-selection--single {
+        @apply h-12;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__rendered {
+        @apply pl-5 pr-12 text-base;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__arrow {
+        @apply w-12;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__clear {
+        @apply right-12;
+    }
+
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__loading {
+        @apply right-12;
+    }
+}
+
+/* ===== CUSTOM SIZES ===== */
+.select2-container--tailwind.select2-container--sm .select2-selection--single {
+    @apply h-8 text-xs;
+}
+
+.select2-container--tailwind.select2-container--sm
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply pl-2 pr-6;
+}
+
+.select2-container--tailwind.select2-container--lg .select2-selection--single {
+    @apply h-12 text-base;
+}
+
+.select2-container--tailwind.select2-container--lg
+    .select2-selection--single
+    .select2-selection__rendered {
+    @apply pl-4 pr-10;
+}
+
+/* ===== CUSTOM COLORS ===== */
+.select2-container--tailwind.select2-container--success
+    .select2-selection--single {
+    @apply border-green-500;
+}
+
+.select2-container--tailwind.select2-container--success.select2-container--focus
+    .select2-selection--single {
+    @apply border-green-600 ring-2 ring-green-500/10;
+}
+
+.select2-container--tailwind.select2-container--error
+    .select2-selection--single {
+    @apply border-red-500;
+}
+
+.select2-container--tailwind.select2-container--error.select2-container--focus
+    .select2-selection--single {
+    @apply border-red-600 ring-2 ring-red-500/10;
+}
+
+.select2-container--tailwind.select2-container--warning
+    .select2-selection--single {
+    @apply border-yellow-500;
+}
+
+.select2-container--tailwind.select2-container--warning.select2-container--focus
+    .select2-selection--single {
+    @apply border-yellow-600 ring-2 ring-yellow-500/10;
+}
+
+/* ===== ANIMATIONS ===== */
+.select2-container--tailwind .select2-dropdown--tailwind {
+    animation: select2-dropdown-fade-in 0.15s ease-out;
+}
+
+@keyframes select2-dropdown-fade-in {
+    from {
+        @apply -translate-y-2 opacity-0;
+    }
+    to {
+        @apply translate-y-0 opacity-100;
+    }
+}
+
+.select2-container--tailwind
+    .select2-selection--single
+    .select2-selection__arrow::after {
+    @apply transition-transform duration-150 ease-in-out;
+}
+
+/* ===== ACCESSIBILITY ===== */
+.select2-container--tailwind .select2-results__option[aria-selected="true"] {
+    @apply relative;
+}
+
+.select2-container--tailwind
+    .select2-results__option[aria-selected="true"]::after {
+    content: "✓";
+    @apply absolute right-3 top-1/2 -translate-y-1/2 font-bold text-blue-500;
+}
+
+.dark
+    .select2-container--tailwind
+    .select2-results__option[aria-selected="true"]::after {
+    @apply text-blue-400;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .select2-container--tailwind {
+        @apply hidden;
+    }
+
+    .select2-container--tailwind .select2-selection--single {
+        @apply border border-black bg-white text-black;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    .select2-container--tailwind .select2-selection--single {
+        @apply border-2;
+    }
+
+    .select2-container--tailwind
+        .select2-results__option--highlighted[aria-selected] {
+        @apply bg-black text-white;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    .select2-container--tailwind
+        .select2-selection--single
+        .select2-selection__arrow::after,
+    .select2-container--tailwind .select2-dropdown--tailwind,
+    .select2-container--tailwind .select2-selection--single,
+    .select2-container--tailwind .select2-selection--multiple,
+    .select2-container--tailwind .select2-results__option {
+        @apply animate-none transition-none;
+    }
+}

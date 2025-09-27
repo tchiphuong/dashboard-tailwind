@@ -1,3 +1,6 @@
+@import "./select2-tailwind.css";
+@import "./flatpickr-tailwind.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

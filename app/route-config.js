@@ -30,6 +30,18 @@ function RouteConfig($routeProvider) {
             controller: "UserRolesCtrl",
         })
 
+        // Products
+        .when("/products/list", {
+            templateUrl: "app/views/products/list.html",
+            controller: "ProductCtrl",
+        })
+
+        // Posts
+        .when("/posts/list", {
+            templateUrl: "app/views/posts/list.html",
+            controller: "PostCtrl",
+        })
+
         // Assets
         .when("/assets/list", {
             templateUrl: "app/views/assets/list.html",

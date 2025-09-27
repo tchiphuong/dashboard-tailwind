@@ -1,5 +1,10 @@
 module.exports = {
-    content: ["*.html", "./app/views/**/*.html", "./app/controllers/*.js"],
+    content: [
+        "*.html",
+        "./app/views/**/*.html",
+        "./app/controllers/*.js",
+        "./assets/css/select2-tailwind.css",
+    ],
     darkMode: "class",
     theme: {
         fontFamily: {

@@ -161,7 +161,7 @@
                     <span class="text-sm font-semibold" ng-class="'text-' + metric.color + '-600 dark:text-' + metric.color + '-400'">{{metric.value}}%</span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                    <div class="h-2 rounded-full transition-all duration-500" ng-class="'bg-' + metric.color + '-500'" style="width: {{metric.value}}%"></div>
+                    <div class="h-2 rounded-full transition-all duration-500" ng-class="'bg-' + metric.color + '-500'" ng-style="{'width': metric.value + '%'}"></div>
                 </div>
             </div>
         </div>
@@ -234,7 +234,7 @@
                 </div>
                 <div class="flex items-center">
                     <div class="w-20 bg-gray-200 dark:bg-gray-600 rounded-full h-2 mr-3 overflow-hidden">
-                        <div class="h-2 rounded-lg" ng-class="'bg-' + category.color + '-500'" style="width: {{category.percentage}}%"></div>
+                        <div class="h-2 rounded-lg" ng-class="'bg-' + category.color + '-500'" ng-style="{'width': category.percentage + '%'}"></div>
                     </div>
                     <span class="w-9 text-sm font-medium text-gray-700 dark:text-gray-200">{{category.percentage}}%</span>
                 </div>
