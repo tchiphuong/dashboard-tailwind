@@ -1,0 +1,151 @@
+{
+    "translation": {
+        "common": {
+            "loading": "加载中...",
+            "save": "保存",
+            "cancel": "取消",
+            "delete": "删除",
+            "edit": "编辑",
+            "create": "创建",
+            "search": "搜索",
+            "refresh": "刷新",
+            "home": "首页",
+            "settings": "设置",
+            "profile": "个人资料",
+            "signOut": "登出",
+            "markAllAsRead": "全部标记为已读",
+            "notifications": "通知",
+            "unreadNotifications": "您有 {{count}} 条未读通知"
+        },
+        "menu": {
+            "dashboard": "仪表盘",
+            "overview": "概览",
+            "analytics": "分析",
+            "projects": "项目",
+            "list": "列表",
+            "createNew": "新建",
+            "users": "用户",
+            "roles": "角色",
+            "products": "产品",
+            "productList": "产品列表",
+            "posts": "帖子",
+            "postList": "帖子列表",
+            "assets": "资产",
+            "assetList": "资产列表",
+            "requests": "请求",
+            "finance": "财务",
+            "budget": "预算",
+            "invoices": "发票",
+            "todos": "待办事项",
+            "comments": "评论",
+            "quotes": "语录",
+            "settings": "设置"
+        },
+        "dashboard": {
+            "title": "仪表盘概览",
+            "totalUsers": "总用户",
+            "revenue": "收入",
+            "orders": "订单",
+            "products": "产品",
+            "fromLastMonth": "较上月 {{change}}%",
+            "quickActions": "快速操作",
+            "newOrder": "新订单",
+            "addUser": "添加用户",
+            "newProduct": "新产品",
+            "reports": "报告",
+            "manageUsers": "用户管理",
+            "uploadFile": "上传文件",
+            "recentNotifications": "最近通知",
+            "revenueTrend": "收入趋势",
+            "ordersTrend": "订单趋势",
+            "performanceMetrics": "绩效指标",
+            "recentActivities": "最近活动"
+        },
+        "pages": {
+            "comingSoon": "即将推出...",
+            "productsList": "产品列表",
+            "usersList": "用户列表",
+            "userRoles": "用户角色",
+            "postsList": "帖子列表",
+            "projectsList": "项目列表",
+            "createProject": "创建项目",
+            "assetsList": "资产列表",
+            "assetRequests": "资产请求",
+            "budgetManagement": "预算管理",
+            "invoices": "发票",
+            "todos": "待办事项管理",
+            "comments": "用户评论",
+            "quotes": "励志语录"
+        },
+        "widgets": {
+            "inspiration": "每日灵感",
+            "pendingTasks": "待办任务",
+            "recent反馈": "最近反馈",
+            "done": "已完成",
+            "pending": "待处理"
+        },
+        "auth": {
+            "title": "欢迎回来",
+            "subtitle": "请输入您的详细信息以登录",
+            "username": "用户名",
+            "password": "密码",
+            "forgotPassword": "忘记密码？",
+            "signIn": "登录",
+            "signInWithGoogle": "使用 Google 登录",
+            "signInWithGithub": "使用 GitHub 登录",
+            "dontHaveAccount": "还没有账号？",
+            "signUp": "注册",
+            "rememberMe": "记住我",
+            "loggingIn": "正在登录..."
+        },
+        "users": {
+            "add": "添加用户",
+            "edit": "编辑用户",
+            "delete": "删除用户",
+            "deleteConfirmTitle": "删除用户",
+            "deleteConfirm": "您确定要删除此用户吗？此操作无法撤销。",
+            "form": {
+                "firstName": "名",
+                "lastName": "姓",
+                "email": "邮箱",
+                "phone": "电话",
+                "username": "用户名",
+                "department": "部门",
+                "role": "角色"
+            }
+        },
+        "settings": {
+            "tabs": {
+                "general": "常规",
+                "account": "账户",
+                "notifications": "通知",
+                "security": "安全"
+            },
+            "general": {
+                "language": "语言",
+                "theme": "主题",
+                "darkMode": "深色模式",
+                "timezone": "时区"
+            },
+            "account": {
+                "avatar": "头像",
+                "name": "名称",
+                "email": "邮箱",
+                "uploadAvatar": "上传新头像"
+            },
+            "notifications": {
+                "emailNotifications": "邮件通知",
+                "pushNotifications": "推送通知",
+                "marketingEmails": "营销邮件"
+            },
+            "security": {
+                "currentPassword": "当前密码",
+                "newPassword": "新密码",
+                "confirmPassword": "确认密码",
+                "changePassword": "修改密码"
+            },
+            "save": "保存更改",
+            "cancel": "取消"
+        }
+    }
+}

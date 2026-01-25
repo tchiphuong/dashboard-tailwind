@@ -1,0 +1,151 @@
+{
+    "translation": {
+        "common": {
+            "loading": "Đang tải...",
+            "save": "Lưu",
+            "cancel": "Hủy",
+            "delete": "Xóa",
+            "edit": "Sửa",
+            "create": "Tạo mới",
+            "search": "Tìm kiếm",
+            "refresh": "Làm mới",
+            "home": "Trang chủ",
+            "settings": "Cài đặt",
+            "profile": "Hồ sơ của bạn",
+            "signOut": "Đăng xuất",
+            "markAllAsRead": "Đánh dấu đã đọc tất cả",
+            "notifications": "Thông báo",
+            "unreadNotifications": "Bạn có {{count}} thông báo chưa đọc"
+        },
+        "menu": {
+            "dashboard": "Bảng điều khiển",
+            "overview": "Tổng quan",
+            "analytics": "Phân tích",
+            "projects": "Dự án",
+            "list": "Danh sách",
+            "createNew": "Tạo mới",
+            "users": "Người dùng",
+            "roles": "Vai trò",
+            "products": "Sản phẩm",
+            "productList": "Danh sách sản phẩm",
+            "posts": "Bài viết",
+            "postList": "Danh sách bài viết",
+            "assets": "Tài sản",
+            "assetList": "Danh sách tài sản",
+            "requests": "Yêu cầu",
+            "finance": "Tài chính",
+            "budget": "Ngân sách",
+            "invoices": "Hóa đơn",
+            "todos": "Công việc",
+            "comments": "Bình luận",
+            "quotes": "Trích dẫn",
+            "settings": "Cài đặt"
+        },
+        "dashboard": {
+            "title": "Tổng quan Bảng điều khiển",
+            "totalUsers": "Tổng người dùng",
+            "revenue": "Doanh thu",
+            "orders": "Đơn hàng",
+            "products": "Sản phẩm",
+            "fromLastMonth": "{{change}}% so với tháng trước",
+            "quickActions": "Thao tác nhanh",
+            "newOrder": "Đơn hàng mới",
+            "addUser": "Thêm người dùng",
+            "newProduct": "Sản phẩm mới",
+            "reports": "Báo cáo",
+            "manageUsers": "Quản lý người dùng",
+            "uploadFile": "Tải lên tệp",
+            "recentNotifications": "Thông báo gần đây",
+            "revenueTrend": "Xu hướng doanh thu",
+            "ordersTrend": "Xu hướng đơn hàng",
+            "performanceMetrics": "Chỉ số hiệu suất",
+            "recentActivities": "Hoạt động gần đây"
+        },
+        "pages": {
+            "comingSoon": "Sắp ra mắt...",
+            "productsList": "Danh sách sản phẩm",
+            "usersList": "Danh sách người dùng",
+            "userRoles": "Vai trò người dùng",
+            "postsList": "Danh sách bài viết",
+            "projectsList": "Danh sách dự án",
+            "createProject": "Tạo dự án",
+            "assetsList": "Danh sách tài sản",
+            "assetRequests": "Yêu cầu tài sản",
+            "budgetManagement": "Quản lý ngân sách",
+            "invoices": "Hóa đơn",
+            "todos": "Quản lý công việc",
+            "comments": "Bình luận người dùng",
+            "quotes": "Trích dẫn cảm hứng"
+        },
+        "widgets": {
+            "inspiration": "Cảm hứng mỗi ngày",
+            "pendingTasks": "Việc cần làm",
+            "recentFeedback": "Phản hồi gần đây",
+            "done": "Đã xong",
+            "pending": "Chờ xử lý"
+        },
+        "auth": {
+            "title": "Chào mừng trở lại",
+            "subtitle": "Vui lòng nhập thông tin để đăng nhập",
+            "username": "Tên đăng nhập",
+            "password": "Mật khẩu",
+            "forgotPassword": "Quên mật khẩu?",
+            "signIn": "Đăng nhập",
+            "signInWithGoogle": "Đăng nhập bằng Google",
+            "signInWithGithub": "Đăng nhập bằng GitHub",
+            "dontHaveAccount": "Chưa có tài khoản?",
+            "signUp": "Đăng ký",
+            "rememberMe": "Ghi nhớ đăng nhập",
+            "loggingIn": "Đang đăng nhập..."
+        },
+        "users": {
+            "add": "Thêm người dùng",
+            "edit": "Sửa người dùng",
+            "delete": "Xóa người dùng",
+            "deleteConfirmTitle": "Xóa người dùng",
+            "deleteConfirm": "Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.",
+            "form": {
+                "firstName": "Tên",
+                "lastName": "Họ",
+                "email": "Email",
+                "phone": "Điện thoại",
+                "username": "Tên đăng nhập",
+                "department": "Phòng ban",
+                "role": "Vai trò"
+            }
+        },
+        "settings": {
+            "tabs": {
+                "general": "Chung",
+                "account": "Tài khoản",
+                "notifications": "Thông báo",
+                "security": "Bảo mật"
+            },
+            "general": {
+                "language": "Ngôn ngữ",
+                "theme": "Giao diện",
+                "darkMode": "Chế độ tối",
+                "timezone": "Múi giờ"
+            },
+            "account": {
+                "avatar": "Ảnh đại diện",
+                "name": "Tên hiển thị",
+                "email": "Email",
+                "uploadAvatar": "Tải ảnh mới"
+            },
+            "notifications": {
+                "emailNotifications": "Thông báo qua Email",
+                "pushNotifications": "Thông báo đẩy",
+                "marketingEmails": "Email quảng cáo"
+            },
+            "security": {
+                "currentPassword": "Mật khẩu hiện tại",
+                "newPassword": "Mật khẩu mới",
+                "confirmPassword": "Xác nhận mật khẩu",
+                "changePassword": "Đổi mật khẩu"
+            },
+            "save": "Lưu thay đổi",
+            "cancel": "Hủy"
+        }
+    }
+}

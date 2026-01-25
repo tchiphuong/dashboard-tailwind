@@ -1,0 +1,151 @@
+{
+    "translation": {
+        "common": {
+            "loading": "Loading...",
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "edit": "Edit",
+            "create": "Create",
+            "search": "Search",
+            "refresh": "Refresh",
+            "home": "Home",
+            "settings": "Settings",
+            "profile": "Your Profile",
+            "signOut": "Sign out",
+            "markAllAsRead": "Mark all as read",
+            "notifications": "Notifications",
+            "unreadNotifications": "You have {{count}} unread notifications"
+        },
+        "menu": {
+            "dashboard": "Dashboard",
+            "overview": "Overview",
+            "analytics": "Analytics",
+            "projects": "Projects",
+            "list": "List",
+            "createNew": "Create New",
+            "users": "Users",
+            "roles": "Roles",
+            "products": "Products",
+            "productList": "Product List",
+            "posts": "Posts",
+            "postList": "Post List",
+            "assets": "Assets",
+            "assetList": "Asset List",
+            "requests": "Requests",
+            "finance": "Finance",
+            "budget": "Budget",
+            "invoices": "Invoices",
+            "todos": "Todos",
+            "comments": "Comments",
+            "quotes": "Quotes",
+            "settings": "Settings"
+        },
+        "dashboard": {
+            "title": "Dashboard Overview",
+            "totalUsers": "Total Users",
+            "revenue": "Revenue",
+            "orders": "Orders",
+            "products": "Products",
+            "fromLastMonth": "{{change}}% from last month",
+            "quickActions": "Quick Actions",
+            "newOrder": "New Order",
+            "addUser": "Add User",
+            "newProduct": "New Product",
+            "reports": "Reports",
+            "manageUsers": "Manage Users",
+            "uploadFile": "Upload File",
+            "recentNotifications": "Recent Notifications",
+            "revenueTrend": "Revenue Trend",
+            "ordersTrend": "Orders Trend",
+            "performanceMetrics": "Performance Metrics",
+            "recentActivities": "Recent Activities"
+        },
+        "pages": {
+            "comingSoon": "Coming soon...",
+            "productsList": "Products List",
+            "usersList": "Users List",
+            "userRoles": "User Roles",
+            "postsList": "Posts List",
+            "projectsList": "Projects List",
+            "createProject": "Create Project",
+            "assetsList": "Assets List",
+            "assetRequests": "Asset Requests",
+            "budgetManagement": "Budget Management",
+            "invoices": "Invoices",
+            "todos": "Todos Management",
+            "comments": "User Comments",
+            "quotes": "Inspirational Quotes"
+        },
+        "widgets": {
+            "inspiration": "Daily Inspiration",
+            "pendingTasks": "Pending Tasks",
+            "recentFeedback": "Recent Feedback",
+            "done": "Done",
+            "pending": "Pending"
+        },
+        "auth": {
+            "title": "Welcome back",
+            "subtitle": "Please enter your details to sign in",
+            "username": "Username",
+            "password": "Password",
+            "forgotPassword": "Forgot password?",
+            "signIn": "Sign in",
+            "signInWithGoogle": "Sign in with Google",
+            "signInWithGithub": "Sign in with GitHub",
+            "dontHaveAccount": "Don't have an account?",
+            "signUp": "Sign up",
+            "rememberMe": "Remember me",
+            "loggingIn": "Signing in..."
+        },
+        "users": {
+            "add": "Add User",
+            "edit": "Edit User",
+            "delete": "Delete User",
+            "deleteConfirmTitle": "Delete User",
+            "deleteConfirm": "Are you sure you want to delete this user? This action cannot be undone.",
+            "form": {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email",
+                "phone": "Phone",
+                "username": "Username",
+                "department": "Department",
+                "role": "Role"
+            }
+        },
+        "settings": {
+            "tabs": {
+                "general": "General",
+                "account": "Account",
+                "notifications": "Notifications",
+                "security": "Security"
+            },
+            "general": {
+                "language": "Language",
+                "theme": "Theme",
+                "darkMode": "Dark Mode",
+                "timezone": "Timezone"
+            },
+            "account": {
+                "avatar": "Avatar",
+                "name": "Name",
+                "email": "Email",
+                "uploadAvatar": "Upload new avatar"
+            },
+            "notifications": {
+                "emailNotifications": "Email Notifications",
+                "pushNotifications": "Push Notifications",
+                "marketingEmails": "Marketing Emails"
+            },
+            "security": {
+                "currentPassword": "Current Password",
+                "newPassword": "New Password",
+                "confirmPassword": "Confirm Password",
+                "changePassword": "Change Password"
+            },
+            "save": "Save Changes",
+            "cancel": "Cancel"
+        }
+    }
+}

@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import "@fontsource/inter";
+/* Variable font */
+@plugin "./hero.js";
+
+@custom-variant dark (&:is(.dark, .dark *));
+@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+
+@theme {
+  --font-sans: "Inter", "Microsoft YaHei", "Heiti SC", "Hiragino Sans GB", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+}
+
+
+/* Preserve existing custom styles */
+.sidebar-transition {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* Scrollbar styling for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
