@@ -18,5 +18,15 @@ export default defineConfig(({ command }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
+    chunkSizeWarningLimit: 1600, // Tăng limit để tránh warning
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['@heroui/react', 'framer-motion'],
+          'chart-vendor': ['recharts'],
+        },
+      },
+    },
   },
 }))
