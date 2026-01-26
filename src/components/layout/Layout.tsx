@@ -8,8 +8,8 @@ export function Layout() {
             <Header />
             <div className="flex flex-1 overflow-hidden">
                 <Sidebar />
-                <div className="flex-1 flex flex-col space-y-2">
-                    <main className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+                <div className="flex flex-1 flex-col space-y-2">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-colors duration-300 dark:bg-gray-900">
                         <div className="container mx-auto gap-3 p-3">
                             <Outlet />
                         </div>

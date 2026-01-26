@@ -22,7 +22,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }, [darkMode]);
 
     const toggleDarkMode = () => {
-        setDarkMode(prev => !prev);
+        setDarkMode((prev) => !prev);
     };
 
     return (

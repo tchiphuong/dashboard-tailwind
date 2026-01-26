@@ -13,6 +13,12 @@ import { Settings } from '@/pages/settings/index';
 import { TodosList } from '@/pages/todos';
 import { CommentsList } from '@/pages/comments';
 import { QuotesList } from '@/pages/quotes';
+import {
+    ApprovalsSubmit,
+    ApprovalsApprove,
+    ApprovalsPending,
+    ApprovalsHistory,
+} from '@/pages/approvals';
 
 import { Login } from '@/pages/auth/Login';
 
@@ -42,6 +48,11 @@ function App() {
                         <Route path="assets/requests" element={<AssetsRequests />} />
                         {/* Finance */}
                         <Route path="finance/invoices" element={<FinanceInvoices />} />
+                        {/* Approvals */}
+                        <Route path="approvals/submit" element={<ApprovalsSubmit />} />
+                        <Route path="approvals/approve" element={<ApprovalsApprove />} />
+                        <Route path="approvals/pending" element={<ApprovalsPending />} />
+                        <Route path="approvals/history" element={<ApprovalsHistory />} />
                         {/* Settings */}
                         <Route path="settings" element={<Settings />} />
 

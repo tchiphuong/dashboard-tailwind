@@ -15,7 +15,10 @@
             "signOut": "Đăng xuất",
             "markAllAsRead": "Đánh dấu đã đọc tất cả",
             "notifications": "Thông báo",
-            "unreadNotifications": "Bạn có {{count}} thông báo chưa đọc"
+            "unreadNotifications": "Bạn có {{count}} thông báo chưa đọc",
+            "favorites": "Yêu thích",
+            "noResults": "Không tìm thấy kết quả",
+            "close": "Đóng"
         },
         "menu": {
             "dashboard": "Bảng điều khiển",
@@ -39,7 +42,12 @@
             "todos": "Công việc",
             "comments": "Bình luận",
             "quotes": "Trích dẫn",
-            "settings": "Cài đặt"
+            "settings": "Cài đặt",
+            "approvals": "Phê duyệt",
+            "submitRequest": "Gửi yêu cầu",
+            "approve": "Phê duyệt",
+            "pending": "Chờ duyệt",
+            "history": "Lịch sử"
         },
         "dashboard": {
             "title": "Tổng quan Bảng điều khiển",
@@ -146,6 +154,45 @@
             },
             "save": "Lưu thay đổi",
             "cancel": "Hủy"
+        },
+        "approvals": {
+            "submitDescription": "Gửi yêu cầu mới để phê duyệt",
+            "approveDescription": "Xem xét và phê duyệt các yêu cầu đang chờ",
+            "pendingDescription": "Các yêu cầu đang chờ phê duyệt",
+            "historyDescription": "Xem lịch sử các quyết định phê duyệt",
+            "newRequest": "Yêu cầu mới",
+            "requestType": "Loại yêu cầu",
+            "selectType": "Chọn loại yêu cầu",
+            "title": "Tiêu đề",
+            "titlePlaceholder": "Nhập tiêu đề ngắn gọn cho yêu cầu",
+            "description": "Mô tả",
+            "descriptionPlaceholder": "Cung cấp chi tiết về yêu cầu của bạn",
+            "submitSuccess": "Gửi yêu cầu thành công!",
+            "requester": "Người yêu cầu",
+            "type": "Loại",
+            "date": "Ngày",
+            "actions": "Thao tác",
+            "approver": "Người duyệt",
+            "status": "Trạng thái",
+            "processedAt": "Ngày xử lý",
+            "noPending": "Không có yêu cầu chờ duyệt",
+            "noHistory": "Không có lịch sử",
+            "viewRequest": "Xem yêu cầu",
+            "confirmApprove": "Xác nhận phê duyệt",
+            "confirmReject": "Xác nhận từ chối",
+            "comment": "Bình luận",
+            "commentPlaceholder": "Thêm bình luận (tùy chọn)",
+            "reject": "Từ chối",
+            "statusPending": "Chờ duyệt",
+            "statusApproved": "Đã duyệt",
+            "statusRejected": "Đã từ chối",
+            "types": {
+                "leave": "Nghỉ phép",
+                "expense": "Chi phí",
+                "purchase": "Mua sắm",
+                "travel": "Công tác",
+                "overtime": "Tăng ca"
+            }
         }
     }
 }

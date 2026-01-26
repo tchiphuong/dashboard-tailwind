@@ -15,7 +15,9 @@
             "signOut": "サインアウト",
             "markAllAsRead": "すべて既読にする",
             "notifications": "通知",
-            "unreadNotifications": "{{count}}件の未読通知があります"
+            "unreadNotifications": "{{count}}件の未読通知があります",
+            "favorites": "お気に入り",
+            "noResults": "結果が見つかりません"
         },
         "menu": {
             "dashboard": "ダッシュボード",
@@ -39,7 +41,12 @@
             "todos": "タスク",
             "comments": "コメント",
             "quotes": "引用",
-            "settings": "設定"
+            "settings": "設定",
+            "approvals": "承認",
+            "submitRequest": "申請する",
+            "approve": "承認する",
+            "pending": "保留中",
+            "history": "履歴"
         },
         "dashboard": {
             "title": "ダッシュボード概要",
@@ -97,6 +104,45 @@
             "signUp": "サインアップ",
             "rememberMe": "ログイン状態を保持する",
             "loggingIn": "サインイン中..."
+        },
+        "approvals": {
+            "submitDescription": "承認のための新しい申請を提出",
+            "approveDescription": "保留中の申請を確認して承認",
+            "pendingDescription": "承認待ちの申請",
+            "historyDescription": "過去の承認履歴を表示",
+            "newRequest": "新規申請",
+            "requestType": "申請タイプ",
+            "selectType": "申請タイプを選択",
+            "title": "タイトル",
+            "titlePlaceholder": "申請のタイトルを入力",
+            "description": "説明",
+            "descriptionPlaceholder": "申請の詳細を入力",
+            "submitSuccess": "申請が正常に提出されました！",
+            "requester": "申請者",
+            "type": "タイプ",
+            "date": "日付",
+            "actions": "アクション",
+            "approver": "承認者",
+            "status": "ステータス",
+            "processedAt": "処理日",
+            "noPending": "保留中の申請はありません",
+            "noHistory": "履歴がありません",
+            "viewRequest": "申請を表示",
+            "confirmApprove": "承認の確認",
+            "confirmReject": "却下の確認",
+            "comment": "コメント",
+            "commentPlaceholder": "コメントを追加（任意）",
+            "reject": "却下",
+            "statusPending": "保留中",
+            "statusApproved": "承認済み",
+            "statusRejected": "却下済み",
+            "types": {
+                "leave": "休暇",
+                "expense": "経費",
+                "purchase": "購入",
+                "travel": "出張",
+                "overtime": "残業"
+            }
         }
     },
     "users": {

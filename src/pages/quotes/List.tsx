@@ -45,7 +45,7 @@ export function QuotesList() {
         <>
             <Breadcrumb items={[{ label: t('menu.quotes') }]} />
 
-            <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="mb-6 flex items-center justify-between gap-4">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('pages.quotes')}
                 </h1>
@@ -55,7 +55,7 @@ export function QuotesList() {
                     isLoading={loading}
                     className="font-medium"
                     radius="full"
-                    startContent={!loading && <ArrowPathIcon className="w-4 h-4" />}
+                    startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
                 >
                     {t('common.refresh')}
                 </Button>
@@ -63,22 +63,22 @@ export function QuotesList() {
 
             {loading ? (
                 <div className="flex justify-center py-20">
-                    <ArrowPathIcon className="w-10 h-10 animate-spin text-blue-600" />
+                    <ArrowPathIcon className="h-10 w-10 animate-spin text-blue-600" />
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {quotes.map((quote) => (
                         <Card key={quote.id} className="p-4" shadow="sm">
                             <CardBody>
                                 <div className="flex gap-4">
-                                    <ChatBubbleBottomCenterTextIcon className="w-8 h-8 text-blue-500 flex-shrink-0" />
-                                    <p className="text-gray-700 dark:text-gray-200 text-lg font-medium italic">
+                                    <ChatBubbleBottomCenterTextIcon className="h-8 w-8 flex-shrink-0 text-blue-500" />
+                                    <p className="text-lg font-medium text-gray-700 italic dark:text-gray-200">
                                         "{quote.quote}"
                                     </p>
                                 </div>
                             </CardBody>
                             <CardFooter>
-                                <p className="text-gray-500 dark:text-gray-400 text-sm font-semibold ml-auto">
+                                <p className="ml-auto text-sm font-semibold text-gray-500 dark:text-gray-400">
                                     — {quote.author}
                                 </p>
                             </CardFooter>

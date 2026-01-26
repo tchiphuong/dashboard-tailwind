@@ -6,16 +6,19 @@ import en from '@/locales/en.json';
 import vi from '@/locales/vi.json';
 import ja from '@/locales/ja.json';
 import zh from '@/locales/zh.json';
+import th from '@/locales/th.json';
+import ko from '@/locales/ko.json';
 
 const resources = {
     en,
     vi,
     ja,
     zh,
+    th,
+    ko,
 };
 
-i18n
-    .use(LanguageDetector)
+i18n.use(LanguageDetector)
     .use(initReactI18next)
     .init({
         resources,

@@ -15,7 +15,9 @@
             "signOut": "登出",
             "markAllAsRead": "全部标记为已读",
             "notifications": "通知",
-            "unreadNotifications": "您有 {{count}} 条未读通知"
+            "unreadNotifications": "您有 {{count}} 条未读通知",
+            "favorites": "收藏夹",
+            "noResults": "未找到结果"
         },
         "menu": {
             "dashboard": "仪表盘",
@@ -39,7 +41,12 @@
             "todos": "待办事项",
             "comments": "评论",
             "quotes": "语录",
-            "settings": "设置"
+            "settings": "设置",
+            "approvals": "审批",
+            "submitRequest": "提交申请",
+            "approve": "审批",
+            "pending": "待审批",
+            "history": "历史记录"
         },
         "dashboard": {
             "title": "仪表盘概览",
@@ -146,6 +153,45 @@
             },
             "save": "保存更改",
             "cancel": "取消"
+        },
+        "approvals": {
+            "submitDescription": "提交新的审批申请",
+            "approveDescription": "审核并审批待处理的申请",
+            "pendingDescription": "等待审批的申请",
+            "historyDescription": "查看历史审批记录",
+            "newRequest": "新申请",
+            "requestType": "申请类型",
+            "selectType": "选择申请类型",
+            "title": "标题",
+            "titlePlaceholder": "输入申请标题",
+            "description": "说明",
+            "descriptionPlaceholder": "提供申请详情",
+            "submitSuccess": "申请提交成功！",
+            "requester": "申请人",
+            "type": "类型",
+            "date": "日期",
+            "actions": "操作",
+            "approver": "审批人",
+            "status": "状态",
+            "processedAt": "处理日期",
+            "noPending": "没有待审批的申请",
+            "noHistory": "没有历史记录",
+            "viewRequest": "查看申请",
+            "confirmApprove": "确认审批",
+            "confirmReject": "确认拒绝",
+            "comment": "备注",
+            "commentPlaceholder": "添加备注（可选）",
+            "reject": "拒绝",
+            "statusPending": "待审批",
+            "statusApproved": "已通过",
+            "statusRejected": "已拒绝",
+            "types": {
+                "leave": "请假",
+                "expense": "报销",
+                "purchase": "采购",
+                "travel": "出差",
+                "overtime": "加班"
+            }
         }
     }
 }

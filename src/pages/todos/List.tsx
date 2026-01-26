@@ -55,7 +55,7 @@ export function TodosList() {
         <>
             <Breadcrumb items={[{ label: t('menu.todos') }]} />
 
-            <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="mb-6 flex items-center justify-between gap-4">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('pages.todos')}
                 </h1>
@@ -65,7 +65,7 @@ export function TodosList() {
                     isLoading={loading}
                     className="font-medium"
                     radius="full"
-                    startContent={!loading && <ArrowPathIcon className="w-4 h-4" />}
+                    startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
                 >
                     {t('common.refresh')}
                 </Button>
@@ -74,7 +74,8 @@ export function TodosList() {
             <Table
                 aria-label="Todos table"
                 classNames={{
-                    wrapper: 'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
+                    wrapper:
+                        'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
                     th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 font-semibold',
                 }}
                 bottomContent={
@@ -103,14 +104,22 @@ export function TodosList() {
                 <TableBody
                     items={todos}
                     isLoading={loading}
-                    loadingContent={<ArrowPathIcon className="w-8 h-8 animate-spin text-blue-600" />}
+                    loadingContent={
+                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
+                    }
                     emptyContent={t('common.search')}
                 >
                     {(todo) => (
                         <TableRow key={todo.id}>
                             <TableCell>#{todo.id}</TableCell>
                             <TableCell>
-                                <span className={todo.completed ? 'line-through text-gray-400' : 'text-gray-800 dark:text-gray-200'}>
+                                <span
+                                    className={
+                                        todo.completed
+                                            ? 'text-gray-400 line-through'
+                                            : 'text-gray-800 dark:text-gray-200'
+                                    }
+                                >
                                     {todo.todo}
                                 </span>
                             </TableCell>
@@ -119,7 +128,13 @@ export function TodosList() {
                                     size="sm"
                                     color={todo.completed ? 'success' : 'warning'}
                                     variant="flat"
-                                    startContent={todo.completed ? <CheckCircleIcon className="w-4 h-4" /> : <XCircleIcon className="w-4 h-4" />}
+                                    startContent={
+                                        todo.completed ? (
+                                            <CheckCircleIcon className="h-4 w-4" />
+                                        ) : (
+                                            <XCircleIcon className="h-4 w-4" />
+                                        )
+                                    }
                                 >
                                     {todo.completed ? t('widgets.done') : t('widgets.pending')}
                                 </Chip>

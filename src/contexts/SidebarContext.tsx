@@ -32,7 +32,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const toggleSidebar = () => {
-        setSidebarOpen(prev => !prev);
+        setSidebarOpen((prev) => !prev);
     };
 
     const closeSidebar = () => {

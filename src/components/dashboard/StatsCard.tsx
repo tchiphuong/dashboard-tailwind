@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UsersIcon, CurrencyDollarIcon, ShoppingCartIcon, CubeIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon } from '@heroicons/react/24/outline';
+import {
+    UsersIcon,
+    CurrencyDollarIcon,
+    ShoppingCartIcon,
+    CubeIcon,
+    ArrowTrendingUpIcon,
+    ArrowTrendingDownIcon,
+} from '@heroicons/react/24/outline';
 import { StatCard as StatCardType } from '@/types';
 
 interface StatsCardProps {
@@ -79,29 +86,36 @@ export function StatsCard({ stat }: StatsCardProps) {
     }, [stat.value]);
 
     return (
-        <div className="rounded-xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-4">
+        <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all duration-300 hover:shadow-xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-800/50">
+            <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-base font-semibold text-gray-600 dark:text-gray-300">
                     {stat.title}
                 </h3>
-                <div className={`p-2.5 rounded-xl ${colors.bg}`}>
-                    {IconComponent && <IconComponent className={`w-5 h-5 ${colors.icon}`} />}
+                <div className={`rounded-xl p-2.5 ${colors.bg}`}>
+                    {IconComponent && <IconComponent className={`h-5 w-5 ${colors.icon}`} />}
                 </div>
             </div>
-            <p className={`text-3xl font-bold mb-2 ${colors.text}`}>
+            <p className={`mb-2 text-3xl font-bold ${colors.text}`}>
                 {stat.prefix && <span>{stat.prefix}</span>}
-                <span ref={counterRef} className="counter">0</span>
+                <span ref={counterRef} className="counter">
+                    0
+                </span>
                 {stat.suffix && <span>{stat.suffix}</span>}
             </p>
-            <div className={`flex items-center text-sm ${stat.changeType === 'up' ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
-                {stat.changeType === 'up' ?
-                    <ArrowTrendingUpIcon className="w-4 h-4 mr-1" /> :
-                    <ArrowTrendingDownIcon className="w-4 h-4 mr-1" />
-                }
+            <div
+                className={`flex items-center text-sm ${stat.changeType === 'up' ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}
+            >
+                {stat.changeType === 'up' ? (
+                    <ArrowTrendingUpIcon className="mr-1 h-4 w-4" />
+                ) : (
+                    <ArrowTrendingDownIcon className="mr-1 h-4 w-4" />
+                )}
                 <span>{t('dashboard.fromLastMonth', { change: stat.change })}</span>
             </div>
             {/* Animated background element */}
-            <div className={`absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-10 dark:opacity-5 ${colors.bgLight}`} />
+            <div
+                className={`absolute -top-4 -right-4 h-24 w-24 rounded-full opacity-10 dark:opacity-5 ${colors.bgLight}`}
+            />
         </div>
     );
 }

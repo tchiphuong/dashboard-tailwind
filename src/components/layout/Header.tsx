@@ -1,6 +1,14 @@
 import { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MoonIcon, SunIcon, BellIcon, ChevronDownIcon, UserIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import {
+    MoonIcon,
+    SunIcon,
+    BellIcon,
+    ChevronDownIcon,
+    UserIcon,
+    Cog6ToothIcon,
+    ArrowRightOnRectangleIcon,
+} from '@heroicons/react/24/outline';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useClickOutside } from '@/hooks';
@@ -27,7 +35,7 @@ export function Header() {
     useEffect(() => {
         const randomLimit = Math.floor(Math.random() * 50) + 1;
         fetch(`https://jsonplaceholder.typicode.com/comments?_limit=${randomLimit}`)
-            .then(res => res.json())
+            .then((res) => res.json())
             .then((data: Notification[]) => setNotifications(data))
             .catch(console.error);
     }, []);
@@ -35,8 +43,8 @@ export function Header() {
     // Fetch user
     useEffect(() => {
         fetch('https://randomuser.me/api/')
-            .then(res => res.json())
-            .then(data => setUser(data.results[0]))
+            .then((res) => res.json())
+            .then((data) => setUser(data.results[0]))
             .catch(console.error);
     }, []);
 
@@ -46,26 +54,29 @@ export function Header() {
     };
 
     return (
-        <header className="h-16 z-50 bg-white dark:bg-gray-800 shadow-md transition-colors duration-300">
-            <div className="mx-auto px-4 h-full">
-                <div className="flex items-center justify-between h-full">
+        <header className="z-50 h-16 bg-white shadow-md transition-colors duration-300 dark:bg-gray-800">
+            <div className="mx-auto h-full px-4">
+                <div className="flex h-full items-center justify-between">
                     <div className="flex items-center space-x-4">
                         {/* Hamburger/X button */}
                         <button
                             onClick={toggleSidebar}
-                            className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 focus:outline-none transition-colors relative w-8 h-8"
+                            className="relative h-8 w-8 text-gray-600 transition-colors hover:text-gray-800 focus:outline-none dark:text-gray-300 dark:hover:text-gray-100"
                         >
                             <span
-                                className={`absolute rounded-full block w-6 h-0.5 bg-current transform transition duration-300 ease-in-out ${sidebarOpen ? 'rotate-45 top-3.5' : 'top-2'
-                                    }`}
+                                className={`absolute block h-0.5 w-6 transform rounded-full bg-current transition duration-300 ease-in-out ${
+                                    sidebarOpen ? 'top-3.5 rotate-45' : 'top-2'
+                                }`}
                             />
                             <span
-                                className={`absolute rounded-full block w-6 h-0.5 bg-current transition-all duration-300 ease-in-out ${sidebarOpen ? 'opacity-0' : 'top-4'
-                                    }`}
+                                className={`absolute block h-0.5 w-6 rounded-full bg-current transition-all duration-300 ease-in-out ${
+                                    sidebarOpen ? 'opacity-0' : 'top-4'
+                                }`}
                             />
                             <span
-                                className={`absolute rounded-full block w-6 h-0.5 bg-current transform transition duration-300 ease-in-out ${sidebarOpen ? '-rotate-45 top-3.5' : 'top-6'
-                                    }`}
+                                className={`absolute block h-0.5 w-6 transform rounded-full bg-current transition duration-300 ease-in-out ${
+                                    sidebarOpen ? 'top-3.5 -rotate-45' : 'top-6'
+                                }`}
                             />
                         </button>
 
@@ -80,12 +91,12 @@ export function Header() {
                         {/* Dark mode toggle */}
                         <button
                             onClick={toggleDarkMode}
-                            className="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none dark:text-white dark:hover:text-gray-200 transition-colors"
+                            className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-gray-200"
                         >
                             {darkMode ? (
-                                <SunIcon className="w-5 h-5 text-yellow-500" />
+                                <SunIcon className="h-5 w-5 text-yellow-500" />
                             ) : (
-                                <MoonIcon className="w-5 h-5 text-blue-500" />
+                                <MoonIcon className="h-5 w-5 text-blue-500" />
                             )}
                         </button>
 
@@ -93,45 +104,50 @@ export function Header() {
                         <div ref={notificationRef} className="relative">
                             <button
                                 onClick={() => setNotificationOpen(!notificationOpen)}
-                                className="p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 dark:hover:text-gray-200 focus:outline-none transition-colors"
+                                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                             >
-                                <BellIcon className="w-5 h-5" />
+                                <BellIcon className="h-5 w-5" />
                             </button>
                             {notifications.length > 0 && (
-                                <span className="absolute right-0 top-0 inline-flex -translate-y-1/4 translate-x-1/4 transform items-center justify-center rounded-full bg-red-600 px-1.5 py-0.5 text-xs font-bold leading-none text-white">
+                                <span className="absolute top-0 right-0 inline-flex translate-x-1/4 -translate-y-1/4 transform items-center justify-center rounded-full bg-red-600 px-1.5 py-0.5 text-xs leading-none font-bold text-white">
                                     {notifications.length > 99 ? '99+' : notifications.length}
                                 </span>
                             )}
                             {notificationOpen && (
-                                <div className="absolute right-0 mt-2 w-80 origin-top-right rounded-xl bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-colors z-50">
-                                    <div className="px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 border-b border-gray-100 dark:border-gray-700">
+                                <div className="absolute right-0 z-50 mt-2 w-80 origin-top-right rounded-xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 transition-all duration-200 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-900/50">
+                                    <div className="border-b border-gray-100 px-4 py-3 text-sm font-semibold text-gray-700 dark:border-gray-700 dark:text-gray-200">
                                         {t('common.notifications')}
                                     </div>
                                     <div className="max-h-60 overflow-y-auto">
-                                        {notifications.slice(0, 10).map(notification => (
+                                        {notifications.slice(0, 10).map((notification) => (
                                             <a
                                                 key={notification.id}
                                                 href="#"
-                                                className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-b border-gray-50 dark:border-gray-700"
+                                                className="block border-b border-gray-50 px-4 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
                                             >
-                                                <p className="line-clamp-1 font-medium" title={notification.name}>
+                                                <p
+                                                    className="line-clamp-1 font-medium"
+                                                    title={notification.name}
+                                                >
                                                     {notification.name}
                                                 </p>
-                                                <p className="line-clamp-1 text-xs italic text-gray-500 mt-0.5">
+                                                <p className="mt-0.5 line-clamp-1 text-xs text-gray-500 italic">
                                                     {notification.email}
                                                 </p>
-                                                <p className="line-clamp-2 text-xs text-gray-500 mt-1">
+                                                <p className="mt-1 line-clamp-2 text-xs text-gray-500">
                                                     {notification.body}
                                                 </p>
                                             </a>
                                         ))}
                                     </div>
-                                    <div className="px-4 py-2 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700">
-                                        {t('common.unreadNotifications', { count: notifications.length })}
+                                    <div className="border-t border-gray-100 px-4 py-2 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                                        {t('common.unreadNotifications', {
+                                            count: notifications.length,
+                                        })}
                                     </div>
                                     <button
                                         onClick={markAllAsRead}
-                                        className="block w-full px-4 py-2.5 text-center text-sm font-medium text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-b-xl"
+                                        className="block w-full rounded-b-xl px-4 py-2.5 text-center text-sm font-medium text-blue-600 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700"
                                     >
                                         {t('common.markAllAsRead')}
                                     </button>
@@ -143,16 +159,18 @@ export function Header() {
                         <div ref={userMenuRef} className="relative">
                             <button
                                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                                className="flex items-center focus:outline-none lg:space-x-2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                className="flex items-center rounded-lg p-1 transition-colors hover:bg-gray-100 focus:outline-none lg:space-x-2 dark:hover:bg-gray-700"
                             >
                                 <img
                                     src={user?.picture?.medium || 'https://via.placeholder.com/150'}
                                     alt="User avatar"
-                                    className="h-9 w-9 rounded-full border-2 border-gray-200 dark:border-gray-600 object-cover"
+                                    className="h-9 w-9 rounded-full border-2 border-gray-200 object-cover dark:border-gray-600"
                                 />
                                 <div className="hidden flex-col items-start lg:flex">
                                     <span className="line-clamp-1 text-left text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {user ? `${user.name.first} ${user.name.last}` : t('common.loading')}
+                                        {user
+                                            ? `${user.name.first} ${user.name.last}`
+                                            : t('common.loading')}
                                     </span>
                                     <span className="line-clamp-1 text-left text-xs text-gray-500 dark:text-gray-400">
                                         {user?.email || t('common.loading')}
@@ -161,24 +179,35 @@ export function Header() {
                                 <ChevronDownIcon className="ml-1 h-4 w-4 text-gray-400" />
                             </button>
                             {userMenuOpen && (
-                                <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-colors z-50">
-                                    <div className="flex flex-col items-start px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-100 dark:border-gray-700 lg:hidden">
+                                <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl border border-gray-100 bg-white py-1 shadow-xl shadow-gray-200/50 transition-all duration-200 dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-900/50">
+                                    <div className="flex flex-col items-start border-b border-gray-100 px-4 py-2 text-sm text-gray-700 lg:hidden dark:border-gray-700 dark:text-gray-300">
                                         <span className="line-clamp-1 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                            {user ? `${user.name.first} ${user.name.last}` : t('common.loading')}
+                                            {user
+                                                ? `${user.name.first} ${user.name.last}`
+                                                : t('common.loading')}
                                         </span>
                                         <span className="line-clamp-1 text-xs text-gray-500 dark:text-gray-400">
                                             {user?.email || t('common.loading')}
                                         </span>
                                     </div>
-                                    <a href="#" className="flex items-center px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <a
+                                        href="#"
+                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                    >
                                         <UserIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.profile')}
                                     </a>
-                                    <a href="#" className="flex items-center px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <a
+                                        href="#"
+                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                    >
                                         <Cog6ToothIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.settings')}
                                     </a>
-                                    <a href="#" className="flex items-center px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-b-xl">
+                                    <a
+                                        href="#"
+                                        className="flex items-center rounded-b-xl px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                    >
                                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.signOut')}
                                     </a>

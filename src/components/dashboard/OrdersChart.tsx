@@ -1,5 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+} from 'recharts';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
 
@@ -12,16 +21,24 @@ export function OrdersChart({ data }: OrdersChartProps) {
     const { darkMode } = useTheme();
 
     return (
-        <div className="rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-            <h3 className="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200 flex items-center">
-                <ChartBarIcon className="w-5 h-5 mr-2 text-green-500" />
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
+                <ChartBarIcon className="mr-2 h-5 w-5 text-green-500" />
                 {t('dashboard.ordersTrend')}
             </h3>
             <div className="relative h-72">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#E5E7EB'} opacity={0.5} />
-                        <XAxis dataKey="name" stroke={darkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke={darkMode ? '#374151' : '#E5E7EB'}
+                            opacity={0.5}
+                        />
+                        <XAxis
+                            dataKey="name"
+                            stroke={darkMode ? '#9CA3AF' : '#6B7280'}
+                            fontSize={12}
+                        />
                         <YAxis stroke={darkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
                         <Tooltip
                             contentStyle={{
@@ -35,8 +52,18 @@ export function OrdersChart({ data }: OrdersChartProps) {
                         />
                         <Legend />
                         <Bar dataKey="online" name="Online" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                        <Bar dataKey="offline" name="Offline" fill="#10B981" radius={[4, 4, 0, 0]} />
-                        <Bar dataKey="unknown" name="Unknown" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+                        <Bar
+                            dataKey="offline"
+                            name="Offline"
+                            fill="#10B981"
+                            radius={[4, 4, 0, 0]}
+                        />
+                        <Bar
+                            dataKey="unknown"
+                            name="Unknown"
+                            fill="#8B5CF6"
+                            radius={[4, 4, 0, 0]}
+                        />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

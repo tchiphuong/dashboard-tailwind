@@ -20,7 +20,9 @@ export function DashboardOverview() {
     const { t } = useTranslation();
     const [stats, setStats] = useState<StatCard[]>([]);
     const [revenueData, setRevenueData] = useState<{ name: string; value: number }[]>([]);
-    const [ordersData, setOrdersData] = useState<{ name: string; online: number; offline: number; unknown: number }[]>([]);
+    const [ordersData, setOrdersData] = useState<
+        { name: string; online: number; offline: number; unknown: number }[]
+    >([]);
     const [performanceMetrics, setPerformanceMetrics] = useState<PerformanceMetric[]>([]);
     const [activities, setActivities] = useState<Activity[]>([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +32,15 @@ export function DashboardOverview() {
     const loadDashboardData = async () => {
         setLoading(true);
         try {
-            const [usersRes, productsRes, cartsRes, recentCartsRes, postsRes, todosRes, commentsRes] = await Promise.all([
+            const [
+                usersRes,
+                productsRes,
+                cartsRes,
+                recentCartsRes,
+                postsRes,
+                todosRes,
+                commentsRes,
+            ] = await Promise.all([
                 fetch('https://dummyjson.com/users?limit=0'),
                 fetch('https://dummyjson.com/products?limit=0'),
                 fetch('https://dummyjson.com/carts?limit=0'),
@@ -40,15 +50,16 @@ export function DashboardOverview() {
                 fetch('https://dummyjson.com/comments?limit=5'),
             ]);
 
-            const [users, products, carts, recentCarts, posts, todosData, commentsData] = await Promise.all([
-                usersRes.json(),
-                productsRes.json(),
-                cartsRes.json(),
-                recentCartsRes.json(),
-                postsRes.json(),
-                todosRes.json(),
-                commentsRes.json(),
-            ]);
+            const [users, products, carts, recentCarts, posts, todosData, commentsData] =
+                await Promise.all([
+                    usersRes.json(),
+                    productsRes.json(),
+                    cartsRes.json(),
+                    recentCartsRes.json(),
+                    postsRes.json(),
+                    todosRes.json(),
+                    commentsRes.json(),
+                ]);
 
             const totalRevenue = recentCarts.carts.reduce(
                 (sum: number, cart: { total: number }) => sum + cart.total,
@@ -93,14 +104,14 @@ export function DashboardOverview() {
 
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
             setRevenueData(
-                months.map(name => ({
+                months.map((name) => ({
                     name,
                     value: Math.floor(Math.random() * 50000) + 20000,
                 }))
             );
 
             setOrdersData(
-                months.map(name => ({
+                months.map((name) => ({
                     name,
                     online: Math.floor(Math.random() * 300) + 100,
                     offline: Math.floor(Math.random() * 200) + 50,
@@ -129,7 +140,6 @@ export function DashboardOverview() {
 
             setTodos(todosData.todos);
             setComments(commentsData.comments);
-
         } catch (error) {
             console.error('Error loading dashboard data:', error);
         } finally {
@@ -144,9 +154,11 @@ export function DashboardOverview() {
 
     return (
         <>
-            <Breadcrumb items={[{ label: t('menu.dashboard'), href: '#' }, { label: t('menu.overview') }]} />
+            <Breadcrumb
+                items={[{ label: t('menu.dashboard'), href: '#' }, { label: t('menu.overview') }]}
+            />
 
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6 flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('dashboard.title')}
                 </h1>
@@ -156,7 +168,9 @@ export function DashboardOverview() {
                     className="font-medium"
                     color="primary"
                     radius="full"
-                    startContent={<ArrowPathIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />}
+                    startContent={
+                        <ArrowPathIcon className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+                    }
                 >
                     {t('common.refresh')}
                 </Button>
@@ -170,7 +184,7 @@ export function DashboardOverview() {
                 ))}
             </div>
 
-            <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
                 <QuickActions />
                 <TodoListWidget todos={todos} />
                 <PerformanceMetrics metrics={performanceMetrics} />
@@ -181,7 +195,7 @@ export function DashboardOverview() {
                 <OrdersChart data={ordersData} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2">
                     <ActivityTimeline activities={activities} />
                 </div>

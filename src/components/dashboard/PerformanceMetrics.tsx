@@ -19,9 +19,9 @@ export function PerformanceMetrics({ metrics }: PerformanceMetricsProps) {
     const { t } = useTranslation();
 
     return (
-        <div className="rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-6 flex items-center">
-                <PresentationChartLineIcon className="w-5 h-5 mr-2 text-purple-500" />
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <h3 className="mb-6 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
+                <PresentationChartLineIcon className="mr-2 h-5 w-5 text-purple-500" />
                 {t('dashboard.performanceMetrics')}
             </h3>
             <div className="space-y-5">
@@ -29,7 +29,7 @@ export function PerformanceMetrics({ metrics }: PerformanceMetricsProps) {
                     const colors = colorClasses[metric.color] || colorClasses.blue;
                     return (
                         <div key={index}>
-                            <div className="flex justify-between items-center mb-2">
+                            <div className="mb-2 flex items-center justify-between">
                                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {metric.name}
                                 </span>
@@ -37,7 +37,7 @@ export function PerformanceMetrics({ metrics }: PerformanceMetricsProps) {
                                     {metric.value}%
                                 </span>
                             </div>
-                            <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                            <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-600">
                                 <div
                                     className={`h-2 rounded-full transition-all duration-500 ${colors.bg}`}
                                     style={{ width: `${metric.value}%` }}

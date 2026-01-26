@@ -14,7 +14,14 @@ import {
     Select,
     SelectItem,
 } from '@heroui/react';
-import { MagnifyingGlassIcon, ArrowPathIcon, PencilIcon, TrashIcon, EyeIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+    MagnifyingGlassIcon,
+    ArrowPathIcon,
+    PencilIcon,
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+} from '@heroicons/react/24/outline';
 import { Breadcrumb } from '@/components/layout';
 
 interface Product {
@@ -143,7 +150,7 @@ export function ProductsPage() {
             <Breadcrumb items={[{ label: t('menu.products') }]} />
 
             {/* Header */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('pages.productsList')}
                 </h1>
@@ -152,7 +159,7 @@ export function ProductsPage() {
                         color="primary"
                         className="font-medium"
                         radius="full"
-                        startContent={<PlusIcon className="w-4 h-4" />}
+                        startContent={<PlusIcon className="h-4 w-4" />}
                     >
                         Add Product
                     </Button>
@@ -162,7 +169,7 @@ export function ProductsPage() {
                         isLoading={loading}
                         className="font-medium"
                         radius="full"
-                        startContent={!loading && <ArrowPathIcon className="w-4 h-4" />}
+                        startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
                     >
                         {t('common.refresh')}
                     </Button>
@@ -170,19 +177,20 @@ export function ProductsPage() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row dark:border-gray-700 dark:bg-gray-800">
                 <Input
                     isClearable
                     className="w-full sm:max-w-xs"
                     placeholder={t('common.search') + '...'}
-                    startContent={<MagnifyingGlassIcon className="w-4 h-4 text-gray-400" />}
+                    startContent={<MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />}
                     value={search}
                     onClear={() => handleSearchChange('')}
                     onValueChange={handleSearchChange}
                     variant="bordered"
                     radius="full"
                     classNames={{
-                        inputWrapper: "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1",
+                        inputWrapper:
+                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
                     }}
                 />
                 <Select
@@ -193,7 +201,8 @@ export function ProductsPage() {
                     variant="bordered"
                     radius="full"
                     classNames={{
-                        trigger: "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1",
+                        trigger:
+                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
                     }}
                 >
                     {categories.map((cat) => (
@@ -201,21 +210,24 @@ export function ProductsPage() {
                     ))}
                 </Select>
                 <Select
-                    className="w-full sm:max-w-[140px]"
+                    className="w-full sm:max-w-35"
                     selectedKeys={[String(rowsPerPage)]}
                     onSelectionChange={(keys) => handleRowsPerPageChange(keys as Set<string>)}
                     variant="bordered"
                     radius="full"
                     classNames={{
-                        trigger: "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1",
+                        trigger:
+                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
                     }}
                 >
                     {rowsPerPageOptions.map((opt) => (
                         <SelectItem key={opt.key}>{opt.label}</SelectItem>
                     ))}
                 </Select>
-                <div className="flex-1 text-right text-sm text-gray-500 dark:text-gray-400 self-center hidden sm:block">
-                    Total: <span className="font-semibold text-gray-800 dark:text-gray-200">{total}</span> products
+                <div className="hidden flex-1 self-center text-right text-sm text-gray-500 sm:block dark:text-gray-400">
+                    Total:{' '}
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{total}</span>{' '}
+                    products
                 </div>
             </div>
 
@@ -224,15 +236,17 @@ export function ProductsPage() {
                 aria-label="Products table"
                 isStriped
                 classNames={{
-                    wrapper: 'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
+                    wrapper:
+                        'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
                     th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 font-semibold',
                     td: 'data-[striped=true]:bg-gray-50/50 dark:data-[striped=true]:bg-gray-800/50',
                 }}
                 bottomContent={
                     totalPages > 0 && (
-                        <div className="flex justify-between items-center px-4 py-4 border-t border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center justify-between border-t border-gray-100 px-4 py-4 dark:border-gray-700">
                             <span className="text-sm text-gray-500 dark:text-gray-400">
-                                Showing {(page - 1) * rowsPerPage + 1} - {Math.min(page * rowsPerPage, total)} of {total}
+                                Showing {(page - 1) * rowsPerPage + 1} -{' '}
+                                {Math.min(page * rowsPerPage, total)} of {total}
                             </span>
                             <Pagination
                                 isCompact
@@ -253,50 +267,61 @@ export function ProductsPage() {
                 <TableHeader>
                     <TableColumn width={60}>ID</TableColumn>
                     <TableColumn>PRODUCT</TableColumn>
-                    <TableColumn width={120}>CATEGORY</TableColumn>
-                    <TableColumn width={100}>BRAND</TableColumn>
-                    <TableColumn width={100}>PRICE</TableColumn>
-                    <TableColumn width={80}>STOCK</TableColumn>
-                    <TableColumn width={80}>RATING</TableColumn>
-                    <TableColumn width={120} align="center">ACTIONS</TableColumn>
+                    <TableColumn>CATEGORY</TableColumn>
+                    <TableColumn>BRAND</TableColumn>
+                    <TableColumn>PRICE</TableColumn>
+                    <TableColumn>STOCK</TableColumn>
+                    <TableColumn>RATING</TableColumn>
+                    <TableColumn align="center">ACTIONS</TableColumn>
                 </TableHeader>
                 <TableBody
                     items={products}
                     isLoading={loading}
-                    loadingContent={<ArrowPathIcon className="w-8 h-8 animate-spin text-blue-600" />}
+                    loadingContent={
+                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
+                    }
                     emptyContent="No products found"
                 >
                     {(product) => (
                         <TableRow key={product.id}>
                             <TableCell>
-                                <span className="text-gray-500 dark:text-gray-400">#{product.id}</span>
+                                <span className="text-gray-500 dark:text-gray-400">
+                                    #{product.id}
+                                </span>
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex-shrink-0 overflow-hidden border border-gray-200 dark:border-gray-600">
+                                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700">
                                         <img
                                             src={product.thumbnail}
                                             alt={product.title}
-                                            className="w-full h-full object-cover"
+                                            className="h-full w-full object-cover"
                                         />
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="font-medium text-gray-800 dark:text-gray-200 truncate max-w-[200px]">
+                                        <p className="max-w-50 truncate font-medium text-gray-800 dark:text-gray-200">
                                             {product.title}
                                         </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px]">
+                                        <p className="max-w-50 truncate text-xs text-gray-500 dark:text-gray-400">
                                             {product.brand}
                                         </p>
                                     </div>
                                 </div>
                             </TableCell>
                             <TableCell>
-                                <Chip size="sm" variant="flat" color="primary" className="capitalize">
+                                <Chip
+                                    size="sm"
+                                    variant="flat"
+                                    color="primary"
+                                    className="capitalize"
+                                >
                                     {product.category}
                                 </Chip>
                             </TableCell>
                             <TableCell>
-                                <span className="text-gray-600 dark:text-gray-300 text-sm">{product.brand || '-'}</span>
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                    {product.brand || '-'}
+                                </span>
                             </TableCell>
                             <TableCell>
                                 <div className="flex flex-col">
@@ -304,7 +329,9 @@ export function ProductsPage() {
                                         ${product.price.toFixed(2)}
                                     </span>
                                     {product.discountPercentage > 10 && (
-                                        <span className="text-xs text-red-500">-{Math.round(product.discountPercentage)}%</span>
+                                        <span className="text-xs text-red-500">
+                                            -{Math.round(product.discountPercentage)}%
+                                        </span>
                                     )}
                                 </div>
                             </TableCell>
@@ -314,21 +341,42 @@ export function ProductsPage() {
                                 </Chip>
                             </TableCell>
                             <TableCell>
-                                <div className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/20 px-2 py-0.5 rounded-full w-fit">
-                                    <span className="text-yellow-500 text-xs">★</span>
-                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{product.rating.toFixed(1)}</span>
+                                <div className="flex w-fit items-center gap-1 rounded-full bg-yellow-50 px-2 py-0.5 dark:bg-yellow-900/20">
+                                    <span className="text-xs text-yellow-500">★</span>
+                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {product.rating.toFixed(1)}
+                                    </span>
                                 </div>
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center justify-center gap-1">
-                                    <Button isIconOnly size="sm" variant="light" aria-label="View" radius="full">
-                                        <EyeIcon className="w-4 h-4 text-gray-500" />
+                                    <Button
+                                        isIconOnly
+                                        size="sm"
+                                        variant="light"
+                                        aria-label="View"
+                                        radius="full"
+                                    >
+                                        <EyeIcon className="h-4 w-4 text-gray-500" />
                                     </Button>
-                                    <Button isIconOnly size="sm" variant="light" aria-label="Edit" radius="full">
-                                        <PencilIcon className="w-4 h-4 text-blue-500" />
+                                    <Button
+                                        isIconOnly
+                                        size="sm"
+                                        variant="light"
+                                        aria-label="Edit"
+                                        radius="full"
+                                    >
+                                        <PencilIcon className="h-4 w-4 text-blue-500" />
                                     </Button>
-                                    <Button isIconOnly size="sm" variant="light" color="danger" aria-label="Delete" radius="full">
-                                        <TrashIcon className="w-4 h-4 text-red-500" />
+                                    <Button
+                                        isIconOnly
+                                        size="sm"
+                                        variant="light"
+                                        color="danger"
+                                        aria-label="Delete"
+                                        radius="full"
+                                    >
+                                        <TrashIcon className="h-4 w-4 text-red-500" />
                                     </Button>
                                 </div>
                             </TableCell>

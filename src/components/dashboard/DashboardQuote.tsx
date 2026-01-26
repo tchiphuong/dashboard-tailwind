@@ -27,19 +27,21 @@ export function DashboardQuote() {
     }, []);
 
     return (
-        <div className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 p-6 shadow-lg text-white mb-6 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="relative mb-6 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white shadow-lg">
+            <div className="relative z-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
                 <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2 opacity-80">
-                        <ChatBubbleBottomCenterTextIcon className="w-5 h-5" />
-                        <span className="text-sm font-medium uppercase tracking-wider">{t('widgets.inspiration')}</span>
+                    <div className="mb-2 flex items-center gap-2 opacity-80">
+                        <ChatBubbleBottomCenterTextIcon className="h-5 w-5" />
+                        <span className="text-sm font-medium tracking-wider uppercase">
+                            {t('widgets.inspiration')}
+                        </span>
                     </div>
                     {loading ? (
-                        <div className="h-16 animate-pulse bg-white/20 rounded-lg w-full max-w-2xl" />
+                        <div className="h-16 w-full max-w-2xl animate-pulse rounded-lg bg-white/20" />
                     ) : (
                         quote && (
                             <>
-                                <p className="text-xl md:text-2xl font-serif italic leading-relaxed mb-2">
+                                <p className="mb-2 font-serif text-xl leading-relaxed italic md:text-2xl">
                                     "{quote.quote}"
                                 </p>
                                 <p className="font-medium opacity-90">— {quote.author}</p>
@@ -55,12 +57,12 @@ export function DashboardQuote() {
                     onPress={loadQuote}
                     isLoading={loading}
                 >
-                    <ArrowPathIcon className="w-5 h-5" />
+                    <ArrowPathIcon className="h-5 w-5" />
                 </Button>
             </div>
 
             {/* Background decoration */}
-            <ChatBubbleBottomCenterTextIcon className="absolute -bottom-4 -right-4 w-32 h-32 text-white opacity-10 rotate-12" />
+            <ChatBubbleBottomCenterTextIcon className="absolute -right-4 -bottom-4 h-32 w-32 rotate-12 text-white opacity-10" />
         </div>
     );
 }

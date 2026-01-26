@@ -15,7 +15,10 @@
             "signOut": "Sign out",
             "markAllAsRead": "Mark all as read",
             "notifications": "Notifications",
-            "unreadNotifications": "You have {{count}} unread notifications"
+            "unreadNotifications": "You have {{count}} unread notifications",
+            "favorites": "Favorites",
+            "noResults": "No results found",
+            "close": "Close"
         },
         "menu": {
             "dashboard": "Dashboard",
@@ -39,7 +42,12 @@
             "todos": "Todos",
             "comments": "Comments",
             "quotes": "Quotes",
-            "settings": "Settings"
+            "settings": "Settings",
+            "approvals": "Approvals",
+            "submitRequest": "Submit Request",
+            "approve": "Approve",
+            "pending": "Pending",
+            "history": "History"
         },
         "dashboard": {
             "title": "Dashboard Overview",
@@ -146,6 +154,45 @@
             },
             "save": "Save Changes",
             "cancel": "Cancel"
+        },
+        "approvals": {
+            "submitDescription": "Submit a new request for approval",
+            "approveDescription": "Review and approve pending requests",
+            "pendingDescription": "Requests waiting for approval",
+            "historyDescription": "View past approval decisions",
+            "newRequest": "New Request",
+            "requestType": "Request Type",
+            "selectType": "Select a request type",
+            "title": "Title",
+            "titlePlaceholder": "Enter a brief title for your request",
+            "description": "Description",
+            "descriptionPlaceholder": "Provide details about your request",
+            "submitSuccess": "Request submitted successfully!",
+            "requester": "Requester",
+            "type": "Type",
+            "date": "Date",
+            "actions": "Actions",
+            "approver": "Approver",
+            "status": "Status",
+            "processedAt": "Processed At",
+            "noPending": "No pending requests",
+            "noHistory": "No history found",
+            "viewRequest": "View Request",
+            "confirmApprove": "Confirm Approval",
+            "confirmReject": "Confirm Rejection",
+            "comment": "Comment",
+            "commentPlaceholder": "Add a comment (optional)",
+            "reject": "Reject",
+            "statusPending": "Pending",
+            "statusApproved": "Approved",
+            "statusRejected": "Rejected",
+            "types": {
+                "leave": "Leave",
+                "expense": "Expense",
+                "purchase": "Purchase",
+                "travel": "Travel",
+                "overtime": "Overtime"
+            }
         }
     }
 }

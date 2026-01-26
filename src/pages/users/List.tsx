@@ -22,7 +22,14 @@ import {
     useDisclosure,
     Form,
 } from '@heroui/react';
-import { MagnifyingGlassIcon, ArrowPathIcon, PencilIcon, TrashIcon, EyeIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+    MagnifyingGlassIcon,
+    ArrowPathIcon,
+    PencilIcon,
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+} from '@heroicons/react/24/outline';
 import { Breadcrumb } from '@/components/layout';
 
 interface User {
@@ -126,7 +133,7 @@ export function UsersList() {
             role: 'user',
             image: `https://i.pravatar.cc/150?u=${Date.now()}`,
             company: { name: 'Acme Inc', department: 'Engineering', title: 'Developer' },
-            address: { city: 'New York', country: 'USA' }
+            address: { city: 'New York', country: 'USA' },
         });
         setFormErrors({});
         onOpen();
@@ -150,10 +157,10 @@ export function UsersList() {
 
         // Simple validation
         const errors: { [key: string]: string } = {};
-        if (!formData.firstName) errors.firstName = "First name is required";
-        if (!formData.lastName) errors.lastName = "Last name is required";
-        if (!formData.email) errors.email = "Email is required";
-        if (!formData.username) errors.username = "Username is required";
+        if (!formData.firstName) errors.firstName = 'First name is required';
+        if (!formData.lastName) errors.lastName = 'Last name is required';
+        if (!formData.email) errors.email = 'Email is required';
+        if (!formData.username) errors.username = 'Username is required';
 
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
@@ -164,7 +171,7 @@ export function UsersList() {
 
         try {
             // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             if (modalMode === 'create') {
                 const newUser = {
@@ -174,9 +181,13 @@ export function UsersList() {
 
                 // Optimistic update
                 setUsers([newUser, ...users]);
-                setTotal(prev => prev + 1);
+                setTotal((prev) => prev + 1);
             } else {
-                setUsers(users.map(u => u.id === selectedUser?.id ? { ...u, ...formData } as User : u));
+                setUsers(
+                    users.map((u) =>
+                        u.id === selectedUser?.id ? ({ ...u, ...formData } as User) : u
+                    )
+                );
             }
 
             onOpenChange(); // Close modal
@@ -193,11 +204,11 @@ export function UsersList() {
         setActionLoading(true);
         try {
             // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             // Optimistic update
-            setUsers(users.filter(u => u.id !== selectedUser.id));
-            setTotal(prev => prev - 1);
+            setUsers(users.filter((u) => u.id !== selectedUser.id));
+            setTotal((prev) => prev - 1);
             setIsDeleteOpen(false);
         } catch (error) {
             console.error('Error deleting user:', error);
@@ -210,9 +221,12 @@ export function UsersList() {
 
     const getRoleColor = (role: string): 'primary' | 'success' | 'warning' | 'danger' => {
         switch (role?.toLowerCase()) {
-            case 'admin': return 'danger';
-            case 'moderator': return 'warning';
-            default: return 'primary';
+            case 'admin':
+                return 'danger';
+            case 'moderator':
+                return 'warning';
+            default:
+                return 'primary';
         }
     };
 
@@ -221,7 +235,7 @@ export function UsersList() {
             <Breadcrumb items={[{ label: t('menu.users') }]} />
 
             {/* Header */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('pages.usersList')}
                 </h1>
@@ -229,7 +243,7 @@ export function UsersList() {
                     <Button
                         color="primary"
                         onPress={handleAdd}
-                        startContent={<PlusIcon className="w-4 h-4" />}
+                        startContent={<PlusIcon className="h-4 w-4" />}
                         radius="full"
                         className="font-medium"
                     >
@@ -237,7 +251,9 @@ export function UsersList() {
                     </Button>
                     <Button
                         variant="bordered"
-                        startContent={<ArrowPathIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />}
+                        startContent={
+                            <ArrowPathIcon className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+                        }
                         onPress={loadUsers}
                         isLoading={loading}
                         radius="full"
@@ -249,12 +265,12 @@ export function UsersList() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row">
                 <Input
                     isClearable
                     className="w-full sm:max-w-xs"
                     placeholder={t('common.search') + '...'}
-                    startContent={<MagnifyingGlassIcon className="w-4 h-4 text-gray-400" />}
+                    startContent={<MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />}
                     value={search}
                     onClear={() => handleSearchChange('')}
                     onValueChange={handleSearchChange}
@@ -272,7 +288,7 @@ export function UsersList() {
                         <SelectItem key={opt.key}>{opt.label}</SelectItem>
                     ))}
                 </Select>
-                <div className="flex-1 text-right text-sm text-gray-500 dark:text-gray-400 self-center">
+                <div className="flex-1 self-center text-right text-sm text-gray-500 dark:text-gray-400">
                     Total: <strong>{total}</strong> users
                 </div>
             </div>
@@ -287,9 +303,10 @@ export function UsersList() {
                 }}
                 bottomContent={
                     totalPages > 0 && (
-                        <div className="flex justify-between items-center px-2 py-2">
+                        <div className="flex items-center justify-between px-2 py-2">
                             <span className="text-sm text-gray-500 dark:text-gray-400">
-                                Showing {(page - 1) * rowsPerPage + 1} - {Math.min(page * rowsPerPage, total)} of {total}
+                                Showing {(page - 1) * rowsPerPage + 1} -{' '}
+                                {Math.min(page * rowsPerPage, total)} of {total}
                             </span>
                             <Pagination
                                 isCompact
@@ -319,7 +336,9 @@ export function UsersList() {
                 <TableBody
                     items={users}
                     isLoading={loading}
-                    loadingContent={<ArrowPathIcon className="w-8 h-8 animate-spin text-blue-600" />}
+                    loadingContent={
+                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
+                    }
                     emptyContent="No users found"
                 >
                     {(user) => (
@@ -329,7 +348,12 @@ export function UsersList() {
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-3">
-                                    <Avatar src={user.image} alt={user.firstName} size="sm" isBordered />
+                                    <Avatar
+                                        src={user.image}
+                                        alt={user.firstName}
+                                        size="sm"
+                                        isBordered
+                                    />
                                     <div className="min-w-0">
                                         <p className="font-medium text-gray-800 dark:text-gray-200">
                                             {user.firstName} {user.lastName}
@@ -341,12 +365,14 @@ export function UsersList() {
                                 </div>
                             </TableCell>
                             <TableCell>
-                                <span className="text-sm text-gray-600 dark:text-gray-300 truncate max-w-[140px] block">
+                                <span className="block max-w-[140px] truncate text-sm text-gray-600 dark:text-gray-300">
                                     {user.email}
                                 </span>
                             </TableCell>
                             <TableCell>
-                                <span className="text-sm text-gray-600 dark:text-gray-300">{user.phone}</span>
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                    {user.phone}
+                                </span>
                             </TableCell>
                             <TableCell>
                                 <Chip size="sm" variant="flat" color={getRoleColor(user.role)}>
@@ -355,7 +381,7 @@ export function UsersList() {
                             </TableCell>
                             <TableCell>
                                 <div className="min-w-0">
-                                    <p className="text-sm text-gray-800 dark:text-gray-200 truncate max-w-[150px]">
+                                    <p className="max-w-[150px] truncate text-sm text-gray-800 dark:text-gray-200">
                                         {user.company?.name || 'N/A'}
                                     </p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -370,8 +396,14 @@ export function UsersList() {
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-1">
-                                    <Button isIconOnly size="sm" variant="light" radius="full" aria-label="View">
-                                        <EyeIcon className="w-4 h-4 text-gray-500" />
+                                    <Button
+                                        isIconOnly
+                                        size="sm"
+                                        variant="light"
+                                        radius="full"
+                                        aria-label="View"
+                                    >
+                                        <EyeIcon className="h-4 w-4 text-gray-500" />
                                     </Button>
                                     <Button
                                         isIconOnly
@@ -381,7 +413,7 @@ export function UsersList() {
                                         aria-label="Edit"
                                         onPress={() => handleEdit(user)}
                                     >
-                                        <PencilIcon className="w-4 h-4 text-blue-500" />
+                                        <PencilIcon className="h-4 w-4 text-blue-500" />
                                     </Button>
                                     <Button
                                         isIconOnly
@@ -392,7 +424,7 @@ export function UsersList() {
                                         aria-label="Delete"
                                         onPress={() => handleDeleteClick(user)}
                                     >
-                                        <TrashIcon className="w-4 h-4 text-red-500" />
+                                        <TrashIcon className="h-4 w-4 text-red-500" />
                                     </Button>
                                 </div>
                             </TableCell>
@@ -407,7 +439,7 @@ export function UsersList() {
                 onOpenChange={onOpenChange}
                 placement="center"
                 classNames={{
-                    base: "rounded-2xl"
+                    base: 'rounded-2xl',
                 }}
             >
                 <ModalContent>
@@ -423,7 +455,9 @@ export function UsersList() {
                                         label={t('users.form.firstName')}
                                         placeholder="Enter first name"
                                         value={formData.firstName || ''}
-                                        onValueChange={(val) => setFormData({ ...formData, firstName: val })}
+                                        onValueChange={(val) =>
+                                            setFormData({ ...formData, firstName: val })
+                                        }
                                         errorMessage={formErrors.firstName}
                                         isInvalid={!!formErrors.firstName}
                                         radius="full"
@@ -434,7 +468,9 @@ export function UsersList() {
                                         label={t('users.form.lastName')}
                                         placeholder="Enter last name"
                                         value={formData.lastName || ''}
-                                        onValueChange={(val) => setFormData({ ...formData, lastName: val })}
+                                        onValueChange={(val) =>
+                                            setFormData({ ...formData, lastName: val })
+                                        }
                                         errorMessage={formErrors.lastName}
                                         isInvalid={!!formErrors.lastName}
                                         radius="full"
@@ -447,7 +483,9 @@ export function UsersList() {
                                     label={t('users.form.email')}
                                     placeholder="Enter email"
                                     value={formData.email || ''}
-                                    onValueChange={(val) => setFormData({ ...formData, email: val })}
+                                    onValueChange={(val) =>
+                                        setFormData({ ...formData, email: val })
+                                    }
                                     errorMessage={formErrors.email}
                                     isInvalid={!!formErrors.email}
                                     radius="full"
@@ -458,7 +496,9 @@ export function UsersList() {
                                     label={t('users.form.username')}
                                     placeholder="Enter username"
                                     value={formData.username || ''}
-                                    onValueChange={(val) => setFormData({ ...formData, username: val })}
+                                    onValueChange={(val) =>
+                                        setFormData({ ...formData, username: val })
+                                    }
                                     errorMessage={formErrors.username}
                                     isInvalid={!!formErrors.username}
                                     radius="full"
@@ -469,14 +509,23 @@ export function UsersList() {
                                         label={t('users.form.phone')}
                                         placeholder="Enter phone"
                                         value={formData.phone || ''}
-                                        onValueChange={(val) => setFormData({ ...formData, phone: val })}
+                                        onValueChange={(val) =>
+                                            setFormData({ ...formData, phone: val })
+                                        }
                                         radius="full"
                                         variant="bordered"
                                     />
                                     <Select
                                         label={t('users.form.role')}
-                                        defaultSelectedKeys={formData.role ? [formData.role] : ['user']}
-                                        onSelectionChange={(keys) => setFormData({ ...formData, role: Array.from(keys)[0] as string })}
+                                        defaultSelectedKeys={
+                                            formData.role ? [formData.role] : ['user']
+                                        }
+                                        onSelectionChange={(keys) =>
+                                            setFormData({
+                                                ...formData,
+                                                role: Array.from(keys)[0] as string,
+                                            })
+                                        }
                                         radius="full"
                                         variant="bordered"
                                     >
@@ -487,10 +536,20 @@ export function UsersList() {
                                 </div>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose} radius="full">
+                                <Button
+                                    color="danger"
+                                    variant="light"
+                                    onPress={onClose}
+                                    radius="full"
+                                >
                                     {t('common.cancel')}
                                 </Button>
-                                <Button color="primary" type="submit" isLoading={actionLoading} radius="full">
+                                <Button
+                                    color="primary"
+                                    type="submit"
+                                    isLoading={actionLoading}
+                                    radius="full"
+                                >
                                     {t('common.save')}
                                 </Button>
                             </ModalFooter>
@@ -505,7 +564,7 @@ export function UsersList() {
                 onOpenChange={setIsDeleteOpen}
                 placement="center"
                 classNames={{
-                    base: "rounded-2xl"
+                    base: 'rounded-2xl',
                 }}
             >
                 <ModalContent>
@@ -517,17 +576,31 @@ export function UsersList() {
                             <ModalBody>
                                 <p>{t('users.deleteConfirm')}</p>
                                 {selectedUser && (
-                                    <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-xl">
-                                        <p className="font-semibold">{selectedUser.firstName} {selectedUser.lastName}</p>
-                                        <p className="text-sm text-gray-500">{selectedUser.email}</p>
+                                    <div className="rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
+                                        <p className="font-semibold">
+                                            {selectedUser.firstName} {selectedUser.lastName}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            {selectedUser.email}
+                                        </p>
                                     </div>
                                 )}
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="default" variant="light" onPress={onClose} radius="full">
+                                <Button
+                                    color="default"
+                                    variant="light"
+                                    onPress={onClose}
+                                    radius="full"
+                                >
                                     {t('common.cancel')}
                                 </Button>
-                                <Button color="danger" onPress={handleConfirmDelete} isLoading={actionLoading} radius="full">
+                                <Button
+                                    color="danger"
+                                    onPress={handleConfirmDelete}
+                                    isLoading={actionLoading}
+                                    radius="full"
+                                >
                                     {t('common.delete')}
                                 </Button>
                             </ModalFooter>
