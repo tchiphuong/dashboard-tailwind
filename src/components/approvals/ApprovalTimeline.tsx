@@ -1,11 +1,5 @@
 import { User } from '@heroui/react';
-import {
-    CheckCircleIcon,
-    XCircleIcon,
-    ClockIcon,
-    PaperAirplaneIcon,
-} from '@heroicons/react/24/solid';
-import { useTranslation } from 'react-i18next';
+import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
 
 export interface TimelineStep {
     id: number;
@@ -29,7 +23,6 @@ interface ApprovalTimelineProps {
 import { useDateFormatter } from '@/hooks/useDateFormatter';
 
 export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineProps) {
-    const { t } = useTranslation();
     const { formatDate } = useDateFormatter();
 
     const getIcon = (status: TimelineStep['status']) => {

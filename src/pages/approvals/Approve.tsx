@@ -18,8 +18,6 @@ import {
     ModalFooter,
     Textarea,
     useDisclosure,
-    Tab,
-    Tabs,
     Tooltip,
 } from '@heroui/react';
 import { ArrowPathIcon, CheckIcon, XMarkIcon, EyeIcon } from '@heroicons/react/24/outline';

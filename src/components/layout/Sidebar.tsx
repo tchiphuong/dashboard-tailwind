@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     ChevronDownIcon,
-    LanguageIcon,
     HomeIcon,
     FolderOpenIcon,
     UsersIcon,
