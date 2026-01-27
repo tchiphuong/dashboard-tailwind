@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -17,13 +17,56 @@ import {
     StarIcon,
     XMarkIcon,
     ClipboardDocumentCheckIcon,
+    ArchiveBoxIcon,
+    UserGroupIcon,
+    ClockIcon,
+    BanknotesIcon,
+    CalendarDaysIcon,
+    BriefcaseIcon,
+    AcademicCapIcon,
+    ShoppingCartIcon,
+    BuildingStorefrontIcon,
+    TruckIcon,
+    HeartIcon,
+    MegaphoneIcon,
+    CalculatorIcon,
+    WrenchScrewdriverIcon,
+    DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
-import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
+import {
+    StarIcon as StarIconSolid,
+    HomeIcon as HomeIconSolid,
+    FolderOpenIcon as FolderOpenIconSolid,
+    UsersIcon as UsersIconSolid,
+    CubeIcon as CubeIconSolid,
+    DocumentTextIcon as DocumentTextIconSolid,
+    CurrencyDollarIcon as CurrencyDollarIconSolid,
+    Cog6ToothIcon as Cog6ToothIconSolid,
+    CheckCircleIcon as CheckCircleIconSolid,
+    ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid,
+    ChatBubbleBottomCenterTextIcon as ChatBubbleBottomCenterTextIconSolid,
+    ClipboardDocumentCheckIcon as ClipboardDocumentCheckIconSolid,
+    ArchiveBoxIcon as ArchiveBoxIconSolid,
+    UserGroupIcon as UserGroupIconSolid,
+    ClockIcon as ClockIconSolid,
+    BanknotesIcon as BanknotesIconSolid,
+    CalendarDaysIcon as CalendarDaysIconSolid,
+    BriefcaseIcon as BriefcaseIconSolid,
+    AcademicCapIcon as AcademicCapIconSolid,
+    ShoppingCartIcon as ShoppingCartIconSolid,
+    BuildingStorefrontIcon as BuildingStorefrontIconSolid,
+    TruckIcon as TruckIconSolid,
+    HeartIcon as HeartIconSolid,
+    MegaphoneIcon as MegaphoneIconSolid,
+    CalculatorIcon as CalculatorIconSolid,
+    WrenchScrewdriverIcon as WrenchScrewdriverIconSolid,
+    DocumentDuplicateIcon as DocumentDuplicateIconSolid,
+} from '@heroicons/react/24/solid';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { MenuItem } from '@/types';
 
-// Icon mapping
-const iconComponents: Record<string, React.ComponentType<{ className?: string }>> = {
+// Icon mapping - outline versions
+const iconComponentsOutline: Record<string, React.ComponentType<{ className?: string }>> = {
     'fa-tachometer-alt': HomeIcon,
     'fa-folder-open': FolderOpenIcon,
     'fa-users': UsersIcon,
@@ -35,27 +78,76 @@ const iconComponents: Record<string, React.ComponentType<{ className?: string }>
     'fa-comments': ChatBubbleLeftRightIcon,
     'fa-quote-left': ChatBubbleBottomCenterTextIcon,
     'fa-clipboard-check': ClipboardDocumentCheckIcon,
+    'fa-archive': ArchiveBoxIcon,
+    'fa-user-group': UserGroupIcon,
+    'fa-clock': ClockIcon,
+    'fa-banknotes': BanknotesIcon,
+    'fa-calendar': CalendarDaysIcon,
+    'fa-briefcase': BriefcaseIcon,
+    'fa-graduation-cap': AcademicCapIcon,
+    'fa-shopping-cart': ShoppingCartIcon,
+    'fa-store': BuildingStorefrontIcon,
+    'fa-truck': TruckIcon,
+    'fa-heart': HeartIcon,
+    'fa-megaphone': MegaphoneIcon,
+    'fa-calculator': CalculatorIcon,
+    'fa-wrench': WrenchScrewdriverIcon,
+    'fa-copy': DocumentDuplicateIcon,
 };
 
-// Menu data with translation keys
+// Icon mapping - solid versions (for active state)
+const iconComponentsSolid: Record<string, React.ComponentType<{ className?: string }>> = {
+    'fa-tachometer-alt': HomeIconSolid,
+    'fa-folder-open': FolderOpenIconSolid,
+    'fa-users': UsersIconSolid,
+    'fa-box': CubeIconSolid,
+    'fa-file-alt': DocumentTextIconSolid,
+    'fa-dollar-sign': CurrencyDollarIconSolid,
+    'fa-cogs': Cog6ToothIconSolid,
+    'fa-check-square': CheckCircleIconSolid,
+    'fa-comments': ChatBubbleLeftRightIconSolid,
+    'fa-quote-left': ChatBubbleBottomCenterTextIconSolid,
+    'fa-clipboard-check': ClipboardDocumentCheckIconSolid,
+    'fa-archive': ArchiveBoxIconSolid,
+    'fa-user-group': UserGroupIconSolid,
+    'fa-clock': ClockIconSolid,
+    'fa-banknotes': BanknotesIconSolid,
+    'fa-calendar': CalendarDaysIconSolid,
+    'fa-briefcase': BriefcaseIconSolid,
+    'fa-graduation-cap': AcademicCapIconSolid,
+    'fa-shopping-cart': ShoppingCartIconSolid,
+    'fa-store': BuildingStorefrontIconSolid,
+    'fa-truck': TruckIconSolid,
+    'fa-heart': HeartIconSolid,
+    'fa-megaphone': MegaphoneIconSolid,
+    'fa-calculator': CalculatorIconSolid,
+    'fa-wrench': WrenchScrewdriverIconSolid,
+    'fa-copy': DocumentDuplicateIconSolid,
+};
+
+// Menu data with translation keys - organized by groups
 const menuData: MenuItem[] = [
+    // MAIN
     {
         id: 'dashboard',
         title: 'menu.dashboard',
         icon: 'fa-tachometer-alt',
         shortcut: '1',
         description: 'View analytics and system overview',
+        group: 'main',
         children: [
             { title: 'menu.overview', link: '/dashboard' },
             { title: 'menu.analytics', link: '/dashboard/analytics' },
         ],
     },
+    // MANAGEMENT
     {
         id: 'projects',
         title: 'menu.projects',
         icon: 'fa-folder-open',
         shortcut: '2',
         description: 'Manage your projects',
+        group: 'management',
         children: [
             { title: 'menu.list', link: '/projects' },
             { title: 'menu.createNew', link: '/projects/new' },
@@ -67,6 +159,7 @@ const menuData: MenuItem[] = [
         icon: 'fa-users',
         shortcut: '3',
         description: 'User management and roles',
+        group: 'management',
         children: [
             { title: 'menu.list', link: '/users' },
             { title: 'menu.roles', link: '/users/roles' },
@@ -78,42 +171,349 @@ const menuData: MenuItem[] = [
         icon: 'fa-box',
         shortcut: '4',
         description: 'Product catalog management',
+        group: 'management',
         link: '/products',
     },
+    {
+        id: 'assets',
+        title: 'menu.assets',
+        icon: 'fa-archive',
+        shortcut: '7',
+        description: 'Asset management system',
+        group: 'management',
+        children: [
+            { title: 'menu.assetList', link: '/assets' },
+            { title: 'menu.requests', link: '/assets/requests' },
+        ],
+    },
+    // HR - Human Resources
+    {
+        id: 'employees',
+        title: 'menu.employees',
+        icon: 'fa-user-group',
+        description: 'Employee management',
+        group: 'hr',
+        children: [
+            { title: 'menu.employeeList', link: '/hr/employees' },
+            { title: 'menu.orgChart', link: '/hr/org-chart' },
+        ],
+    },
+    {
+        id: 'attendance',
+        title: 'menu.attendance',
+        icon: 'fa-clock',
+        description: 'Time and attendance tracking',
+        group: 'hr',
+        children: [
+            { title: 'menu.checkIn', link: '/hr/attendance/check-in' },
+            { title: 'menu.attendanceHistory', link: '/hr/attendance/history' },
+        ],
+    },
+    {
+        id: 'payroll',
+        title: 'menu.payroll',
+        icon: 'fa-banknotes',
+        description: 'Payroll and salary management',
+        group: 'hr',
+        children: [
+            { title: 'menu.salarySheet', link: '/hr/payroll/salary' },
+            { title: 'menu.advances', link: '/hr/payroll/advances' },
+        ],
+    },
+    {
+        id: 'leave',
+        title: 'menu.leave',
+        icon: 'fa-calendar',
+        description: 'Leave and time-off management',
+        group: 'hr',
+        children: [
+            { title: 'menu.leaveRequest', link: '/hr/leave/request' },
+            { title: 'menu.leaveApprove', link: '/hr/leave/approve' },
+        ],
+    },
+    {
+        id: 'recruitment',
+        title: 'menu.recruitment',
+        icon: 'fa-briefcase',
+        description: 'Recruitment and hiring',
+        group: 'hr',
+        children: [
+            { title: 'menu.jobPostings', link: '/hr/recruitment/jobs' },
+            { title: 'menu.candidates', link: '/hr/recruitment/candidates' },
+        ],
+    },
+    {
+        id: 'training',
+        title: 'menu.training',
+        icon: 'fa-graduation-cap',
+        description: 'Training and development',
+        group: 'hr',
+        children: [
+            { title: 'menu.courses', link: '/hr/training/courses' },
+            { title: 'menu.myLearning', link: '/hr/training/my-learning' },
+        ],
+    },
+    // SALES
+    {
+        id: 'orders',
+        title: 'menu.orders',
+        icon: 'fa-shopping-cart',
+        description: 'Order management',
+        group: 'sales',
+        children: [
+            { title: 'menu.orderList', link: '/sales/orders' },
+            { title: 'menu.createOrder', link: '/sales/orders/new' },
+        ],
+    },
+    {
+        id: 'customers',
+        title: 'menu.customers',
+        icon: 'fa-users',
+        description: 'Customer management',
+        group: 'sales',
+        children: [
+            { title: 'menu.customerList', link: '/sales/customers' },
+            { title: 'menu.addCustomer', link: '/sales/customers/new' },
+        ],
+    },
+    {
+        id: 'salesQuotes',
+        title: 'menu.salesQuotes',
+        icon: 'fa-file-alt',
+        description: 'Sales quotes and proposals',
+        group: 'sales',
+        link: '/sales/quotes',
+    },
+    // INVENTORY
+    {
+        id: 'stock',
+        title: 'menu.stock',
+        icon: 'fa-store',
+        description: 'Stock management',
+        group: 'inventory',
+        children: [
+            { title: 'menu.stockOverview', link: '/inventory/stock' },
+            { title: 'menu.stockAdjustment', link: '/inventory/stock/adjustment' },
+        ],
+    },
+    {
+        id: 'warehouses',
+        title: 'menu.warehouses',
+        icon: 'fa-archive',
+        description: 'Warehouse management',
+        group: 'inventory',
+        link: '/inventory/warehouses',
+    },
+    {
+        id: 'transfers',
+        title: 'menu.transfers',
+        icon: 'fa-truck',
+        description: 'Stock transfers',
+        group: 'inventory',
+        link: '/inventory/transfers',
+    },
+    // PURCHASE
+    {
+        id: 'purchaseOrders',
+        title: 'menu.purchaseOrders',
+        icon: 'fa-clipboard-check',
+        description: 'Purchase order management',
+        group: 'purchase',
+        children: [
+            { title: 'menu.poList', link: '/purchase/orders' },
+            { title: 'menu.createPO', link: '/purchase/orders/new' },
+        ],
+    },
+    {
+        id: 'suppliers',
+        title: 'menu.suppliers',
+        icon: 'fa-truck',
+        description: 'Supplier management',
+        group: 'purchase',
+        link: '/purchase/suppliers',
+    },
+    {
+        id: 'receipts',
+        title: 'menu.receipts',
+        icon: 'fa-file-alt',
+        description: 'Goods receipts',
+        group: 'purchase',
+        link: '/purchase/receipts',
+    },
+    // CRM
+    {
+        id: 'leads',
+        title: 'menu.leads',
+        icon: 'fa-heart',
+        description: 'Lead management',
+        group: 'crm',
+        children: [
+            { title: 'menu.leadList', link: '/crm/leads' },
+            { title: 'menu.addLead', link: '/crm/leads/new' },
+        ],
+    },
+    {
+        id: 'opportunities',
+        title: 'menu.opportunities',
+        icon: 'fa-briefcase',
+        description: 'Sales opportunities',
+        group: 'crm',
+        link: '/crm/opportunities',
+    },
+    {
+        id: 'contacts',
+        title: 'menu.contacts',
+        icon: 'fa-user-group',
+        description: 'Contact management',
+        group: 'crm',
+        link: '/crm/contacts',
+    },
+    // MARKETING
+    {
+        id: 'campaigns',
+        title: 'menu.campaigns',
+        icon: 'fa-megaphone',
+        description: 'Marketing campaigns',
+        group: 'marketing',
+        children: [
+            { title: 'menu.campaignList', link: '/marketing/campaigns' },
+            { title: 'menu.createCampaign', link: '/marketing/campaigns/new' },
+        ],
+    },
+    {
+        id: 'emailMarketing',
+        title: 'menu.emailMarketing',
+        icon: 'fa-file-alt',
+        description: 'Email marketing',
+        group: 'marketing',
+        link: '/marketing/email',
+    },
+    {
+        id: 'socialMedia',
+        title: 'menu.socialMedia',
+        icon: 'fa-comments',
+        description: 'Social media management',
+        group: 'marketing',
+        link: '/marketing/social',
+    },
+    // ACCOUNTING
+    {
+        id: 'chartOfAccounts',
+        title: 'menu.chartOfAccounts',
+        icon: 'fa-calculator',
+        description: 'Chart of accounts',
+        group: 'accounting',
+        link: '/accounting/chart',
+    },
+    {
+        id: 'journalEntries',
+        title: 'menu.journalEntries',
+        icon: 'fa-file-alt',
+        description: 'Journal entries',
+        group: 'accounting',
+        children: [
+            { title: 'menu.journalList', link: '/accounting/journal' },
+            { title: 'menu.newEntry', link: '/accounting/journal/new' },
+        ],
+    },
+    {
+        id: 'generalLedger',
+        title: 'menu.generalLedger',
+        icon: 'fa-dollar-sign',
+        description: 'General ledger',
+        group: 'accounting',
+        link: '/accounting/ledger',
+    },
+    // IT
+    {
+        id: 'tickets',
+        title: 'menu.tickets',
+        icon: 'fa-wrench',
+        description: 'IT support tickets',
+        group: 'it',
+        children: [
+            { title: 'menu.ticketList', link: '/it/tickets' },
+            { title: 'menu.newTicket', link: '/it/tickets/new' },
+        ],
+    },
+    {
+        id: 'itAssets',
+        title: 'menu.itAssets',
+        icon: 'fa-box',
+        description: 'IT asset management',
+        group: 'it',
+        link: '/it/assets',
+    },
+    {
+        id: 'knowledgeBase',
+        title: 'menu.knowledgeBase',
+        icon: 'fa-file-alt',
+        description: 'Knowledge base articles',
+        group: 'it',
+        link: '/it/knowledge',
+    },
+    // DOCUMENTS
+    {
+        id: 'files',
+        title: 'menu.files',
+        icon: 'fa-copy',
+        description: 'File management',
+        group: 'documents',
+        children: [
+            { title: 'menu.allFiles', link: '/documents/files' },
+            { title: 'menu.myFiles', link: '/documents/files/my' },
+        ],
+    },
+    {
+        id: 'templates',
+        title: 'menu.templates',
+        icon: 'fa-file-alt',
+        description: 'Document templates',
+        group: 'documents',
+        link: '/documents/templates',
+    },
+    {
+        id: 'signatures',
+        title: 'menu.signatures',
+        icon: 'fa-check-square',
+        description: 'Digital signatures',
+        group: 'documents',
+        link: '/documents/signatures',
+    },
+    // CONTENT
     {
         id: 'posts',
         title: 'menu.posts',
         icon: 'fa-file-alt',
         shortcut: '5',
         description: 'Blog posts and articles',
+        group: 'content',
         link: '/posts',
     },
     {
-        id: 'assets',
-        title: 'menu.assets',
-        icon: 'fa-box',
-        description: 'Asset management system',
-        children: [
-            { title: 'menu.assetList', link: '/assets' },
-            { title: 'menu.requests', link: '/assets/requests' },
-        ],
+        id: 'comments',
+        title: 'menu.comments',
+        icon: 'fa-comments',
+        description: 'User comments and feedback',
+        group: 'content',
+        link: '/comments',
     },
     {
-        id: 'finance',
-        title: 'menu.finance',
-        icon: 'fa-dollar-sign',
-        description: 'Financial reports and invoices',
-        children: [
-            { title: 'menu.budget', link: '/finance/budgets' },
-            { title: 'menu.invoices', link: '/finance/invoices' },
-        ],
+        id: 'quotes',
+        title: 'menu.quotes',
+        icon: 'fa-quote-left',
+        description: 'Inspirational quotes',
+        group: 'content',
+        link: '/quotes',
     },
+    // WORKFLOW
     {
         id: 'approvals',
         title: 'menu.approvals',
         icon: 'fa-clipboard-check',
         shortcut: '6',
         description: 'Approval management',
+        group: 'workflow',
         children: [
             { title: 'menu.submitRequest', link: '/approvals/submit' },
             { title: 'menu.approve', link: '/approvals/approve' },
@@ -122,33 +522,35 @@ const menuData: MenuItem[] = [
         ],
     },
     {
-        id: 'settings',
-        title: 'common.settings',
-        icon: 'fa-cogs',
-        shortcut: '0',
-        description: 'System configuration',
-        link: '/settings',
-    },
-    {
         id: 'todos',
         title: 'menu.todos',
         icon: 'fa-check-square',
         description: 'Task management',
+        group: 'workflow',
         link: '/todos',
     },
+    // REPORTS
     {
-        id: 'comments',
-        title: 'menu.comments',
-        icon: 'fa-comments',
-        description: 'User comments and feedback',
-        link: '/comments',
+        id: 'finance',
+        title: 'menu.finance',
+        icon: 'fa-dollar-sign',
+        shortcut: '8',
+        description: 'Financial reports and invoices',
+        group: 'reports',
+        children: [
+            { title: 'menu.budget', link: '/finance/budgets' },
+            { title: 'menu.invoices', link: '/finance/invoices' },
+        ],
     },
+    // SYSTEM
     {
-        id: 'quotes',
-        title: 'menu.quotes',
-        icon: 'fa-quote-left',
-        description: 'Inspirational quotes',
-        link: '/quotes',
+        id: 'settings',
+        title: 'menu.settings',
+        icon: 'fa-cogs',
+        shortcut: '0',
+        description: 'System configuration',
+        group: 'system',
+        link: '/settings',
     },
 ];
 
@@ -180,7 +582,17 @@ function SidebarMenuItem({
     const [isOpen, setIsOpen] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const hasChildren = item.children && item.children.length > 0;
-    const IconComponent = item.icon ? iconComponents[item.icon] : null;
+
+    const isActive =
+        item.link === currentPath ||
+        (hasChildren && item.children?.some((child) => child.link === currentPath));
+
+    // Use solid icon when active, outline when not
+    const IconComponent = item.icon
+        ? isActive
+            ? iconComponentsSolid[item.icon]
+            : iconComponentsOutline[item.icon]
+        : null;
 
     const handleClick = () => {
         if (hasChildren) {
@@ -189,10 +601,6 @@ function SidebarMenuItem({
             onNavigate(item.link);
         }
     };
-
-    const isActive =
-        item.link === currentPath ||
-        (hasChildren && item.children?.some((child) => child.link === currentPath));
 
     return (
         <li className="relative">
@@ -350,6 +758,22 @@ export function Sidebar() {
         });
     };
 
+    // Language dropdown ref and click-outside handler
+    const langRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (langRef.current && !langRef.current.contains(event.target as Node)) {
+                setLangOpen(false);
+            }
+        };
+        if (langOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [langOpen]);
+
     const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
     const handleNavigate = useCallback(
@@ -460,20 +884,87 @@ export function Sidebar() {
                     </div>
                 )}
 
-                {/* Regular Menu Items */}
-                <ul className="space-y-1">
-                    {regularItems.map((item, index) => (
-                        <SidebarMenuItem
-                            key={index}
-                            item={item}
-                            onNavigate={handleNavigate}
-                            currentPath={location.pathname}
-                            isFavorite={item.id ? favorites.includes(item.id) : false}
-                            onToggleFavorite={toggleFavorite}
-                            badgeCount={item.id ? badgeCounts[item.id] : undefined}
-                        />
-                    ))}
-                </ul>
+                {/* Regular Menu Items - Grouped */}
+                {(() => {
+                    // Group labels for i18n
+                    const groupLabels: Record<string, string> = {
+                        main: 'menu.group.main',
+                        management: 'menu.group.management',
+                        hr: 'menu.group.hr',
+                        sales: 'menu.group.sales',
+                        inventory: 'menu.group.inventory',
+                        purchase: 'menu.group.purchase',
+                        crm: 'menu.group.crm',
+                        marketing: 'menu.group.marketing',
+                        accounting: 'menu.group.accounting',
+                        it: 'menu.group.it',
+                        documents: 'menu.group.documents',
+                        content: 'menu.group.content',
+                        workflow: 'menu.group.workflow',
+                        reports: 'menu.group.reports',
+                        system: 'menu.group.system',
+                    };
+
+                    // Group order
+                    const groupOrder = [
+                        'main',
+                        'management',
+                        'hr',
+                        'sales',
+                        'inventory',
+                        'purchase',
+                        'crm',
+                        'marketing',
+                        'accounting',
+                        'it',
+                        'documents',
+                        'content',
+                        'workflow',
+                        'reports',
+                        'system',
+                    ];
+
+                    // Group regular items by their group
+                    const groupedItems = groupOrder.reduce(
+                        (acc, group) => {
+                            acc[group] = regularItems.filter((item) => item.group === group);
+                            return acc;
+                        },
+                        {} as Record<string, typeof regularItems>
+                    );
+
+                    return groupOrder.map((group) => {
+                        const items = groupedItems[group];
+                        if (!items || items.length === 0) return null;
+
+                        return (
+                            <div key={group} className="mb-2">
+                                {/* Group Header - Sticky */}
+                                <div className="sticky -top-4 z-10 mb-1 border-b border-gray-100 bg-white px-4 pb-1 dark:border-gray-700 dark:bg-gray-800">
+                                    <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase dark:text-gray-500">
+                                        {t(groupLabels[group]) || group.toUpperCase()}
+                                    </span>
+                                </div>
+                                {/* Group Items */}
+                                <ul className="space-y-0.5">
+                                    {items.map((item, index) => (
+                                        <SidebarMenuItem
+                                            key={`${group}-${index}`}
+                                            item={item}
+                                            onNavigate={handleNavigate}
+                                            currentPath={location.pathname}
+                                            isFavorite={
+                                                item.id ? favorites.includes(item.id) : false
+                                            }
+                                            onToggleFavorite={toggleFavorite}
+                                            badgeCount={item.id ? badgeCounts[item.id] : undefined}
+                                        />
+                                    ))}
+                                </ul>
+                            </div>
+                        );
+                    });
+                })()}
 
                 {/* No Results */}
                 {filteredMenu.length === 0 && (
@@ -483,55 +974,55 @@ export function Sidebar() {
                 )}
             </nav>
 
-            {/* Language Selector */}
-            <div className="border-t border-gray-200 p-3 dark:border-gray-700">
-                <div className="relative">
-                    <button
-                        onClick={() => setLangOpen(!langOpen)}
-                        className="flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700/50"
-                    >
-                        <span className="flex items-center gap-2">
-                            {/* <LanguageIcon className="h-5 w-5 text-gray-500" /> */}
-                            <div className="flex items-center gap-2">
-                                <img
-                                    src={currentLang.flag}
-                                    alt={currentLang.name}
-                                    className="h-6 w-6 rounded-full object-cover shadow-sm"
-                                />
-                                <span className="text-gray-700 dark:text-gray-300">
-                                    {currentLang.name}
-                                </span>
+            {/* Compact Footer: Language + Version + Copyright */}
+            <div className="border-t border-gray-200 px-3 py-2 dark:border-gray-700">
+                <div className="relative flex items-center justify-between">
+                    {/* Language Selector - Compact */}
+                    <div className="relative" ref={langRef}>
+                        <button
+                            onClick={() => setLangOpen(!langOpen)}
+                            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1 text-xs transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700/50"
+                        >
+                            <img
+                                src={currentLang.flag}
+                                alt={currentLang.name}
+                                className="h-4 w-4 rounded-full object-cover"
+                            />
+                            <ChevronDownIcon
+                                className={`h-3 w-3 text-gray-400 transition-transform ${langOpen ? 'rotate-180' : ''}`}
+                            />
+                        </button>
+                        {langOpen && (
+                            <div className="absolute bottom-full left-0 z-20 mb-2 min-w-32 overflow-hidden rounded-lg border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                                {languages
+                                    .sort((a, b) => a.name.localeCompare(b.name))
+                                    .filter((lang) => lang.code !== i18n.language)
+                                    .map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            onClick={() => changeLanguage(lang.code)}
+                                            className="flex w-full items-center gap-2.5 px-3 py-2 text-sm transition-all hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                                        >
+                                            <img
+                                                src={lang.flag}
+                                                alt={lang.name}
+                                                className="h-5 w-5 rounded-full object-cover"
+                                            />
+                                            <span className="text-gray-700 dark:text-gray-300">
+                                                {lang.name}
+                                            </span>
+                                        </button>
+                                    ))}
                             </div>
-                        </span>
-                        <ChevronDownIcon
-                            className={`h-4 w-4 text-gray-500 transition-transform ${langOpen ? 'rotate-180' : ''}`}
-                        />
-                    </button>
-                    {langOpen && (
-                        <div className="absolute bottom-full left-0 mb-2 w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-900/50">
-                            {languages
-                                .sort((a, b) => a.name.localeCompare(b.name))
-                                .filter((lang) => lang.code !== i18n.language)
-                                .map((lang) => (
-                                    <button
-                                        key={lang.code}
-                                        onClick={() => changeLanguage(lang.code)}
-                                        className={`flex w-full items-center gap-3 px-2.5 py-2.5 text-sm transition-all duration-200 ${
-                                            lang.code === i18n.language
-                                                ? 'bg-blue-50 font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
-                                                : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50'
-                                        }`}
-                                    >
-                                        <img
-                                            src={lang.flag}
-                                            alt={lang.name}
-                                            className="h-6 w-6 rounded-full object-cover shadow-sm"
-                                        />
-                                        <span>{lang.name}</span>
-                                    </button>
-                                ))}
-                        </div>
-                    )}
+                        )}
+                    </div>
+
+                    {/* Version & Copyright */}
+                    <div className="text-right text-[10px] text-gray-400 dark:text-gray-500">
+                        <span>v1.0.0</span>
+                        <span className="mx-1">•</span>
+                        <span>© 2024 Phuong Tran</span>
+                    </div>
                 </div>
             </div>
         </aside>

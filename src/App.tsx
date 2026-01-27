@@ -8,7 +8,7 @@ import { UsersList, UsersRoles } from '@/pages/users/index';
 import { PostsList } from '@/pages/posts/index';
 import { ProjectsList, ProjectsCreate } from '@/pages/projects/index';
 import { AssetsList, AssetsRequests } from '@/pages/assets/index';
-import { FinanceInvoices } from '@/pages/finance/index';
+import { FinanceInvoices, FinanceBudgets } from '@/pages/finance/index';
 import { Settings } from '@/pages/settings/index';
 import { TodosList } from '@/pages/todos';
 import { CommentsList } from '@/pages/comments';
@@ -19,6 +19,7 @@ import {
     ApprovalsPending,
     ApprovalsHistory,
 } from '@/pages/approvals';
+import { FilesList, MyFilesList } from '@/pages/documents';
 
 import { Login } from '@/pages/auth/Login';
 
@@ -47,12 +48,16 @@ function App() {
                         <Route path="assets" element={<AssetsList />} />
                         <Route path="assets/requests" element={<AssetsRequests />} />
                         {/* Finance */}
+                        <Route path="finance/budgets" element={<FinanceBudgets />} />
                         <Route path="finance/invoices" element={<FinanceInvoices />} />
                         {/* Approvals */}
                         <Route path="approvals/submit" element={<ApprovalsSubmit />} />
                         <Route path="approvals/approve" element={<ApprovalsApprove />} />
                         <Route path="approvals/pending" element={<ApprovalsPending />} />
                         <Route path="approvals/history" element={<ApprovalsHistory />} />
+                        {/* Documents */}
+                        <Route path="documents/files" element={<FilesList />} />
+                        <Route path="documents/files/my" element={<MyFilesList />} />
                         {/* Settings */}
                         <Route path="settings" element={<Settings />} />
 

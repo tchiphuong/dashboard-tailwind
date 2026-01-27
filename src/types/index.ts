@@ -1,3 +1,21 @@
+// Menu groups
+export type MenuGroup =
+    | 'main'
+    | 'management'
+    | 'hr'
+    | 'sales'
+    | 'inventory'
+    | 'purchase'
+    | 'crm'
+    | 'marketing'
+    | 'accounting'
+    | 'it'
+    | 'documents'
+    | 'content'
+    | 'workflow'
+    | 'reports'
+    | 'system';
+
 // Menu types
 export interface MenuItem {
     id?: string;
@@ -9,6 +27,7 @@ export interface MenuItem {
     badge?: number;
     shortcut?: string;
     description?: string;
+    group?: MenuGroup;
 }
 
 // Stats types
