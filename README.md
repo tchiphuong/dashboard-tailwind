@@ -29,17 +29,17 @@ Modern admin dashboard built with React, TypeScript, and Tailwind CSS 4.
 
 ## 🛠️ Tech Stack
 
-| Technology | Version | Description |
-|------------|---------|-------------|
-| React | 18.3 | UI Library |
-| TypeScript | 5.5 | Type Safety |
-| Tailwind CSS | 4.0 | Styling |
-| Vite | 5.4 | Build Tool |
-| React Router | 6.22 | Client Routing |
-| Framer Motion | 11.0 | Animations |
-| Recharts | 2.12 | Charts |
-| HeroUI | 2.7 | UI Components |
-| i18next | 24.2 | Internationalization |
+| Technology    | Version | Description          |
+| ------------- | ------- | -------------------- |
+| React         | 18.3    | UI Library           |
+| TypeScript    | 5.5     | Type Safety          |
+| Tailwind CSS  | 4.0     | Styling              |
+| Vite          | 5.4     | Build Tool           |
+| React Router  | 6.22    | Client Routing       |
+| Framer Motion | 11.0    | Animations           |
+| Recharts      | 2.12    | Charts               |
+| HeroUI        | 2.7     | UI Components        |
+| i18next       | 24.2    | Internationalization |
 
 ## 📦 Installation
 
@@ -116,10 +116,10 @@ Edit `vite.config.ts` to customize:
 
 ```typescript
 export default defineConfig(({ command }) => ({
-  // Change 'dashboard-tailwind' to your repo name for GitHub Pages
-  base: command === 'build' ? '/dashboard-tailwind/' : '/',
-  // ... other config
-}))
+    // Change 'dashboard-tailwind' to your repo name for GitHub Pages
+    base: command === 'build' ? '/dashboard-tailwind/' : '/',
+    // ... other config
+}));
 ```
 
 ### Environment Variables
@@ -133,12 +133,12 @@ VITE_APP_TITLE=Dashboard
 
 ## 📜 Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| Script            | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start development server |
+| `npm run build`   | Build for production     |
 | `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
+| `npm run lint`    | Run ESLint               |
 
 ## 🤝 Contributing
 
@@ -151,6 +151,16 @@ VITE_APP_TITLE=Dashboard
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📏 Development Guidelines
+
+Please refer to [SKILL.md](./SKILL.md) for detailed coding standards and component usage.
+
+### Key Rules
+
+1.  **Use Common Components**: Always use components from `@/components/common` (`Button`, `Input`, etc.).
+2.  **HeroUI**: Use `@heroui/react` for all UI elements.
+3.  **Page Structure**: Use `PageHeader` and avoid global padding wrappers.
 
 ## 👨‍💻 Author
 

@@ -154,8 +154,8 @@ export function PostsList() {
                 aria-label="Posts table"
                 isStriped
                 classNames={{
-                    wrapper: 'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700',
-                    th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300',
+                    wrapper: 'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700',
+                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300',
                 }}
                 bottomContent={
                     totalPages > 0 && (

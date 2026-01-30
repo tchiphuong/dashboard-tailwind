@@ -18,7 +18,13 @@
             "unreadNotifications": "Bạn có {{count}} thông báo chưa đọc",
             "favorites": "Yêu thích",
             "noResults": "Không tìm thấy kết quả",
-            "close": "Đóng"
+            "close": "Đóng",
+            "total": "Tổng cộng",
+            "showing": "Hiển thị {{from}} - {{to}} trên {{total}}",
+            "rowsPerPage": "{{count}} dòng",
+            "actions": "Thao tác",
+            "id": "ID",
+            "status": "Trạng thái"
         },
         "menu": {
             "dashboard": "Bảng điều khiển",
@@ -93,11 +99,20 @@
             "createCampaign": "Tạo chiến dịch",
             "emailMarketing": "Email Marketing",
             "socialMedia": "Mạng xã hội",
+            "workflow": "Quy trình",
+            "kanban": "Bảng Kanban",
+            "calendar": "Lịch",
+            "apps": "Ứng dụng",
             "chartOfAccounts": "Hệ thống tài khoản",
             "journalEntries": "Bút toán",
             "journalList": "Danh sách bút toán",
             "newEntry": "Bút toán mới",
             "generalLedger": "Sổ cái",
+            "surveys": "Khảo sát",
+            "surveyList": "Tất cả khảo sát",
+            "createSurvey": "Tạo khảo sát mới",
+            "surveyTemplates": "Mẫu khảo sát",
+            "surveyAnalytics": "Phân tích & Báo cáo",
             "tickets": "Phiếu hỗ trợ",
             "ticketList": "Danh sách phiếu",
             "newTicket": "Phiếu mới",
@@ -123,7 +138,60 @@
                 "content": "Nội dung",
                 "workflow": "Quy trình",
                 "reports": "Báo cáo",
-                "system": "Hệ thống"
+                "system": "Hệ thống",
+                "apps": "Ứng dụng"
+            },
+            "descriptions": {
+                "dashboard": "Xem phân tích và tổng quan hệ thống",
+                "projects": "Quản lý dự án của bạn",
+                "users": "Quản lý người dùng và vai trò",
+                "products": "Quản lý danh mục sản phẩm",
+                "assets": "Hệ thống quản lý tài sản",
+                "employees": "Quản lý nhân viên",
+                "attendance": "Theo dõi chấm công và thời gian",
+                "payroll": "Quản lý lương và bảng lương",
+                "leave": "Quản lý nghỉ phép và thời gian nghỉ",
+                "recruitment": "Tuyển dụng và tìm kiếm nhân sự",
+                "training": "Đào tạo và phát triển",
+                "orders": "Quản lý đơn hàng",
+                "customers": "Quản lý khách hàng",
+                "salesQuotes": "Báo giá và đề xuất bán hàng",
+                "stock": "Quản lý tồn kho",
+                "warehouses": "Quản lý kho hàng",
+                "transfers": "Chuyển kho",
+                "purchaseOrders": "Quản lý đơn mua hàng",
+                "suppliers": "Quản lý nhà cung cấp",
+                "receipts": "Phiếu nhập hàng",
+                "leads": "Quản lý khách hàng tiềm năng",
+                "opportunities": "Cơ hội bán hàng",
+                "contacts": "Quản lý liên hệ",
+                "campaigns": "Chiến dịch tiếp thị",
+                "emailMarketing": "Tiếp thị qua email",
+                "socialMedia": "Quản lý mạng xã hội",
+                "chartOfAccounts": "Hệ thống tài khoản",
+                "journalEntries": "Bút toán nhật ký",
+                "generalLedger": "Sổ cái chung",
+                "tickets": "Phiếu hỗ trợ IT",
+                "itAssets": "Quản lý tài sản IT",
+                "knowledgeBase": "Bài viết cơ sở tri thức",
+                "files": "Quản lý tệp tin",
+                "templates": "Mẫu tài liệu",
+                "signatures": "Chữ ký số",
+                "posts": "Bài viết blog và tin tức",
+                "comments": "Bình luận và phản hồi từ người dùng",
+                "quotes": "Trích dẫn truyền cảm hứng",
+                "chat": "Trò chuyện nhóm và tin nhắn",
+                "notifications": "Thông báo hệ thống",
+                "approvals": "Quản lý phê duyệt",
+                "todos": "Quản lý công việc",
+                "calendar": "Sự kiện và lịch trình",
+                "kanban": "Bảng dự án (Kanban)",
+                "finance": "Báo cáo tài chính và hóa đơn",
+                "settings": "Cấu hình hệ thống",
+                "auditLog": "Nhật ký kiểm tra hệ thống",
+                "profile": "Hồ sơ người dùng của tôi",
+                "surveys": "Tạo và quản lý khảo sát",
+                "help": "Trung tâm trợ giúp và hỗ trợ"
             }
         },
         "dashboard": {
@@ -198,6 +266,25 @@
                 "username": "Tên đăng nhập",
                 "department": "Phòng ban",
                 "role": "Vai trò"
+            },
+            "roles": {
+                "title": "Vai trò người dùng",
+                "description": "Quản lý vai trò và phân quyền người dùng",
+                "add": "Thêm vai trò",
+                "edit": "Sửa vai trò",
+                "delete": "Xóa vai trò",
+                "deleteConfirmTitle": "Xóa vai trò",
+                "deleteConfirm": "Bạn có chắc chắn muốn xóa vai trò này? Hành động này không thể hoàn tác.",
+                "usersCount": "{{count}} người dùng",
+                "permsCount": "{{count}} quyền",
+                "form": {
+                    "name": "Tên vai trò",
+                    "namePlaceholder": "vd: Quản lý dự án",
+                    "nameRequired": "Tên vai trò là bắt buộc",
+                    "description": "Mô tả",
+                    "descriptionPlaceholder": "Mô tả trách nhiệm của vai trò",
+                    "permissions": "Phân quyền"
+                }
             }
         },
         "settings": {
@@ -311,6 +398,61 @@
             "sharedWithMe": "Được chia sẻ",
             "myFiles": "Tệp của tôi",
             "trash": "Thùng rác"
+        },
+        "calendar": {
+            "title": "Lịch",
+            "addEvent": "Thêm sự kiện",
+            "editEvent": "Sửa sự kiện",
+            "deleteEvent": "Xóa sự kiện",
+            "eventTitle": "Tiêu đề",
+            "eventDescription": "Mô tả",
+            "startTime": "Thời gian bắt đầu",
+            "endTime": "Thời gian kết thúc",
+            "allDay": "Cả ngày",
+            "type": "Loại",
+            "types": {
+                "meeting": "Cuộc họp",
+                "task": "Công việc",
+                "reminder": "Nhắc nhở",
+                "holiday": "Ngày lễ",
+                "other": "Khác"
+            },
+            "today": "Hôm nay",
+            "month": "Tháng",
+            "week": "Tuần",
+            "day": "Ngày",
+            "noEvents": "Không có sự kiện",
+            "deleteConfirmTitle": "Xóa sự kiện",
+            "deleteConfirm": "Bạn có chắc chắn muốn xóa sự kiện này?",
+            "weekdays": {
+                "sun": "CN",
+                "mon": "T2",
+                "tue": "T3",
+                "wed": "T4",
+                "thu": "T5",
+                "fri": "T6",
+                "sat": "T7"
+            }
+        },
+        "kanban": {
+            "title": "Bảng Kanban",
+            "addTask": "Thêm công việc",
+            "editTask": "Sửa công việc",
+            "deleteTask": "Xóa công việc",
+            "columns": {
+                "todo": "Cần làm",
+                "inProgress": "Đang làm",
+                "review": "Đang duyệt",
+                "done": "Hoàn thành"
+            },
+            "priority": {
+                "low": "Thấp",
+                "medium": "Trung bình",
+                "high": "Cao"
+            },
+            "deleteConfirmTitle": "Xóa công việc",
+            "deleteConfirm": "Bạn có chắc chắn muốn xóa công việc này?",
+            "searchPlaceholder": "Tìm kiếm công việc..."
         }
     }
 }

@@ -86,7 +86,7 @@ export function StatsCard({ stat }: StatsCardProps) {
     }, [stat.value]);
 
     return (
-        <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all duration-300 hover:shadow-xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-800/50">
+        <div className="relative overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all duration-300 hover:shadow-xl dark:border-zinc-700 dark:from-gray-800 dark:to-gray-800/50">
             <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-base font-semibold text-gray-600 dark:text-gray-300">
                     {stat.title}

@@ -66,8 +66,8 @@ export function ApprovalsSubmit() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {/* Left Column: Form */}
                 <div className="lg:col-span-2">
-                    <Card className="border border-gray-200 shadow-lg dark:border-gray-700">
-                        <CardHeader className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800">
+                    <Card className="border border-zinc-200 shadow-lg dark:border-zinc-700">
+                        <CardHeader className="border-b border-zinc-200 bg-gray-50 px-6 py-4 dark:border-zinc-700 dark:bg-zinc-800">
                             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                                 {t('approvals.newRequest')}
                             </h2>
@@ -176,9 +176,9 @@ export function ApprovalsSubmit() {
                     </Card>
 
                     {/* Support Card */}
-                    <Card className="border border-gray-200 shadow-sm dark:border-gray-700">
+                    <Card className="border border-zinc-200 shadow-sm dark:border-zinc-700">
                         <CardHeader className="flex gap-3 px-6 pt-6 pb-0">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 dark:bg-zinc-700 dark:text-gray-400">
                                 <QuestionMarkCircleIcon className="h-5 w-5" />
                             </div>
                             <div className="flex flex-col">
@@ -192,7 +192,7 @@ export function ApprovalsSubmit() {
                                 If you have any questions or encounter issues, please contact the HR
                                 department at:
                             </p>
-                            <div className="mt-3 rounded-lg bg-gray-50 p-3 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            <div className="mt-3 rounded-lg bg-gray-50 p-3 text-sm font-medium text-gray-700 dark:bg-zinc-800 dark:text-gray-300">
                                 📧 hr@company.com
                                 <br />
                                 📞 Ext. 1234

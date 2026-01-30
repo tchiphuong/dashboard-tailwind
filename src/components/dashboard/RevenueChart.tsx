@@ -14,7 +14,7 @@ export function RevenueChart({ data }: RevenueChartProps) {
     const { darkMode } = useTheme();
 
     return (
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
             <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
                 <ChartPieIcon className="mr-2 h-5 w-5 text-blue-500" />
                 {t('dashboard.revenueTrend')}

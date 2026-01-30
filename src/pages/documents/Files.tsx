@@ -378,7 +378,7 @@ const getFileColor = (type: FileItem['type'], filename?: string): string => {
         case 'archive':
             return 'bg-orange-50 dark:bg-orange-900/20';
         default:
-            return 'bg-gray-50 dark:bg-gray-700/20';
+            return 'bg-gray-50 dark:bg-zinc-700/20';
     }
 };
 
@@ -815,11 +815,11 @@ export function FilesList() {
             {/* Main Layout: Sidebar + Content */}
             <div className="flex h-[calc(100vh-14rem)] items-start gap-6">
                 {/* Folder Tree Sidebar */}
-                <div className="hidden h-full w-64 shrink-0 rounded-xl border border-gray-200 bg-white p-1 lg:block dark:border-gray-700 dark:bg-gray-800">
+                <div className="hidden h-full w-64 shrink-0 rounded-xl border border-zinc-200 bg-white p-1 lg:block dark:border-zinc-700 dark:bg-zinc-800">
                     <div className="custom-scrollbar h-full overflow-y-auto rounded-lg">
                         <div className="p-3">
                             {/* Storage Info */}
-                            <div className="sticky top-0 z-20 -mx-3 -mt-3 bg-white/95 p-3 backdrop-blur-sm dark:bg-gray-800/95">
+                            <div className="sticky top-0 z-20 -mx-3 -mt-3 bg-white/95 p-3 backdrop-blur-sm dark:bg-zinc-800/95">
                                 <div className="mb-4 rounded-lg bg-linear-to-r from-blue-50 to-purple-50 p-3 dark:from-blue-900/20 dark:to-purple-900/20">
                                     <div className="mb-2 flex items-center justify-between text-xs">
                                         <span className="font-medium text-gray-700 dark:text-gray-300">
@@ -858,7 +858,7 @@ export function FilesList() {
                 {/* Files Content */}
                 <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden">
                     {/* Filters & View Toggle */}
-                    <div className="mb-4 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+                    <div className="mb-4 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-800">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex flex-col gap-4 sm:flex-row">
                                 <Input
@@ -909,7 +909,7 @@ export function FilesList() {
                                     color="primary"
                                     classNames={{
                                         tabList:
-                                            'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-1',
+                                            'bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 p-1',
                                         cursor: 'bg-primary shadow-sm',
                                         tab: 'px-3',
                                         tabContent: 'group-data-[selected=true]:text-white',
@@ -948,7 +948,7 @@ export function FilesList() {
                             <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
                         </div>
                     ) : paginatedFiles.length === 0 ? (
-                        <div className="flex h-64 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+                        <div className="flex h-64 flex-col items-center justify-center rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-700">
                             <FolderIcon className="h-16 w-16 text-gray-300 dark:text-gray-600" />
                             <p className="mt-4 text-gray-500 dark:text-gray-400">
                                 {t('files.noFiles') || 'No files found'}
@@ -969,10 +969,10 @@ export function FilesList() {
                                 {paginatedFiles.map((file) => (
                                     <div
                                         key={file.id}
-                                        className={`group relative cursor-pointer rounded-xl border bg-white p-4 transition-all hover:border-blue-300 hover:shadow-lg dark:bg-gray-800 ${
+                                        className={`group relative cursor-pointer rounded-xl border bg-white p-4 transition-all hover:border-blue-300 hover:shadow-lg dark:bg-zinc-800 ${
                                             selectedFiles.has(file.id)
                                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
-                                                : 'border-gray-200 dark:border-gray-700 dark:hover:border-blue-600'
+                                                : 'border-zinc-200 dark:border-zinc-700 dark:hover:border-blue-600'
                                         }`}
                                         onClick={() => handleSelectFile(file.id)}
                                     >
@@ -1081,7 +1081,7 @@ export function FilesList() {
                                     base: 'h-full overflow-hidden',
                                     table: 'min-h-[400px]',
                                     wrapper:
-                                        'h-full overflow-y-auto custom-scrollbar shadow-none border border-gray-200 dark:border-gray-700 rounded-xl',
+                                        'h-full overflow-y-auto custom-scrollbar shadow-none border border-zinc-200 dark:border-zinc-700 rounded-xl',
                                 }}
                             >
                                 <TableHeader columns={columns}>
@@ -1145,7 +1145,7 @@ export function FilesList() {
                         <>
                             <ModalHeader>{t('files.uploadFiles') || 'Upload Files'}</ModalHeader>
                             <ModalBody>
-                                <div className="rounded-xl border-2 border-dashed border-gray-300 p-8 text-center transition-colors hover:border-blue-400 dark:border-gray-600">
+                                <div className="rounded-xl border-2 border-dashed border-zinc-300 p-8 text-center transition-colors hover:border-blue-400 dark:border-zinc-600">
                                     <CloudArrowUpIcon className="mx-auto h-12 w-12 text-gray-400" />
                                     <p className="mt-4 text-gray-600 dark:text-gray-300">
                                         {t('files.dragDrop') ||
@@ -1250,7 +1250,7 @@ export function FilesList() {
                                         'Are you sure you want to delete this file?'}
                                 </p>
                                 {fileToDelete && (
-                                    <div className="mt-3 flex items-center gap-3 rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
+                                    <div className="mt-3 flex items-center gap-3 rounded-xl bg-gray-100 p-3 dark:bg-zinc-800">
                                         {getFileIcon(fileToDelete.type)}
                                         <div>
                                             <p className="font-medium">{fileToDelete.name}</p>

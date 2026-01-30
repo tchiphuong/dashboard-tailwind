@@ -22,19 +22,17 @@
 
 /* Scrollbar styling for dark mode */
 .dark ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    @apply h-1.5 w-1.5;
 }
 
 .dark ::-webkit-scrollbar-track {
-    background: #374151;
+    @apply bg-transparent;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-    background: #4b5563;
-    border-radius: 4px;
+    @apply rounded bg-zinc-600;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
+    @apply bg-zinc-500;
 }

@@ -9,7 +9,7 @@ export function DashboardAnalytics() {
                     Analytics
                 </h1>
             </div>
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-600 dark:bg-gray-800">
+            <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-600 dark:bg-zinc-800">
                 <p className="text-gray-600 dark:text-gray-300">
                     Analytics dashboard coming soon...
                 </p>

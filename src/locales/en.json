@@ -18,7 +18,13 @@
             "unreadNotifications": "You have {{count}} unread notifications",
             "favorites": "Favorites",
             "noResults": "No results found",
-            "close": "Close"
+            "close": "Close",
+            "total": "Total",
+            "showing": "Showing {{from}} - {{to}} of {{total}}",
+            "rowsPerPage": "{{count}} rows",
+            "actions": "Actions",
+            "id": "ID",
+            "status": "Status"
         },
         "menu": {
             "dashboard": "Dashboard",
@@ -93,11 +99,20 @@
             "createCampaign": "Create Campaign",
             "emailMarketing": "Email Marketing",
             "socialMedia": "Social Media",
+            "workflow": "Workflow",
+            "kanban": "Kanban Board",
+            "calendar": "Calendar",
+            "apps": "Apps",
             "chartOfAccounts": "Chart of Accounts",
             "journalEntries": "Journal Entries",
             "journalList": "Journal List",
             "newEntry": "New Entry",
             "generalLedger": "General Ledger",
+            "surveys": "Surveys",
+            "surveyList": "All Surveys",
+            "createSurvey": "Create Survey",
+            "surveyTemplates": "Survey Templates",
+            "surveyAnalytics": "Survey Analytics",
             "tickets": "Tickets",
             "ticketList": "Ticket List",
             "newTicket": "New Ticket",
@@ -123,7 +138,60 @@
                 "content": "Content",
                 "workflow": "Workflow",
                 "reports": "Reports",
-                "system": "System"
+                "system": "System",
+                "apps": "Applications"
+            },
+            "descriptions": {
+                "dashboard": "View analytics and system overview",
+                "projects": "Manage your projects",
+                "users": "User management and roles",
+                "products": "Product catalog management",
+                "assets": "Asset management system",
+                "employees": "Employee management",
+                "attendance": "Time and attendance tracking",
+                "payroll": "Payroll and salary management",
+                "leave": "Leave and time-off management",
+                "recruitment": "Recruitment and hiring",
+                "training": "Training and development",
+                "orders": "Order management",
+                "customers": "Customer management",
+                "salesQuotes": "Sales quotes and proposals",
+                "stock": "Stock management",
+                "warehouses": "Warehouse management",
+                "transfers": "Stock transfers",
+                "purchaseOrders": "Purchase order management",
+                "suppliers": "Supplier management",
+                "receipts": "Goods receipts",
+                "leads": "Lead management",
+                "opportunities": "Sales opportunities",
+                "contacts": "Contact management",
+                "campaigns": "Marketing campaigns",
+                "emailMarketing": "Email marketing",
+                "socialMedia": "Social media management",
+                "chartOfAccounts": "Chart of accounts",
+                "journalEntries": "Journal entries",
+                "generalLedger": "General ledger",
+                "tickets": "IT support tickets",
+                "itAssets": "IT asset management",
+                "knowledgeBase": "Knowledge base articles",
+                "files": "File management",
+                "templates": "Document templates",
+                "signatures": "Digital signatures",
+                "posts": "Blog posts and articles",
+                "comments": "User comments and feedback",
+                "quotes": "Inspirational quotes",
+                "chat": "Team chat and messaging",
+                "notifications": "System notifications",
+                "approvals": "Approval management",
+                "todos": "Task management",
+                "calendar": "Events and schedule",
+                "kanban": "Project board (Kanban)",
+                "finance": "Financial reports and invoices",
+                "settings": "System configuration",
+                "auditLog": "System audit logs",
+                "profile": "My user profile",
+                "surveys": "Create and manage surveys",
+                "help": "Help center and support"
             }
         },
         "dashboard": {
@@ -198,6 +266,25 @@
                 "username": "Username",
                 "department": "Department",
                 "role": "Role"
+            },
+            "roles": {
+                "title": "User Roles",
+                "description": "Manage user roles and permissions",
+                "add": "Add Role",
+                "edit": "Edit Role",
+                "delete": "Delete Role",
+                "deleteConfirmTitle": "Delete Role",
+                "deleteConfirm": "Are you sure you want to delete this role? This action cannot be undone.",
+                "usersCount": "{{count}} users",
+                "permsCount": "{{count}} perms",
+                "form": {
+                    "name": "Role Name",
+                    "namePlaceholder": "e.g. Project Manager",
+                    "nameRequired": "Role name is required",
+                    "description": "Description",
+                    "descriptionPlaceholder": "Describe the role's responsibilities",
+                    "permissions": "Permissions"
+                }
             }
         },
         "settings": {
@@ -311,6 +398,61 @@
             "sharedWithMe": "Shared with me",
             "myFiles": "My Files",
             "trash": "Trash"
+        },
+        "calendar": {
+            "title": "Calendar",
+            "addEvent": "Add Event",
+            "editEvent": "Edit Event",
+            "deleteEvent": "Delete Event",
+            "eventTitle": "Event Title",
+            "eventDescription": "Description",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "allDay": "All Day",
+            "type": "Type",
+            "types": {
+                "meeting": "Meeting",
+                "task": "Task",
+                "reminder": "Reminder",
+                "holiday": "Holiday",
+                "other": "Other"
+            },
+            "today": "Today",
+            "month": "Month",
+            "week": "Week",
+            "day": "Day",
+            "noEvents": "No events",
+            "deleteConfirmTitle": "Delete Event",
+            "deleteConfirm": "Are you sure you want to delete this event?",
+            "weekdays": {
+                "sun": "Sun",
+                "mon": "Mon",
+                "tue": "Tue",
+                "wed": "Wed",
+                "thu": "Thu",
+                "fri": "Fri",
+                "sat": "Sat"
+            }
+        },
+        "kanban": {
+            "title": "Kanban Board",
+            "addTask": "Add Task",
+            "editTask": "Edit Task",
+            "deleteTask": "Delete Task",
+            "columns": {
+                "todo": "To Do",
+                "inProgress": "In Progress",
+                "review": "Review",
+                "done": "Done"
+            },
+            "priority": {
+                "low": "Low",
+                "medium": "Medium",
+                "high": "High"
+            },
+            "deleteConfirmTitle": "Delete Task",
+            "deleteConfirm": "Are you sure you want to delete this task?",
+            "searchPlaceholder": "Search tasks..."
         }
     }
 }

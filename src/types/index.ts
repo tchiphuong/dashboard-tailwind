@@ -12,8 +12,10 @@ export type MenuGroup =
     | 'it'
     | 'documents'
     | 'content'
+    | 'communication'
     | 'workflow'
     | 'reports'
+    | 'apps'
     | 'system';
 
 // Menu types

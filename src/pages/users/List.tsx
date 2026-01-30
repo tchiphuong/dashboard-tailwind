@@ -14,12 +14,6 @@ import {
     Select,
     SelectItem,
     Avatar,
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
     Form,
 } from '@heroui/react';
 import {
@@ -30,7 +24,7 @@ import {
     EyeIcon,
     PlusIcon,
 } from '@heroicons/react/24/outline';
-import { Breadcrumb } from '@/components/layout';
+import { PageHeader, Modal as CommonModal, ConfirmModal } from '@/components/common';
 
 interface User {
     id: number;
@@ -76,7 +70,7 @@ export function UsersList() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // Modal state
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
@@ -136,7 +130,7 @@ export function UsersList() {
             address: { city: 'New York', country: 'USA' },
         });
         setFormErrors({});
-        onOpen();
+        setIsModalOpen(true);
     };
 
     const handleEdit = (user: User) => {
@@ -144,7 +138,7 @@ export function UsersList() {
         setSelectedUser(user);
         setFormData({ ...user });
         setFormErrors({});
-        onOpen();
+        setIsModalOpen(true);
     };
 
     const handleDeleteClick = (user: User) => {
@@ -190,7 +184,7 @@ export function UsersList() {
                 );
             }
 
-            onOpenChange(); // Close modal
+            setIsModalOpen(false);
         } catch (error) {
             console.error('Error saving user:', error);
         } finally {
@@ -232,37 +226,37 @@ export function UsersList() {
 
     return (
         <>
-            <Breadcrumb items={[{ label: t('menu.users') }]} />
-
-            {/* Header */}
-            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                    {t('pages.usersList')}
-                </h1>
-                <div className="flex gap-2">
-                    <Button
-                        color="primary"
-                        onPress={handleAdd}
-                        startContent={<PlusIcon className="h-4 w-4" />}
-                        radius="full"
-                        className="font-medium"
-                    >
-                        {t('users.add')}
-                    </Button>
-                    <Button
-                        variant="bordered"
-                        startContent={
-                            <ArrowPathIcon className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-                        }
-                        onPress={loadUsers}
-                        isLoading={loading}
-                        radius="full"
-                        className="font-medium"
-                    >
-                        {t('common.refresh')}
-                    </Button>
-                </div>
-            </div>
+            <PageHeader
+                title={t('pages.usersList')}
+                breadcrumbs={[{ label: t('menu.users') }]}
+                actions={
+                    <>
+                        <Button
+                            color="primary"
+                            onPress={handleAdd}
+                            startContent={<PlusIcon className="h-4 w-4" />}
+                            radius="full"
+                            className="font-medium"
+                        >
+                            {t('users.add')}
+                        </Button>
+                        <Button
+                            variant="bordered"
+                            startContent={
+                                <ArrowPathIcon
+                                    className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`}
+                                />
+                            }
+                            onPress={loadUsers}
+                            isLoading={loading}
+                            radius="full"
+                            className="font-medium"
+                        >
+                            {t('common.refresh')}
+                        </Button>
+                    </>
+                }
+            />
 
             {/* Filters */}
             <div className="mb-6 flex flex-col gap-4 sm:flex-row">
@@ -298,8 +292,8 @@ export function UsersList() {
                 aria-label="Users table"
                 isStriped
                 classNames={{
-                    wrapper: 'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700',
-                    th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300',
+                    wrapper: 'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700',
+                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300',
                 }}
                 bottomContent={
                     totalPages > 0 && (
@@ -434,180 +428,121 @@ export function UsersList() {
             </Table>
 
             {/* Add/Edit User Modal */}
-            <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement="center"
-                classNames={{
-                    base: 'rounded-2xl',
-                }}
+            <CommonModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title={modalMode === 'create' ? t('users.add') : t('users.edit')}
+                footer={
+                    <>
+                        <Button
+                            color="danger"
+                            variant="light"
+                            onPress={() => setIsModalOpen(false)}
+                            radius="full"
+                        >
+                            {t('common.cancel')}
+                        </Button>
+                        <Button
+                            color="primary"
+                            onPress={handleSubmit as any}
+                            isLoading={actionLoading}
+                            radius="full"
+                        >
+                            {t('common.save')}
+                        </Button>
+                    </>
+                }
             >
-                <ModalContent>
-                    {(onClose) => (
-                        <Form onSubmit={handleSubmit} validationBehavior="native">
-                            <ModalHeader className="flex flex-col gap-1">
-                                {modalMode === 'create' ? t('users.add') : t('users.edit')}
-                            </ModalHeader>
-                            <ModalBody>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Input
-                                        isRequired
-                                        label={t('users.form.firstName')}
-                                        placeholder="Enter first name"
-                                        value={formData.firstName || ''}
-                                        onValueChange={(val) =>
-                                            setFormData({ ...formData, firstName: val })
-                                        }
-                                        errorMessage={formErrors.firstName}
-                                        isInvalid={!!formErrors.firstName}
-                                        radius="full"
-                                        variant="bordered"
-                                    />
-                                    <Input
-                                        isRequired
-                                        label={t('users.form.lastName')}
-                                        placeholder="Enter last name"
-                                        value={formData.lastName || ''}
-                                        onValueChange={(val) =>
-                                            setFormData({ ...formData, lastName: val })
-                                        }
-                                        errorMessage={formErrors.lastName}
-                                        isInvalid={!!formErrors.lastName}
-                                        radius="full"
-                                        variant="bordered"
-                                    />
-                                </div>
-                                <Input
-                                    isRequired
-                                    type="email"
-                                    label={t('users.form.email')}
-                                    placeholder="Enter email"
-                                    value={formData.email || ''}
-                                    onValueChange={(val) =>
-                                        setFormData({ ...formData, email: val })
-                                    }
-                                    errorMessage={formErrors.email}
-                                    isInvalid={!!formErrors.email}
-                                    radius="full"
-                                    variant="bordered"
-                                />
-                                <Input
-                                    isRequired
-                                    label={t('users.form.username')}
-                                    placeholder="Enter username"
-                                    value={formData.username || ''}
-                                    onValueChange={(val) =>
-                                        setFormData({ ...formData, username: val })
-                                    }
-                                    errorMessage={formErrors.username}
-                                    isInvalid={!!formErrors.username}
-                                    radius="full"
-                                    variant="bordered"
-                                />
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Input
-                                        label={t('users.form.phone')}
-                                        placeholder="Enter phone"
-                                        value={formData.phone || ''}
-                                        onValueChange={(val) =>
-                                            setFormData({ ...formData, phone: val })
-                                        }
-                                        radius="full"
-                                        variant="bordered"
-                                    />
-                                    <Select
-                                        label={t('users.form.role')}
-                                        defaultSelectedKeys={
-                                            formData.role ? [formData.role] : ['user']
-                                        }
-                                        onSelectionChange={(keys) =>
-                                            setFormData({
-                                                ...formData,
-                                                role: Array.from(keys)[0] as string,
-                                            })
-                                        }
-                                        radius="full"
-                                        variant="bordered"
-                                    >
-                                        <SelectItem key="admin">Admin</SelectItem>
-                                        <SelectItem key="moderator">Moderator</SelectItem>
-                                        <SelectItem key="user">User</SelectItem>
-                                    </Select>
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color="danger"
-                                    variant="light"
-                                    onPress={onClose}
-                                    radius="full"
-                                >
-                                    {t('common.cancel')}
-                                </Button>
-                                <Button
-                                    color="primary"
-                                    type="submit"
-                                    isLoading={actionLoading}
-                                    radius="full"
-                                >
-                                    {t('common.save')}
-                                </Button>
-                            </ModalFooter>
-                        </Form>
-                    )}
-                </ModalContent>
-            </Modal>
+                <Form onSubmit={handleSubmit} validationBehavior="native" className="w-full">
+                    <div className="flex flex-col gap-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <Input
+                                isRequired
+                                label={t('users.form.firstName')}
+                                placeholder="Enter first name"
+                                value={formData.firstName || ''}
+                                onValueChange={(val) =>
+                                    setFormData({ ...formData, firstName: val })
+                                }
+                                errorMessage={formErrors.firstName}
+                                isInvalid={!!formErrors.firstName}
+                                radius="full"
+                                variant="bordered"
+                            />
+                            <Input
+                                isRequired
+                                label={t('users.form.lastName')}
+                                placeholder="Enter last name"
+                                value={formData.lastName || ''}
+                                onValueChange={(val) => setFormData({ ...formData, lastName: val })}
+                                errorMessage={formErrors.lastName}
+                                isInvalid={!!formErrors.lastName}
+                                radius="full"
+                                variant="bordered"
+                            />
+                        </div>
+                        <Input
+                            isRequired
+                            type="email"
+                            label={t('users.form.email')}
+                            placeholder="Enter email"
+                            value={formData.email || ''}
+                            onValueChange={(val) => setFormData({ ...formData, email: val })}
+                            errorMessage={formErrors.email}
+                            isInvalid={!!formErrors.email}
+                            radius="full"
+                            variant="bordered"
+                        />
+                        <Input
+                            isRequired
+                            label={t('users.form.username')}
+                            placeholder="Enter username"
+                            value={formData.username || ''}
+                            onValueChange={(val) => setFormData({ ...formData, username: val })}
+                            errorMessage={formErrors.username}
+                            isInvalid={!!formErrors.username}
+                            radius="full"
+                            variant="bordered"
+                        />
+                        <div className="grid grid-cols-2 gap-4">
+                            <Input
+                                label={t('users.form.phone')}
+                                placeholder="Enter phone"
+                                value={formData.phone || ''}
+                                onValueChange={(val) => setFormData({ ...formData, phone: val })}
+                                radius="full"
+                                variant="bordered"
+                            />
+                            <Select
+                                label={t('users.form.role')}
+                                defaultSelectedKeys={formData.role ? [formData.role] : ['user']}
+                                onSelectionChange={(keys) =>
+                                    setFormData({
+                                        ...formData,
+                                        role: Array.from(keys)[0] as string,
+                                    })
+                                }
+                                radius="full"
+                                variant="bordered"
+                            >
+                                <SelectItem key="admin">Admin</SelectItem>
+                                <SelectItem key="moderator">Moderator</SelectItem>
+                                <SelectItem key="user">User</SelectItem>
+                            </Select>
+                        </div>
+                    </div>
+                </Form>
+            </CommonModal>
 
             {/* Delete Confirmation Modal */}
-            <Modal
+            <ConfirmModal
                 isOpen={isDeleteOpen}
-                onOpenChange={setIsDeleteOpen}
-                placement="center"
-                classNames={{
-                    base: 'rounded-2xl',
-                }}
-            >
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">
-                                {t('users.deleteConfirmTitle')}
-                            </ModalHeader>
-                            <ModalBody>
-                                <p>{t('users.deleteConfirm')}</p>
-                                {selectedUser && (
-                                    <div className="rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
-                                        <p className="font-semibold">
-                                            {selectedUser.firstName} {selectedUser.lastName}
-                                        </p>
-                                        <p className="text-sm text-gray-500">
-                                            {selectedUser.email}
-                                        </p>
-                                    </div>
-                                )}
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color="default"
-                                    variant="light"
-                                    onPress={onClose}
-                                    radius="full"
-                                >
-                                    {t('common.cancel')}
-                                </Button>
-                                <Button
-                                    color="danger"
-                                    onPress={handleConfirmDelete}
-                                    isLoading={actionLoading}
-                                    radius="full"
-                                >
-                                    {t('common.delete')}
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
+                onClose={() => setIsDeleteOpen(false)}
+                onConfirm={handleConfirmDelete}
+                title={t('users.deleteConfirmTitle')}
+                message={t('users.deleteConfirm')}
+                isLoading={actionLoading}
+            />
         </>
     );
 }

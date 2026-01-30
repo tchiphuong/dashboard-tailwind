@@ -45,16 +45,16 @@ Dashboard đã được tích hợp dark mode sử dụng **Tailwind CSS's built
 ```javascript
 // tailwind.config.js
 module.exports = {
-    darkMode: "class", // Sử dụng class thay vì media query
+    darkMode: 'class', // Sử dụng class thay vì media query
     // ...
 };
 ```
 
 ### 3. Màu sắc Facebook Style
 
-- **Background chính**: `bg-white` → `dark:bg-gray-800`
-- **Background phụ**: `bg-gray-50` → `dark:bg-gray-700`
-- **Background hover**: `bg-gray-100` → `dark:bg-gray-600`
+- **Background chính**: `bg-white` → `dark:bg-zinc-800`
+- **Background phụ**: `bg-gray-50` → `dark:bg-zinc-700`
+- **Background hover**: `bg-gray-100` → `dark:bg-zinc-600`
 - **Text chính**: `text-gray-700` → `dark:text-gray-200`
 - **Text phụ**: `text-gray-500` → `dark:text-gray-400`
 
@@ -80,13 +80,13 @@ index.html                                   # Alpine.js setup & toggle button
 
 ```html
 <!-- Background -->
-<div class="bg-white dark:bg-gray-800">
+<div class="bg-white dark:bg-zinc-800">
     <!-- Text -->
     <p class="text-gray-700 dark:text-gray-200">
         <!-- Borders -->
     </p>
 
-    <div class="border border-gray-200 dark:border-gray-600">
+    <div class="border border-zinc-200 dark:border-zinc-600">
         <!-- Hover states -->
         <button class="hover:bg-gray-100 dark:hover:bg-gray-700"></button>
     </div>
@@ -99,13 +99,9 @@ index.html                                   # Alpine.js setup & toggle button
 <!-- Blue variant -->
 <div class="bg-blue-50 text-blue-600 dark:bg-blue-900 dark:text-blue-400">
     <!-- Green variant -->
-    <div
-        class="bg-green-50 text-green-600 dark:bg-green-900 dark:text-green-400"
-    >
+    <div class="bg-green-50 text-green-600 dark:bg-green-900 dark:text-green-400">
         <!-- Custom colors -->
-        <div
-            class="bg-purple-50 text-purple-600 dark:bg-purple-900 dark:text-purple-400"
-        ></div>
+        <div class="bg-purple-50 text-purple-600 dark:bg-purple-900 dark:text-purple-400"></div>
     </div>
 </div>
 ```
@@ -116,24 +112,21 @@ index.html                                   # Alpine.js setup & toggle button
 // Badge classes
 $scope.getActivityBadgeClasses = function (color) {
     const colorMap = {
-        blue: "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300",
-        green: "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300",
+        blue: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300',
+        green: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300',
         // ...
     };
-    return (
-        colorMap[color] ||
-        "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
-    );
+    return colorMap[color] || 'bg-gray-100 dark:bg-zinc-700 text-gray-800 dark:text-gray-300';
 };
 
 // Icon classes
 $scope.getActivityIconClasses = function (color) {
     const colorMap = {
-        blue: "text-blue-500 dark:text-blue-400",
-        green: "text-green-500 dark:text-green-400",
+        blue: 'text-blue-500 dark:text-blue-400',
+        green: 'text-green-500 dark:text-green-400',
         // ...
     };
-    return colorMap[color] || "text-gray-500 dark:text-gray-400";
+    return colorMap[color] || 'text-gray-500 dark:text-gray-400';
 };
 ```
 
@@ -213,8 +206,8 @@ $scope.getActivityIconClasses = function (color) {
 
 ```javascript
 module.exports = {
-    content: ["*.html", "./app/views/**/*.html", "./app/controllers/*.js"],
-    darkMode: "class", // Enable class-based dark mode
+    content: ['*.html', './app/views/**/*.html', './app/controllers/*.js'],
+    darkMode: 'class', // Enable class-based dark mode
     theme: {
         extend: {},
     },
@@ -222,7 +215,7 @@ module.exports = {
         {
             pattern:
                 /^(border|ring|outline|bg|text)-(red|blue|green|yellow|purple|pink|indigo|gray|teal|lime|orange|cyan)-(50|100|200|300|400|500|600|700|800|900)$/,
-            variants: ["hover", "focus", "dark"],
+            variants: ['hover', 'focus', 'dark'],
         },
     ],
     plugins: [],
@@ -515,11 +508,11 @@ Hệ thống sử dụng **Select2** để tạo các dropdown combobox nâng ca
 ### 3. **Select2 Configuration**
 
 ```javascript
-$("#categoryFilter").select2({
-    placeholder: "Select Category",
+$('#categoryFilter').select2({
+    placeholder: 'Select Category',
     allowClear: true,
-    width: "100%",
-    theme: "classic",
+    width: '100%',
+    theme: 'classic',
 });
 ```
 
@@ -537,9 +530,7 @@ Tất cả components đều hỗ trợ dark mode:
 ### 1. **Cards & Tables**
 
 ```html
-<div
-    class="border border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800"
-></div>
+<div class="border border-zinc-200 bg-white dark:border-zinc-600 dark:bg-zinc-800"></div>
 ```
 
 ### 2. **Text Colors**
@@ -554,16 +545,14 @@ Tất cả components đều hỗ trợ dark mode:
 
 ```html
 <input
-    class="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+    class="border-zinc-300 bg-white text-gray-900 dark:border-zinc-600 dark:bg-zinc-700 dark:text-gray-100"
 />
 ```
 
 ### 4. **Status Badges**
 
 ```html
-<span
-    class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-></span>
+<span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"></span>
 ```
 
 ## Responsive Design
@@ -628,21 +617,18 @@ Tất cả components đều hỗ trợ dark mode:
 ## Future Enhancements
 
 1. **Advanced Features**
-
     - Bulk operations (select multiple products)
     - Export to CSV/Excel
     - Import products from file
     - Product variants (size, color)
 
 2. **Analytics**
-
     - Product performance metrics
     - Sales tracking
     - Inventory alerts
     - Trend analysis
 
 3. **Integration**
-
     - Real API endpoints
     - Image upload
     - Payment integration
@@ -947,19 +933,19 @@ Hệ thống sử dụng **Select2** cho các dropdown nâng cao:
 
 ```javascript
 // Tag filter
-$("#tagFilter").select2({
-    placeholder: "Select Tag",
+$('#tagFilter').select2({
+    placeholder: 'Select Tag',
     allowClear: true,
-    width: "100%",
-    theme: "classic",
+    width: '100%',
+    theme: 'classic',
 });
 
 // Multiple tags in modal
-$("#modalTags").select2({
-    placeholder: "Select Tags",
+$('#modalTags').select2({
+    placeholder: 'Select Tags',
     allowClear: true,
-    width: "100%",
-    theme: "classic",
+    width: '100%',
+    theme: 'classic',
     multiple: true,
 });
 ```
@@ -978,9 +964,7 @@ Tất cả components đều hỗ trợ dark mode:
 ### 1. **Cards & Tables**
 
 ```html
-<div
-    class="border border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800"
-></div>
+<div class="border border-zinc-200 bg-white dark:border-zinc-600 dark:bg-zinc-800"></div>
 ```
 
 ### 2. **Text Colors**
@@ -995,24 +979,20 @@ Tất cả components đều hỗ trợ dark mode:
 
 ```html
 <input
-    class="border-gray-300 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+    class="border-zinc-300 bg-white text-gray-900 dark:border-zinc-600 dark:bg-zinc-700 dark:text-gray-100"
 />
 ```
 
 ### 4. **Tag Badges**
 
 ```html
-<span
-    class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-></span>
+<span class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"></span>
 ```
 
 ### 5. **Reaction Icons**
 
 ```html
-<i class="text-green-600 dark:text-green-400">
-    <i class="text-red-600 dark:text-red-400"></i
-></i>
+<i class="text-green-600 dark:text-green-400"> <i class="text-red-600 dark:text-red-400"></i></i>
 ```
 
 ## Responsive Design
@@ -1106,7 +1086,6 @@ Tất cả components đều hỗ trợ dark mode:
 ## Future Enhancements
 
 1. **Advanced Features**
-
     - Rich text editor cho content
     - Image upload cho posts
     - Post categories
@@ -1114,14 +1093,12 @@ Tất cả components đều hỗ trợ dark mode:
     - Draft posts
 
 2. **Analytics**
-
     - Post performance metrics
     - View tracking
     - Engagement analytics
     - Popular posts
 
 3. **Integration**
-
     - Real API endpoints
     - User authentication
     - Social sharing

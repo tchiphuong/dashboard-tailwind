@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     ChevronDownIcon,
@@ -32,6 +32,15 @@ import {
     CalculatorIcon,
     WrenchScrewdriverIcon,
     DocumentDuplicateIcon,
+    BellIcon,
+    ViewColumnsIcon,
+    ChartBarIcon,
+    ClipboardDocumentListIcon,
+    UserCircleIcon,
+    QuestionMarkCircleIcon,
+    PlusIcon,
+    CheckIcon,
+    ChartPieIcon,
 } from '@heroicons/react/24/outline';
 import {
     StarIcon as StarIconSolid,
@@ -61,6 +70,15 @@ import {
     CalculatorIcon as CalculatorIconSolid,
     WrenchScrewdriverIcon as WrenchScrewdriverIconSolid,
     DocumentDuplicateIcon as DocumentDuplicateIconSolid,
+    BellIcon as BellIconSolid,
+    ViewColumnsIcon as ViewColumnsIconSolid,
+    ChartBarIcon as ChartBarIconSolid,
+    ClipboardDocumentListIcon as ClipboardDocumentListIconSolid,
+    UserCircleIcon as UserCircleIconSolid,
+    QuestionMarkCircleIcon as QuestionMarkCircleIconSolid,
+    PlusIcon as PlusIconSolid,
+    CheckIcon as CheckIconSolid,
+    ChartPieIcon as ChartPieIconSolid,
 } from '@heroicons/react/24/solid';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { MenuItem } from '@/types';
@@ -93,6 +111,16 @@ const iconComponentsOutline: Record<string, React.ComponentType<{ className?: st
     'fa-calculator': CalculatorIcon,
     'fa-wrench': WrenchScrewdriverIcon,
     'fa-copy': DocumentDuplicateIcon,
+    'fa-bell': BellIcon,
+    'fa-columns': ViewColumnsIcon,
+    'fa-chart-bar': ChartPieIcon,
+    'fa-poll': ChartBarIcon,
+    'fa-clipboard-list': ClipboardDocumentListIcon,
+    'fa-user-circle': UserCircleIcon,
+    'fa-question-circle': QuestionMarkCircleIcon,
+    'fa-plus': PlusIcon,
+    'fa-check': CheckIcon,
+    'fa-history': ClockIcon,
 };
 
 // Icon mapping - solid versions (for active state)
@@ -123,6 +151,16 @@ const iconComponentsSolid: Record<string, React.ComponentType<{ className?: stri
     'fa-calculator': CalculatorIconSolid,
     'fa-wrench': WrenchScrewdriverIconSolid,
     'fa-copy': DocumentDuplicateIconSolid,
+    'fa-bell': BellIconSolid,
+    'fa-columns': ViewColumnsIconSolid,
+    'fa-chart-bar': ChartPieIconSolid,
+    'fa-poll': ChartBarIconSolid,
+    'fa-clipboard-list': ClipboardDocumentListIconSolid,
+    'fa-user-circle': UserCircleIconSolid,
+    'fa-question-circle': QuestionMarkCircleIconSolid,
+    'fa-plus': PlusIconSolid,
+    'fa-check': CheckIconSolid,
+    'fa-history': ClockIconSolid,
 };
 
 // Menu data with translation keys - organized by groups
@@ -133,7 +171,7 @@ const menuData: MenuItem[] = [
         title: 'menu.dashboard',
         icon: 'fa-tachometer-alt',
         shortcut: '1',
-        description: 'View analytics and system overview',
+        description: 'menu.descriptions.dashboard',
         group: 'main',
         children: [
             { title: 'menu.overview', link: '/dashboard' },
@@ -146,7 +184,7 @@ const menuData: MenuItem[] = [
         title: 'menu.projects',
         icon: 'fa-folder-open',
         shortcut: '2',
-        description: 'Manage your projects',
+        description: 'menu.descriptions.projects',
         group: 'management',
         children: [
             { title: 'menu.list', link: '/projects' },
@@ -158,7 +196,7 @@ const menuData: MenuItem[] = [
         title: 'menu.users',
         icon: 'fa-users',
         shortcut: '3',
-        description: 'User management and roles',
+        description: 'menu.descriptions.users',
         group: 'management',
         children: [
             { title: 'menu.list', link: '/users' },
@@ -170,7 +208,7 @@ const menuData: MenuItem[] = [
         title: 'menu.products',
         icon: 'fa-box',
         shortcut: '4',
-        description: 'Product catalog management',
+        description: 'menu.descriptions.products',
         group: 'management',
         link: '/products',
     },
@@ -179,7 +217,7 @@ const menuData: MenuItem[] = [
         title: 'menu.assets',
         icon: 'fa-archive',
         shortcut: '7',
-        description: 'Asset management system',
+        description: 'menu.descriptions.assets',
         group: 'management',
         children: [
             { title: 'menu.assetList', link: '/assets' },
@@ -191,7 +229,7 @@ const menuData: MenuItem[] = [
         id: 'employees',
         title: 'menu.employees',
         icon: 'fa-user-group',
-        description: 'Employee management',
+        description: 'menu.descriptions.employees',
         group: 'hr',
         children: [
             { title: 'menu.employeeList', link: '/hr/employees' },
@@ -202,7 +240,7 @@ const menuData: MenuItem[] = [
         id: 'attendance',
         title: 'menu.attendance',
         icon: 'fa-clock',
-        description: 'Time and attendance tracking',
+        description: 'menu.descriptions.attendance',
         group: 'hr',
         children: [
             { title: 'menu.checkIn', link: '/hr/attendance/check-in' },
@@ -213,7 +251,7 @@ const menuData: MenuItem[] = [
         id: 'payroll',
         title: 'menu.payroll',
         icon: 'fa-banknotes',
-        description: 'Payroll and salary management',
+        description: 'menu.descriptions.payroll',
         group: 'hr',
         children: [
             { title: 'menu.salarySheet', link: '/hr/payroll/salary' },
@@ -224,7 +262,7 @@ const menuData: MenuItem[] = [
         id: 'leave',
         title: 'menu.leave',
         icon: 'fa-calendar',
-        description: 'Leave and time-off management',
+        description: 'menu.descriptions.leave',
         group: 'hr',
         children: [
             { title: 'menu.leaveRequest', link: '/hr/leave/request' },
@@ -235,7 +273,7 @@ const menuData: MenuItem[] = [
         id: 'recruitment',
         title: 'menu.recruitment',
         icon: 'fa-briefcase',
-        description: 'Recruitment and hiring',
+        description: 'menu.descriptions.recruitment',
         group: 'hr',
         children: [
             { title: 'menu.jobPostings', link: '/hr/recruitment/jobs' },
@@ -246,7 +284,7 @@ const menuData: MenuItem[] = [
         id: 'training',
         title: 'menu.training',
         icon: 'fa-graduation-cap',
-        description: 'Training and development',
+        description: 'menu.descriptions.training',
         group: 'hr',
         children: [
             { title: 'menu.courses', link: '/hr/training/courses' },
@@ -258,7 +296,7 @@ const menuData: MenuItem[] = [
         id: 'orders',
         title: 'menu.orders',
         icon: 'fa-shopping-cart',
-        description: 'Order management',
+        description: 'menu.descriptions.orders',
         group: 'sales',
         children: [
             { title: 'menu.orderList', link: '/sales/orders' },
@@ -269,7 +307,7 @@ const menuData: MenuItem[] = [
         id: 'customers',
         title: 'menu.customers',
         icon: 'fa-users',
-        description: 'Customer management',
+        description: 'menu.descriptions.customers',
         group: 'sales',
         children: [
             { title: 'menu.customerList', link: '/sales/customers' },
@@ -280,7 +318,7 @@ const menuData: MenuItem[] = [
         id: 'salesQuotes',
         title: 'menu.salesQuotes',
         icon: 'fa-file-alt',
-        description: 'Sales quotes and proposals',
+        description: 'menu.descriptions.salesQuotes',
         group: 'sales',
         link: '/sales/quotes',
     },
@@ -289,7 +327,7 @@ const menuData: MenuItem[] = [
         id: 'stock',
         title: 'menu.stock',
         icon: 'fa-store',
-        description: 'Stock management',
+        description: 'menu.descriptions.stock',
         group: 'inventory',
         children: [
             { title: 'menu.stockOverview', link: '/inventory/stock' },
@@ -300,7 +338,7 @@ const menuData: MenuItem[] = [
         id: 'warehouses',
         title: 'menu.warehouses',
         icon: 'fa-archive',
-        description: 'Warehouse management',
+        description: 'menu.descriptions.warehouses',
         group: 'inventory',
         link: '/inventory/warehouses',
     },
@@ -308,7 +346,7 @@ const menuData: MenuItem[] = [
         id: 'transfers',
         title: 'menu.transfers',
         icon: 'fa-truck',
-        description: 'Stock transfers',
+        description: 'menu.descriptions.transfers',
         group: 'inventory',
         link: '/inventory/transfers',
     },
@@ -317,7 +355,7 @@ const menuData: MenuItem[] = [
         id: 'purchaseOrders',
         title: 'menu.purchaseOrders',
         icon: 'fa-clipboard-check',
-        description: 'Purchase order management',
+        description: 'menu.descriptions.purchaseOrders',
         group: 'purchase',
         children: [
             { title: 'menu.poList', link: '/purchase/orders' },
@@ -328,7 +366,7 @@ const menuData: MenuItem[] = [
         id: 'suppliers',
         title: 'menu.suppliers',
         icon: 'fa-truck',
-        description: 'Supplier management',
+        description: 'menu.descriptions.suppliers',
         group: 'purchase',
         link: '/purchase/suppliers',
     },
@@ -336,7 +374,7 @@ const menuData: MenuItem[] = [
         id: 'receipts',
         title: 'menu.receipts',
         icon: 'fa-file-alt',
-        description: 'Goods receipts',
+        description: 'menu.descriptions.receipts',
         group: 'purchase',
         link: '/purchase/receipts',
     },
@@ -345,7 +383,7 @@ const menuData: MenuItem[] = [
         id: 'leads',
         title: 'menu.leads',
         icon: 'fa-heart',
-        description: 'Lead management',
+        description: 'menu.descriptions.leads',
         group: 'crm',
         children: [
             { title: 'menu.leadList', link: '/crm/leads' },
@@ -356,7 +394,7 @@ const menuData: MenuItem[] = [
         id: 'opportunities',
         title: 'menu.opportunities',
         icon: 'fa-briefcase',
-        description: 'Sales opportunities',
+        description: 'menu.descriptions.opportunities',
         group: 'crm',
         link: '/crm/opportunities',
     },
@@ -364,7 +402,7 @@ const menuData: MenuItem[] = [
         id: 'contacts',
         title: 'menu.contacts',
         icon: 'fa-user-group',
-        description: 'Contact management',
+        description: 'menu.descriptions.contacts',
         group: 'crm',
         link: '/crm/contacts',
     },
@@ -373,7 +411,7 @@ const menuData: MenuItem[] = [
         id: 'campaigns',
         title: 'menu.campaigns',
         icon: 'fa-megaphone',
-        description: 'Marketing campaigns',
+        description: 'menu.descriptions.campaigns',
         group: 'marketing',
         children: [
             { title: 'menu.campaignList', link: '/marketing/campaigns' },
@@ -384,7 +422,7 @@ const menuData: MenuItem[] = [
         id: 'emailMarketing',
         title: 'menu.emailMarketing',
         icon: 'fa-file-alt',
-        description: 'Email marketing',
+        description: 'menu.descriptions.emailMarketing',
         group: 'marketing',
         link: '/marketing/email',
     },
@@ -392,7 +430,7 @@ const menuData: MenuItem[] = [
         id: 'socialMedia',
         title: 'menu.socialMedia',
         icon: 'fa-comments',
-        description: 'Social media management',
+        description: 'menu.descriptions.socialMedia',
         group: 'marketing',
         link: '/marketing/social',
     },
@@ -401,7 +439,7 @@ const menuData: MenuItem[] = [
         id: 'chartOfAccounts',
         title: 'menu.chartOfAccounts',
         icon: 'fa-calculator',
-        description: 'Chart of accounts',
+        description: 'menu.descriptions.chartOfAccounts',
         group: 'accounting',
         link: '/accounting/chart',
     },
@@ -409,7 +447,7 @@ const menuData: MenuItem[] = [
         id: 'journalEntries',
         title: 'menu.journalEntries',
         icon: 'fa-file-alt',
-        description: 'Journal entries',
+        description: 'menu.descriptions.journalEntries',
         group: 'accounting',
         children: [
             { title: 'menu.journalList', link: '/accounting/journal' },
@@ -420,7 +458,7 @@ const menuData: MenuItem[] = [
         id: 'generalLedger',
         title: 'menu.generalLedger',
         icon: 'fa-dollar-sign',
-        description: 'General ledger',
+        description: 'menu.descriptions.generalLedger',
         group: 'accounting',
         link: '/accounting/ledger',
     },
@@ -429,7 +467,7 @@ const menuData: MenuItem[] = [
         id: 'tickets',
         title: 'menu.tickets',
         icon: 'fa-wrench',
-        description: 'IT support tickets',
+        description: 'menu.descriptions.tickets',
         group: 'it',
         children: [
             { title: 'menu.ticketList', link: '/it/tickets' },
@@ -440,7 +478,7 @@ const menuData: MenuItem[] = [
         id: 'itAssets',
         title: 'menu.itAssets',
         icon: 'fa-box',
-        description: 'IT asset management',
+        description: 'menu.descriptions.itAssets',
         group: 'it',
         link: '/it/assets',
     },
@@ -448,7 +486,7 @@ const menuData: MenuItem[] = [
         id: 'knowledgeBase',
         title: 'menu.knowledgeBase',
         icon: 'fa-file-alt',
-        description: 'Knowledge base articles',
+        description: 'menu.descriptions.knowledgeBase',
         group: 'it',
         link: '/it/knowledge',
     },
@@ -457,7 +495,7 @@ const menuData: MenuItem[] = [
         id: 'files',
         title: 'menu.files',
         icon: 'fa-copy',
-        description: 'File management',
+        description: 'menu.descriptions.files',
         group: 'documents',
         children: [
             { title: 'menu.allFiles', link: '/documents/files' },
@@ -468,7 +506,7 @@ const menuData: MenuItem[] = [
         id: 'templates',
         title: 'menu.templates',
         icon: 'fa-file-alt',
-        description: 'Document templates',
+        description: 'menu.descriptions.templates',
         group: 'documents',
         link: '/documents/templates',
     },
@@ -476,7 +514,7 @@ const menuData: MenuItem[] = [
         id: 'signatures',
         title: 'menu.signatures',
         icon: 'fa-check-square',
-        description: 'Digital signatures',
+        description: 'menu.descriptions.signatures',
         group: 'documents',
         link: '/documents/signatures',
     },
@@ -486,7 +524,7 @@ const menuData: MenuItem[] = [
         title: 'menu.posts',
         icon: 'fa-file-alt',
         shortcut: '5',
-        description: 'Blog posts and articles',
+        description: 'menu.descriptions.posts',
         group: 'content',
         link: '/posts',
     },
@@ -494,7 +532,7 @@ const menuData: MenuItem[] = [
         id: 'comments',
         title: 'menu.comments',
         icon: 'fa-comments',
-        description: 'User comments and feedback',
+        description: 'menu.descriptions.comments',
         group: 'content',
         link: '/comments',
     },
@@ -502,9 +540,41 @@ const menuData: MenuItem[] = [
         id: 'quotes',
         title: 'menu.quotes',
         icon: 'fa-quote-left',
-        description: 'Inspirational quotes',
-        group: 'content',
+        description: 'menu.descriptions.quotes',
         link: '/quotes',
+    },
+    // APPS
+    {
+        id: 'chat',
+        title: 'menu.chat',
+        icon: 'fa-comments',
+        description: 'menu.descriptions.chat',
+        group: 'apps',
+        link: '/apps/chat',
+    },
+    {
+        id: 'surveys',
+        title: 'menu.surveys',
+        icon: 'fa-poll',
+        description: 'menu.descriptions.surveys',
+        group: 'apps',
+        children: [
+            { title: 'menu.surveyList', link: '/apps/surveys' },
+            { title: 'menu.createSurvey', link: '/apps/surveys/create' },
+            { title: 'menu.surveyTemplates', link: '/apps/surveys/templates' },
+            {
+                title: 'menu.surveyAnalytics',
+                link: '/apps/surveys/analytics',
+            },
+        ],
+    },
+    {
+        id: 'notifications',
+        title: 'menu.notifications',
+        icon: 'fa-bell',
+        description: 'menu.descriptions.notifications',
+        group: 'communication',
+        link: '/apps/notifications',
     },
     // WORKFLOW
     {
@@ -512,7 +582,7 @@ const menuData: MenuItem[] = [
         title: 'menu.approvals',
         icon: 'fa-clipboard-check',
         shortcut: '6',
-        description: 'Approval management',
+        description: 'menu.descriptions.approvals',
         group: 'workflow',
         children: [
             { title: 'menu.submitRequest', link: '/approvals/submit' },
@@ -525,9 +595,24 @@ const menuData: MenuItem[] = [
         id: 'todos',
         title: 'menu.todos',
         icon: 'fa-check-square',
-        description: 'Task management',
-        group: 'workflow',
+        description: 'menu.descriptions.todos',
         link: '/todos',
+    },
+    {
+        id: 'calendar',
+        title: 'menu.calendar',
+        icon: 'fa-calendar',
+        description: 'menu.descriptions.calendar',
+        group: 'workflow',
+        link: '/workflow/calendar',
+    },
+    {
+        id: 'kanban',
+        title: 'menu.kanban',
+        icon: 'fa-columns',
+        description: 'Project board (Kanban)',
+        group: 'workflow',
+        link: '/workflow/kanban',
     },
     // REPORTS
     {
@@ -535,11 +620,12 @@ const menuData: MenuItem[] = [
         title: 'menu.finance',
         icon: 'fa-dollar-sign',
         shortcut: '8',
-        description: 'Financial reports and invoices',
+        description: 'menu.descriptions.finance',
         group: 'reports',
         children: [
             { title: 'menu.budget', link: '/finance/budgets' },
             { title: 'menu.invoices', link: '/finance/invoices' },
+            { title: 'menu.advancedReports', link: '/reports/advanced', icon: 'fa-chart-bar' },
         ],
     },
     // SYSTEM
@@ -548,9 +634,33 @@ const menuData: MenuItem[] = [
         title: 'menu.settings',
         icon: 'fa-cogs',
         shortcut: '0',
-        description: 'System configuration',
+        description: 'menu.descriptions.settings',
         group: 'system',
         link: '/settings',
+    },
+    {
+        id: 'auditLog',
+        title: 'menu.auditLog',
+        icon: 'fa-clipboard-list',
+        description: 'menu.descriptions.auditLog',
+        group: 'system',
+        link: '/system/audit-log',
+    },
+    {
+        id: 'profile',
+        title: 'menu.profile',
+        icon: 'fa-user-circle',
+        description: 'menu.descriptions.profile',
+        group: 'system',
+        link: '/profile',
+    },
+    {
+        id: 'help',
+        title: 'menu.help',
+        icon: 'fa-question-circle',
+        description: 'menu.descriptions.help',
+        group: 'system',
+        link: '/help',
     },
 ];
 
@@ -572,7 +682,6 @@ interface MenuItemProps {
 
 function SidebarMenuItem({
     item,
-    onNavigate,
     currentPath,
     isFavorite,
     onToggleFavorite,
@@ -587,6 +696,12 @@ function SidebarMenuItem({
         item.link === currentPath ||
         (hasChildren && item.children?.some((child) => child.link === currentPath));
 
+    useEffect(() => {
+        if (isActive && hasChildren) {
+            setIsOpen(true);
+        }
+    }, [currentPath, hasChildren, isActive]);
+
     // Use solid icon when active, outline when not
     const IconComponent = item.icon
         ? isActive
@@ -594,118 +709,139 @@ function SidebarMenuItem({
             : iconComponentsOutline[item.icon]
         : null;
 
-    const handleClick = () => {
+    const handleExpandToggle = (e: React.MouseEvent) => {
         if (hasChildren) {
+            e.preventDefault();
             setIsOpen(!isOpen);
-        } else if (item.link) {
-            onNavigate(item.link);
         }
     };
+
+    const commonClasses = `mx-2 flex flex-1 cursor-pointer items-center justify-between rounded-full p-1.5 transition-all duration-200 ${
+        isActive
+            ? 'bg-blue-500 text-white shadow-md shadow-blue-500/25'
+            : 'text-gray-700 hover:bg-gray-100 dark:text-zinc-300 dark:hover:bg-zinc-700/50'
+    }`;
+
+    const content = (
+        <>
+            <span className="flex flex-1 items-center gap-3 overflow-hidden">
+                {IconComponent && (
+                    <span
+                        className={`shrink-0 rounded-full p-1.5 transition-colors ${
+                            isActive
+                                ? 'bg-white/20'
+                                : 'bg-gray-100 group-hover:bg-blue-100 dark:bg-zinc-700 dark:group-hover:bg-blue-900/30'
+                        }`}
+                    >
+                        <IconComponent
+                            className={`h-4 w-4 ${isActive ? '' : 'group-hover:text-blue-500'}`}
+                        />
+                    </span>
+                )}
+                <span className="flex-1 truncate text-left text-sm font-medium">
+                    {t(item.title)}
+                </span>
+            </span>
+
+            <span className="flex shrink-0 items-center gap-1">
+                {/* Badge */}
+                {badgeCount && badgeCount > 0 && (
+                    <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-bold text-white">
+                        {badgeCount > 99 ? '99+' : badgeCount}
+                    </span>
+                )}
+
+                {/* Keyboard Shortcut */}
+                {item.shortcut && !hasChildren && (
+                    <kbd
+                        className={`hidden rounded-md border px-1.5 py-0.5 text-[10px] font-semibold sm:inline ${
+                            isActive
+                                ? 'border-white/30 bg-white/20 text-white'
+                                : 'border-zinc-300 bg-gray-100 text-gray-500 dark:border-zinc-500 dark:bg-zinc-600 dark:text-zinc-300'
+                        }`}
+                    >
+                        ⌘ + {item.shortcut}
+                    </kbd>
+                )}
+
+                {/* Favorite Star - inside button */}
+                {item.id && (
+                    <span
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onToggleFavorite(item.id!);
+                        }}
+                        className="rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-white/20"
+                    >
+                        {isFavorite ? (
+                            <StarIconSolid className="h-4 w-4 text-yellow-500" />
+                        ) : (
+                            <StarIcon
+                                className={`h-4 w-4 ${isActive ? 'text-white/70 hover:text-yellow-300' : 'text-gray-400 hover:text-yellow-500'}`}
+                            />
+                        )}
+                    </span>
+                )}
+
+                {hasChildren && (
+                    <ChevronDownIcon
+                        className={`mx-1 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    />
+                )}
+            </span>
+        </>
+    );
 
     return (
         <li className="relative">
             <div className="group relative flex items-center">
-                <button
-                    onClick={handleClick}
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                    className={`mx-2 flex flex-1 cursor-pointer items-center justify-between rounded-full p-1.5 transition-all duration-200 ${
-                        isActive
-                            ? 'bg-blue-500 text-white shadow-md shadow-blue-500/25'
-                            : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50'
-                    }`}
-                    style={{ width: 'calc(100% - 1rem)' }}
-                >
-                    <span className="flex flex-1 items-center gap-3 overflow-hidden">
-                        {IconComponent && (
-                            <span
-                                className={`shrink-0 rounded-full p-1.5 transition-colors ${
-                                    isActive
-                                        ? 'bg-white/20'
-                                        : 'bg-gray-100 group-hover:bg-blue-100 dark:bg-gray-700 dark:group-hover:bg-blue-900/30'
-                                }`}
-                            >
-                                <IconComponent
-                                    className={`h-4 w-4 ${isActive ? '' : 'group-hover:text-blue-500'}`}
-                                />
-                            </span>
-                        )}
-                        <span className="flex-1 truncate text-left text-sm font-medium">
-                            {t(item.title)}
-                        </span>
-                    </span>
-
-                    <span className="flex shrink-0 items-center gap-1">
-                        {/* Badge */}
-                        {badgeCount && badgeCount > 0 && (
-                            <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-bold text-white">
-                                {badgeCount > 99 ? '99+' : badgeCount}
-                            </span>
-                        )}
-
-                        {/* Keyboard Shortcut */}
-                        {item.shortcut && !hasChildren && (
-                            <kbd
-                                className={`hidden rounded-md border px-1.5 py-0.5 text-[10px] font-semibold sm:inline ${
-                                    isActive
-                                        ? 'border-white/30 bg-white/20 text-white'
-                                        : 'border-gray-300 bg-gray-100 text-gray-500 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-300'
-                                }`}
-                            >
-                                ⌘ + {item.shortcut}
-                            </kbd>
-                        )}
-
-                        {/* Favorite Star - inside button */}
-                        {item.id && (
-                            <span
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onToggleFavorite(item.id!);
-                                }}
-                                className="rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-white/20"
-                            >
-                                {isFavorite ? (
-                                    <StarIconSolid className="h-4 w-4 text-yellow-500" />
-                                ) : (
-                                    <StarIcon
-                                        className={`h-4 w-4 ${isActive ? 'text-white/70 hover:text-yellow-300' : 'text-gray-400 hover:text-yellow-500'}`}
-                                    />
-                                )}
-                            </span>
-                        )}
-
-                        {hasChildren && (
-                            <ChevronDownIcon
-                                className={`mx-1 h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                            />
-                        )}
-                    </span>
-                </button>
+                {hasChildren ? (
+                    <div
+                        onClick={handleExpandToggle}
+                        role="button"
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}
+                        className={commonClasses}
+                        style={{ width: 'calc(100% - 1rem)' }}
+                    >
+                        {content}
+                    </div>
+                ) : (
+                    <Link
+                        to={item.link || '#'}
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}
+                        className={commonClasses}
+                        style={{ width: 'calc(100% - 1rem)' }}
+                    >
+                        {content}
+                    </Link>
+                )}
 
                 {/* Tooltip */}
                 {showTooltip && item.description && (
-                    <div className="pointer-events-none absolute left-full z-50 ml-2 w-48 rounded-lg bg-gray-900 px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700">
-                        {item.description}
-                        <div className="absolute top-1/2 -left-1 h-2 w-2 -translate-y-1/2 rotate-45 bg-gray-900 dark:bg-gray-700"></div>
+                    <div className="pointer-events-none absolute left-full z-50 ml-2 w-48 rounded-lg bg-gray-900 px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-zinc-700">
+                        {t(item.description)}
+                        <div className="absolute top-1/2 -left-1 h-2 w-2 -translate-y-1/2 rotate-45 bg-gray-900 dark:bg-zinc-700"></div>
                     </div>
                 )}
             </div>
 
             {hasChildren && isOpen && (
-                <ul className="mt-2 ml-6 cursor-pointer space-y-0.5 border-l-2 border-gray-200 dark:border-gray-700">
+                <ul className="mt-2 ml-6 space-y-0.5 border-l-2 border-zinc-200 dark:border-zinc-700">
                     {item.children?.map((child, index) => (
                         <li className="px-2" key={index}>
-                            <button
-                                onClick={() => child.link && onNavigate(child.link)}
-                                className={`relative block w-full cursor-pointer rounded-full py-2 pr-3 pl-4 text-left text-sm transition-all duration-200 ${
+                            <Link
+                                to={child.link || '#'}
+                                className={`relative block w-full rounded-full py-2 pr-3 pl-4 text-left text-sm transition-all duration-200 ${
                                     child.link === currentPath
                                         ? 'bg-blue-50 font-medium text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
                                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-gray-200'
                                 }`}
                             >
                                 {t(child.title)}
-                            </button>
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -829,14 +965,14 @@ export function Sidebar() {
 
     return (
         <aside
-            className={`sidebar-transition fixed top-16 left-0 z-40 flex h-[calc(100vh-4rem)] flex-col overflow-hidden bg-white shadow-lg transition-all duration-300 ease-in-out lg:relative lg:top-0 lg:m-3 lg:h-[calc(100vh-5.5rem)] lg:rounded-xl lg:border lg:border-gray-200 dark:bg-gray-800 dark:lg:border-gray-600 ${
+            className={`sidebar-transition fixed top-16 left-0 z-40 flex h-[calc(100vh-4rem)] flex-col overflow-hidden bg-white shadow-lg transition-all duration-300 ease-in-out lg:relative lg:top-0 lg:m-3 lg:h-[calc(100vh-5.5rem)] lg:rounded-xl lg:border lg:border-zinc-200 dark:bg-zinc-800 dark:lg:border-zinc-600 ${
                 sidebarOpen
                     ? 'w-full translate-x-0 opacity-100 lg:w-64'
                     : '-translate-x-full opacity-0 lg:w-0 lg:translate-x-0'
             }`}
         >
             {/* Search Box */}
-            <div className="border-b border-gray-200 p-3 dark:border-gray-700">
+            <div className="border-b border-zinc-200 p-3 dark:border-zinc-700">
                 <div className="relative">
                     <MagnifyingGlassIcon className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
@@ -844,7 +980,7 @@ export function Sidebar() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder={t('common.search') + '...'}
-                        className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pr-8 pl-9 text-sm transition-colors focus:border-blue-500 focus:bg-white focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
+                        className="w-full rounded-full border border-zinc-200 bg-gray-50 py-2 pr-8 pl-9 text-sm transition-colors focus:border-blue-500 focus:bg-white focus:outline-none dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:focus:border-blue-500"
                     />
                     {searchQuery && (
                         <button
@@ -880,7 +1016,7 @@ export function Sidebar() {
                                 />
                             ))}
                         </ul>
-                        <div className="mx-4 my-3 border-t border-gray-200 dark:border-gray-700"></div>
+                        <div className="mx-4 my-3 border-t border-zinc-200 dark:border-zinc-700"></div>
                     </div>
                 )}
 
@@ -900,9 +1036,11 @@ export function Sidebar() {
                         it: 'menu.group.it',
                         documents: 'menu.group.documents',
                         content: 'menu.group.content',
+                        communication: 'menu.group.communication',
                         workflow: 'menu.group.workflow',
                         reports: 'menu.group.reports',
                         system: 'menu.group.system',
+                        apps: 'menu.group.apps',
                     };
 
                     // Group order
@@ -919,8 +1057,10 @@ export function Sidebar() {
                         'it',
                         'documents',
                         'content',
+                        'communication',
                         'workflow',
                         'reports',
+                        'apps',
                         'system',
                     ];
 
@@ -940,7 +1080,7 @@ export function Sidebar() {
                         return (
                             <div key={group} className="mb-2">
                                 {/* Group Header - Sticky */}
-                                <div className="sticky -top-4 z-10 mb-1 border-b border-gray-100 bg-white px-4 pb-1 dark:border-gray-700 dark:bg-gray-800">
+                                <div className="sticky -top-4 z-10 mb-1 border-b border-zinc-100 bg-white px-4 pb-1 dark:border-zinc-700 dark:bg-zinc-800">
                                     <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase dark:text-gray-500">
                                         {t(groupLabels[group]) || group.toUpperCase()}
                                     </span>
@@ -975,7 +1115,7 @@ export function Sidebar() {
             </nav>
 
             {/* Compact Footer: Language + Version + Copyright */}
-            <div className="border-t border-gray-200 px-3 py-2 dark:border-gray-700">
+            <div className="border-t border-zinc-200 px-3 py-2 dark:border-zinc-700">
                 <div className="relative flex items-center justify-between">
                     {/* Language Selector - Compact */}
                     <div className="relative" ref={langRef}>
@@ -993,7 +1133,7 @@ export function Sidebar() {
                             />
                         </button>
                         {langOpen && (
-                            <div className="absolute bottom-full left-0 z-20 mb-2 min-w-32 overflow-hidden rounded-lg border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                            <div className="absolute bottom-full left-0 z-20 mb-2 min-w-32 overflow-hidden rounded-lg border border-zinc-100 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
                                 {languages
                                     .sort((a, b) => a.name.localeCompare(b.name))
                                     .filter((lang) => lang.code !== i18n.language)

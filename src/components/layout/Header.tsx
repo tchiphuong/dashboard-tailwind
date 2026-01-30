@@ -54,7 +54,7 @@ export function Header() {
     };
 
     return (
-        <header className="z-50 h-16 bg-white shadow-md transition-colors duration-300 dark:bg-gray-800">
+        <header className="z-50 h-16 bg-white shadow-md transition-colors duration-300 dark:bg-zinc-800">
             <div className="mx-auto h-full px-4">
                 <div className="flex h-full items-center justify-between">
                     <div className="flex items-center space-x-4">
@@ -91,7 +91,7 @@ export function Header() {
                         {/* Dark mode toggle */}
                         <button
                             onClick={toggleDarkMode}
-                            className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                            className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-white dark:hover:bg-zinc-700 dark:hover:text-zinc-200"
                         >
                             {darkMode ? (
                                 <SunIcon className="h-5 w-5 text-yellow-500" />
@@ -104,7 +104,7 @@ export function Header() {
                         <div ref={notificationRef} className="relative">
                             <button
                                 onClick={() => setNotificationOpen(!notificationOpen)}
-                                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:text-zinc-200"
                             >
                                 <BellIcon className="h-5 w-5" />
                             </button>
@@ -114,8 +114,8 @@ export function Header() {
                                 </span>
                             )}
                             {notificationOpen && (
-                                <div className="absolute right-0 z-50 mt-2 w-80 origin-top-right rounded-xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 transition-all duration-200 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-900/50">
-                                    <div className="border-b border-gray-100 px-4 py-3 text-sm font-semibold text-gray-700 dark:border-gray-700 dark:text-gray-200">
+                                <div className="absolute right-0 z-50 mt-2 w-80 origin-top-right rounded-xl border border-zinc-100 bg-white shadow-xl shadow-gray-200/50 transition-all duration-200 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-zinc-900/50">
+                                    <div className="border-b border-zinc-100 px-4 py-3 text-sm font-semibold text-gray-700 dark:border-zinc-700 dark:text-zinc-200">
                                         {t('common.notifications')}
                                     </div>
                                     <div className="max-h-60 overflow-y-auto">
@@ -123,7 +123,7 @@ export function Header() {
                                             <a
                                                 key={notification.id}
                                                 href="#"
-                                                className="block border-b border-gray-50 px-4 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+                                                className="block border-b border-zinc-50 px-4 py-3 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-zinc-700 dark:text-gray-300 dark:hover:bg-gray-700"
                                             >
                                                 <p
                                                     className="line-clamp-1 font-medium"
@@ -140,7 +140,7 @@ export function Header() {
                                             </a>
                                         ))}
                                     </div>
-                                    <div className="border-t border-gray-100 px-4 py-2 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                                    <div className="border-t border-zinc-100 px-4 py-2 text-center text-sm text-gray-500 dark:border-zinc-700 dark:text-gray-400">
                                         {t('common.unreadNotifications', {
                                             count: notifications.length,
                                         })}
@@ -164,49 +164,49 @@ export function Header() {
                                 <img
                                     src={user?.picture?.medium || 'https://via.placeholder.com/150'}
                                     alt="User avatar"
-                                    className="h-9 w-9 rounded-full border-2 border-gray-200 object-cover dark:border-gray-600"
+                                    className="h-9 w-9 rounded-full border-2 border-zinc-200 object-cover dark:border-zinc-600"
                                 />
                                 <div className="hidden flex-col items-start lg:flex">
-                                    <span className="line-clamp-1 text-left text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    <span className="line-clamp-1 text-left text-sm font-medium text-gray-900 dark:text-zinc-100">
                                         {user
                                             ? `${user.name.first} ${user.name.last}`
                                             : t('common.loading')}
                                     </span>
-                                    <span className="line-clamp-1 text-left text-xs text-gray-500 dark:text-gray-400">
+                                    <span className="line-clamp-1 text-left text-xs text-gray-500 dark:text-zinc-400">
                                         {user?.email || t('common.loading')}
                                     </span>
                                 </div>
                                 <ChevronDownIcon className="ml-1 h-4 w-4 text-gray-400" />
                             </button>
                             {userMenuOpen && (
-                                <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl border border-gray-100 bg-white py-1 shadow-xl shadow-gray-200/50 transition-all duration-200 dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-900/50">
-                                    <div className="flex flex-col items-start border-b border-gray-100 px-4 py-2 text-sm text-gray-700 lg:hidden dark:border-gray-700 dark:text-gray-300">
-                                        <span className="line-clamp-1 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                <div className="absolute right-0 z-50 mt-2 w-48 rounded-xl border border-zinc-100 bg-white py-1 shadow-xl shadow-gray-200/50 transition-all duration-200 dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-zinc-900/50">
+                                    <div className="flex flex-col items-start border-b border-zinc-100 px-4 py-2 text-sm text-gray-700 lg:hidden dark:border-zinc-700 dark:text-zinc-300">
+                                        <span className="line-clamp-1 text-sm font-medium text-gray-900 dark:text-zinc-100">
                                             {user
                                                 ? `${user.name.first} ${user.name.last}`
                                                 : t('common.loading')}
                                         </span>
-                                        <span className="line-clamp-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <span className="line-clamp-1 text-xs text-gray-500 dark:text-zinc-400">
                                             {user?.email || t('common.loading')}
                                         </span>
                                     </div>
                                     <a
                                         href="#"
-                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <UserIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.profile')}
                                     </a>
                                     <a
                                         href="#"
-                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <Cog6ToothIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.settings')}
                                     </a>
                                     <a
                                         href="#"
-                                        className="flex items-center rounded-b-xl px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        className="flex items-center rounded-b-xl px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.signOut')}

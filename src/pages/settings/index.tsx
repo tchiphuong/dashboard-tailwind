@@ -5,7 +5,6 @@ import {
     Tab,
     Card,
     CardBody,
-    Input,
     Button,
     Switch,
     Select,
@@ -13,6 +12,7 @@ import {
     Avatar,
     Divider,
 } from '@heroui/react';
+import { Input } from '@/components/common';
 import {
     UserIcon,
     BellIcon,
@@ -71,7 +71,7 @@ export function Settings() {
                         variant="light"
                         classNames={{
                             tabList: '',
-                            cursor: 'w-full bg-white dark:bg-gray-700 shadow-sm rounded-full',
+                            cursor: 'w-full bg-white dark:bg-zinc-700 shadow-sm rounded-full',
                             tab: 'w-full px-4 h-12 justify-start',
                             tabContent:
                                 'group-data-[selected=true]:text-primary font-medium w-full text-left',
@@ -118,7 +118,7 @@ export function Settings() {
 
                 <div className="flex-1">
                     {selectedTab === 'general' && (
-                        <Card className="shadow-medium rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Card className="shadow-medium rounded-2xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
                             <CardBody className="gap-8 p-8">
                                 <div>
                                     <h3 className="mb-1 text-xl font-bold">
@@ -141,7 +141,7 @@ export function Settings() {
                                             radius="full"
                                             classNames={{
                                                 trigger:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
+                                                    'bg-gray-50 dark:bg-zinc-700/30 border-zinc-200 dark:border-zinc-600',
                                             }}
                                         >
                                             <SelectItem
@@ -227,7 +227,7 @@ export function Settings() {
                                             radius="full"
                                             classNames={{
                                                 trigger:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
+                                                    'bg-gray-50 dark:bg-zinc-700/30 border-zinc-200 dark:border-zinc-600',
                                             }}
                                         >
                                             <SelectItem key="utc-7">
@@ -284,7 +284,7 @@ export function Settings() {
                     )}
 
                     {selectedTab === 'account' && (
-                        <Card className="shadow-medium rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Card className="shadow-medium rounded-2xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
                             <CardBody className="gap-8 p-8">
                                 <div>
                                     <h3 className="mb-1 text-xl font-bold">
@@ -294,11 +294,11 @@ export function Settings() {
                                         Manage your personal information and profile
                                     </p>
 
-                                    <div className="mb-8 flex items-center gap-8 rounded-2xl border border-gray-100 bg-gray-50 p-6 dark:border-gray-700/50 dark:bg-gray-700/30">
+                                    <div className="mb-8 flex items-center gap-8 rounded-2xl border border-zinc-100 bg-gray-50 p-6 dark:border-zinc-700/50 dark:bg-zinc-700/30">
                                         <div className="group relative">
                                             <Avatar
                                                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                                                className="text-large h-24 w-24 shadow-xl ring-4 ring-white dark:ring-gray-800"
+                                                className="text-large h-24 w-24 shadow-xl ring-4 ring-white dark:ring-zinc-800"
                                                 isBordered
                                             />
                                             <div className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
@@ -328,24 +328,12 @@ export function Settings() {
                                         <Input
                                             label={t('settings.account.name')}
                                             defaultValue="Tony Reichert"
-                                            variant="flat"
                                             labelPlacement="outside"
-                                            radius="full"
-                                            classNames={{
-                                                inputWrapper:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
-                                            }}
                                         />
                                         <Input
                                             label={t('settings.account.email')}
                                             defaultValue="tony.reichert@example.com"
-                                            variant="flat"
                                             labelPlacement="outside"
-                                            radius="full"
-                                            classNames={{
-                                                inputWrapper:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
-                                            }}
                                         />
                                     </div>
                                 </div>
@@ -373,7 +361,7 @@ export function Settings() {
                     )}
 
                     {selectedTab === 'notifications' && (
-                        <Card className="shadow-medium rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Card className="shadow-medium rounded-2xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
                             <CardBody className="gap-8 p-8">
                                 <div>
                                     <h3 className="mb-1 text-xl font-bold">
@@ -384,7 +372,7 @@ export function Settings() {
                                     </p>
 
                                     <div className="space-y-6">
-                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-gray-700/30">
+                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-zinc-700/30">
                                             <div className="flex flex-col gap-1">
                                                 <p className="text-base font-semibold">
                                                     {t('settings.notifications.emailNotifications')}
@@ -400,7 +388,7 @@ export function Settings() {
                                                 }
                                             />
                                         </div>
-                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-gray-700/30">
+                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-zinc-700/30">
                                             <div className="flex flex-col gap-1">
                                                 <p className="text-base font-semibold">
                                                     {t('settings.notifications.pushNotifications')}
@@ -416,7 +404,7 @@ export function Settings() {
                                                 }
                                             />
                                         </div>
-                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-gray-700/30">
+                                        <div className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-zinc-700/30">
                                             <div className="flex flex-col gap-1">
                                                 <p className="text-base font-semibold">
                                                     {t('settings.notifications.marketingEmails')}
@@ -453,7 +441,7 @@ export function Settings() {
                     )}
 
                     {selectedTab === 'security' && (
-                        <Card className="shadow-medium rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Card className="shadow-medium rounded-2xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
                             <CardBody className="gap-8 p-8">
                                 <div>
                                     <h3 className="mb-1 text-xl font-bold">
@@ -468,37 +456,19 @@ export function Settings() {
                                             label={t('settings.security.currentPassword')}
                                             placeholder="Enter current password"
                                             type="password"
-                                            variant="flat"
                                             labelPlacement="outside"
-                                            radius="full"
-                                            classNames={{
-                                                inputWrapper:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
-                                            }}
                                         />
                                         <Input
                                             label={t('settings.security.newPassword')}
                                             placeholder="Enter new password"
                                             type="password"
-                                            variant="flat"
                                             labelPlacement="outside"
-                                            radius="full"
-                                            classNames={{
-                                                inputWrapper:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
-                                            }}
                                         />
                                         <Input
                                             label={t('settings.security.confirmPassword')}
                                             placeholder="Confirm new password"
                                             type="password"
-                                            variant="flat"
                                             labelPlacement="outside"
-                                            radius="full"
-                                            classNames={{
-                                                inputWrapper:
-                                                    'bg-gray-50 dark:bg-gray-700/30 border-gray-200 dark:border-gray-600',
-                                            }}
                                         />
                                         <div className="flex justify-end pt-4">
                                             <Button

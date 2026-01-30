@@ -54,7 +54,7 @@ export function Login() {
     };
 
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-50 transition-colors duration-300 dark:bg-gray-900">
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-50 transition-colors duration-300 dark:bg-zinc-900">
             {/* Background decorations */}
             <div className="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
                 <div className="animate-blob absolute -top-[30%] -left-[10%] h-[70%] w-[70%] rounded-full bg-blue-400/20 blur-3xl dark:bg-blue-600/10"></div>
@@ -63,7 +63,7 @@ export function Login() {
             </div>
 
             <div className="z-10 mx-4 w-full max-w-md">
-                <div className="bg-opacity-90 dark:bg-opacity-90 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-2xl backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800">
+                <div className="bg-opacity-90 dark:bg-opacity-90 overflow-hidden rounded-3xl border border-zinc-100 bg-white shadow-2xl backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-800">
                     <div className="p-8 sm:p-10">
                         <div className="mb-10 text-center">
                             <div className="mb-6 inline-flex h-16 w-16 rotate-3 transform items-center justify-center rounded-2xl bg-blue-600 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg transition-transform duration-300 hover:rotate-6">
@@ -102,7 +102,7 @@ export function Login() {
                                 }
                                 classNames={{
                                     inputWrapper:
-                                        'bg-gray-50 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
+                                        'bg-gray-50 dark:bg-zinc-700/50 border-zinc-200 dark:border-zinc-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
                                     label: 'text-md font-medium text-gray-700 dark:text-gray-300 mb-1.5',
                                     input: 'text-base',
                                 }}
@@ -143,7 +143,7 @@ export function Login() {
                                 }
                                 classNames={{
                                     inputWrapper:
-                                        'bg-gray-50 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
+                                        'bg-gray-50 dark:bg-zinc-700/50 border-zinc-200 dark:border-zinc-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
                                     label: 'text-md font-medium text-gray-700 dark:text-gray-300 mb-1.5',
                                     input: 'text-base',
                                 }}
@@ -194,10 +194,10 @@ export function Login() {
 
                         <div className="relative my-8">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                                <div className="w-full border-t border-zinc-200 dark:border-zinc-700"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="bg-white px-4 font-medium tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                                <span className="bg-white px-4 font-medium tracking-wide text-gray-500 dark:bg-zinc-800 dark:text-gray-400">
                                     or continue with
                                 </span>
                             </div>
@@ -207,7 +207,7 @@ export function Login() {
                             <Button
                                 type="button"
                                 onClick={() => handleSocialLogin('google')}
-                                className="group flex items-center justify-center border border-gray-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                                className="group flex items-center justify-center border border-zinc-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-gray-700"
                                 radius="full"
                                 variant="flat"
                             >
@@ -223,7 +223,7 @@ export function Login() {
                             <Button
                                 type="button"
                                 onClick={() => handleSocialLogin('github')}
-                                className="group flex items-center justify-center border border-gray-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                                className="group flex items-center justify-center border border-zinc-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-gray-700"
                                 radius="full"
                                 variant="flat"
                             >
@@ -245,7 +245,7 @@ export function Login() {
                             </Button>
                         </div>
                     </div>
-                    <div className="border-t border-gray-100 bg-gray-50 px-8 py-6 text-center dark:border-gray-700 dark:bg-gray-700/30">
+                    <div className="border-t border-zinc-100 bg-gray-50 px-8 py-6 text-center dark:border-zinc-700 dark:bg-zinc-700/30">
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                             {t('auth.dontHaveAccount')}{' '}
                             <a

@@ -270,8 +270,8 @@ export function ApprovalsApprove() {
                 aria-label="Approval requests table"
                 classNames={{
                     wrapper:
-                        'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
-                    th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 font-semibold',
+                        'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
+                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
                 }}
                 bottomContent={
                     requests.length > 10 && (
@@ -383,7 +383,7 @@ export function ApprovalsApprove() {
                         {selectedRequest && (
                             <div className="flex flex-col gap-6">
                                 {/* Detail Header */}
-                                <div className="rounded-xl bg-gray-50 p-4 dark:bg-gray-700/50">
+                                <div className="rounded-xl bg-gray-50 p-4 dark:bg-zinc-700/50">
                                     <div className="flex items-start justify-between">
                                         <div>
                                             <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
@@ -422,7 +422,7 @@ export function ApprovalsApprove() {
                                     <h4 className="mb-2 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
                                         Approval Timeline
                                     </h4>
-                                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                                    <div className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-700">
                                         <ApprovalTimeline steps={selectedRequest.timeline} />
                                     </div>
                                 </div>

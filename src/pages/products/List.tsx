@@ -7,13 +7,11 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Input,
-    Button,
     Chip,
     Pagination,
-    Select,
     SelectItem,
 } from '@heroui/react';
+import { PageHeader, Button, Input, Select } from '@/components/common';
 import {
     MagnifyingGlassIcon,
     ArrowPathIcon,
@@ -22,7 +20,6 @@ import {
     EyeIcon,
     PlusIcon,
 } from '@heroicons/react/24/outline';
-import { Breadcrumb } from '@/components/layout';
 
 interface Product {
     id: number;
@@ -147,37 +144,28 @@ export function ProductsPage() {
 
     return (
         <>
-            <Breadcrumb items={[{ label: t('menu.products') }]} />
-
-            {/* Header */}
-            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                    {t('pages.productsList')}
-                </h1>
-                <div className="flex gap-2">
-                    <Button
-                        color="primary"
-                        className="font-medium"
-                        radius="full"
-                        startContent={<PlusIcon className="h-4 w-4" />}
-                    >
-                        Add Product
-                    </Button>
-                    <Button
-                        variant="bordered"
-                        onPress={loadProducts}
-                        isLoading={loading}
-                        className="font-medium"
-                        radius="full"
-                        startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
-                    >
-                        {t('common.refresh')}
-                    </Button>
-                </div>
-            </div>
+            <PageHeader
+                title={t('pages.productsList')}
+                breadcrumbs={[{ label: t('menu.products') }]}
+                actions={
+                    <>
+                        <Button color="primary" startContent={<PlusIcon className="h-4 w-4" />}>
+                            {t('menu.products.product.add')}
+                        </Button>
+                        <Button
+                            variant="bordered"
+                            onPress={loadProducts}
+                            isLoading={loading}
+                            startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
+                        >
+                            {t('common.refresh')}
+                        </Button>
+                    </>
+                }
+            />
 
             {/* Filters */}
-            <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row dark:border-gray-700 dark:bg-gray-800">
+            <div className="mb-6 flex flex-col gap-4 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:flex-row dark:border-zinc-700 dark:bg-zinc-800">
                 <Input
                     isClearable
                     className="w-full sm:max-w-xs"
@@ -186,24 +174,12 @@ export function ProductsPage() {
                     value={search}
                     onClear={() => handleSearchChange('')}
                     onValueChange={handleSearchChange}
-                    variant="bordered"
-                    radius="full"
-                    classNames={{
-                        inputWrapper:
-                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
-                    }}
                 />
                 <Select
                     className="w-full sm:max-w-xs"
-                    placeholder="Select category"
+                    placeholder={t('menu.product.selectCategory')}
                     selectedKeys={category ? [category] : []}
                     onSelectionChange={(keys) => handleCategoryChange(keys as Set<string>)}
-                    variant="bordered"
-                    radius="full"
-                    classNames={{
-                        trigger:
-                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
-                    }}
                 >
                     {categories.map((cat) => (
                         <SelectItem key={cat.key}>{cat.label}</SelectItem>
@@ -213,40 +189,37 @@ export function ProductsPage() {
                     className="w-full sm:max-w-35"
                     selectedKeys={[String(rowsPerPage)]}
                     onSelectionChange={(keys) => handleRowsPerPageChange(keys as Set<string>)}
-                    variant="bordered"
-                    radius="full"
-                    classNames={{
-                        trigger:
-                            'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-1',
-                    }}
                 >
                     {rowsPerPageOptions.map((opt) => (
                         <SelectItem key={opt.key}>{opt.label}</SelectItem>
                     ))}
                 </Select>
                 <div className="hidden flex-1 self-center text-right text-sm text-gray-500 sm:block dark:text-gray-400">
-                    Total:{' '}
+                    {t('common.total')}:{' '}
                     <span className="font-semibold text-gray-800 dark:text-gray-200">{total}</span>{' '}
-                    products
+                    {t('menu.products').toLowerCase()}
                 </div>
             </div>
 
             {/* Table */}
             <Table
-                aria-label="Products table"
+                aria-label={t('menu.product.title')}
                 isStriped
                 classNames={{
                     wrapper:
-                        'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
-                    th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 font-semibold',
+                        'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
+                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
                     td: 'data-[striped=true]:bg-gray-50/50 dark:data-[striped=true]:bg-gray-800/50',
                 }}
                 bottomContent={
                     totalPages > 0 && (
-                        <div className="flex items-center justify-between border-t border-gray-100 px-4 py-4 dark:border-gray-700">
+                        <div className="flex items-center justify-between border-t border-zinc-100 px-4 py-4 dark:border-zinc-700">
                             <span className="text-sm text-gray-500 dark:text-gray-400">
-                                Showing {(page - 1) * rowsPerPage + 1} -{' '}
-                                {Math.min(page * rowsPerPage, total)} of {total}
+                                {t('common.showing', {
+                                    from: (page - 1) * rowsPerPage + 1,
+                                    to: Math.min(page * rowsPerPage, total),
+                                    total,
+                                })}
                             </span>
                             <Pagination
                                 isCompact
@@ -265,14 +238,14 @@ export function ProductsPage() {
                 bottomContentPlacement="outside"
             >
                 <TableHeader>
-                    <TableColumn width={60}>ID</TableColumn>
-                    <TableColumn>PRODUCT</TableColumn>
-                    <TableColumn>CATEGORY</TableColumn>
-                    <TableColumn>BRAND</TableColumn>
-                    <TableColumn>PRICE</TableColumn>
-                    <TableColumn>STOCK</TableColumn>
-                    <TableColumn>RATING</TableColumn>
-                    <TableColumn align="center">ACTIONS</TableColumn>
+                    <TableColumn width={60}>{t('common.id')}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.product').toUpperCase()}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.category').toUpperCase()}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.brand').toUpperCase()}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.price').toUpperCase()}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.stock').toUpperCase()}</TableColumn>
+                    <TableColumn>{t('menu.product.fields.rating').toUpperCase()}</TableColumn>
+                    <TableColumn align="center">{t('common.actions').toUpperCase()}</TableColumn>
                 </TableHeader>
                 <TableBody
                     items={products}
@@ -291,7 +264,7 @@ export function ProductsPage() {
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700">
+                                    <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-gray-100 dark:border-zinc-600 dark:bg-zinc-700">
                                         <img
                                             src={product.thumbnail}
                                             alt={product.title}

@@ -75,8 +75,8 @@ export function TodosList() {
                 aria-label="Todos table"
                 classNames={{
                     wrapper:
-                        'rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800',
-                    th: 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 font-semibold',
+                        'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
+                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
                 }}
                 bottomContent={
                     totalPages > 0 && (

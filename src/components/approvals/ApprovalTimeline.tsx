@@ -35,7 +35,7 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
                 return <ClockIcon className="text-primary h-6 w-6 animate-pulse" />;
             default:
                 return (
-                    <div className="h-4 w-4 rounded-full border-2 border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-800" />
+                    <div className="h-4 w-4 rounded-full border-2 border-zinc-300 bg-white dark:border-zinc-600 dark:bg-zinc-800" />
                 );
         }
     };
@@ -63,13 +63,13 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
                             className={`absolute top-8 left-2.75 -ml-px h-full w-0.5 ${
                                 step.status === 'completed'
                                     ? 'bg-success-300 dark:bg-success-700/50'
-                                    : 'border-l-2 border-dashed border-gray-200 dark:border-gray-700'
+                                    : 'border-l-2 border-dashed border-zinc-200 dark:border-zinc-700'
                             }`}
                         />
                     )}
 
                     {/* Icon/Node */}
-                    <div className="relative z-10 flex h-6 w-6 items-center justify-center bg-white dark:bg-gray-800">
+                    <div className="relative z-10 flex h-6 w-6 items-center justify-center bg-white dark:bg-zinc-800">
                         {getIcon(step.status)}
                     </div>
 
@@ -102,13 +102,13 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
                             )}
                         </div>
                         {step.comment && (
-                            <div className="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-700/50 dark:text-gray-300">
+                            <div className="mt-3 rounded-lg border border-zinc-100 bg-gray-50 p-3 text-sm text-gray-600 dark:border-zinc-700 dark:bg-zinc-700/50 dark:text-gray-300">
                                 <p className="italic">"{step.comment}"</p>
                             </div>
                         )}
                         {/* Render SubSteps Recursively */}
                         {step.subSteps && step.subSteps.length > 0 && (
-                            <div className="border-l-2 border-dashed border-gray-200 pl-4 dark:border-gray-700">
+                            <div className="border-l-2 border-dashed border-zinc-200 pl-4 dark:border-zinc-700">
                                 <ApprovalTimeline steps={step.subSteps} isSubStep={true} />
                             </div>
                         )}
