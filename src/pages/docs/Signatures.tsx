@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Chip } from '@heroui/react';
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -63,7 +63,9 @@ export function SignaturesPage() {
                 actions={
                     <Button
                         color="primary"
-                        onPress={() => setIsModalOpen(true)}
+                        onPress={() => {
+                            // TODO: Implement request signature modal
+                        }}
                         startContent={<PlusIcon className="h-4 w-4" />}
                         radius="full"
                     >
