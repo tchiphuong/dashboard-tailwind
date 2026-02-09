@@ -1,12 +1,10 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Chip, Avatar, SelectItem, Form, Progress, Card, CardBody } from '@heroui/react';
+import { Button, Chip, Avatar, SelectItem, Progress, Card, CardBody } from '@heroui/react';
 import {
     PlusIcon,
-    UserGroupIcon,
     ClockIcon,
     CheckCircleIcon,
-    XCircleIcon,
 } from '@heroicons/react/24/outline';
 import {
     Select,
@@ -310,7 +308,7 @@ export function EmployeesPage() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<Employee | null>(null);
+    const [, setSelectedItem] = useState<Employee | null>(null);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
 
     const getStatusColor = (status: string) => {

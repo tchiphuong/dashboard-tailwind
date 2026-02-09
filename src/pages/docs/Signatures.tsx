@@ -12,7 +12,6 @@ export function SignaturesPage() {
             fetchFn: createFetchFn(mockSignatures),
             initialPageSize: 10,
         });
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const getStatusColor = (status: string) => {
         switch (status) {

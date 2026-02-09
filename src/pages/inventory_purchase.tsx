@@ -11,19 +11,15 @@ import { Button, Chip, SelectItem, Card, CardBody, Divider, Progress } from '@he
 import {
     PlusIcon,
     CubeIcon,
-    TruckIcon,
     BuildingStorefrontIcon,
     ArrowsRightLeftIcon,
     ClipboardDocumentListIcon,
     UserGroupIcon,
-    DocumentCheckIcon,
-    InboxArrowDownIcon,
 } from '@heroicons/react/24/outline';
 import {
     Select,
     PageHeader,
     Modal as CommonModal,
-    ConfirmModal,
     Table,
     Input,
     TableColumn,
@@ -482,7 +478,7 @@ export function StockAdjustmentPage() {
                             Nhấn "Thêm dòng" để bắt đầu điều chỉnh
                         </div>
                     ) : (
-                        adjustments.map((adj, i) => (
+                        adjustments.map((_, i) => (
                             <div key={i} className="grid grid-cols-12 items-end gap-3">
                                 <div className="col-span-3">
                                     <Input
