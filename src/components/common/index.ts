@@ -6,3 +6,7 @@ export * from './Card';
 export * from './Button';
 export * from './Input';
 export * from './Select';
+export * from './Table';
+export * from './useTableData';
+export * from './Tabs';
+export * from './Textarea';

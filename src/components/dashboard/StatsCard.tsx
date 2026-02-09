@@ -7,6 +7,10 @@ import {
     CubeIcon,
     ArrowTrendingUpIcon,
     ArrowTrendingDownIcon,
+    EyeIcon,
+    ClockIcon,
+    CheckCircleIcon,
+    ArrowRightIcon,
 } from '@heroicons/react/24/outline';
 import { StatCard as StatCardType } from '@/types';
 
@@ -20,6 +24,10 @@ const iconComponents: Record<string, React.ComponentType<{ className?: string }>
     'fa-dollar-sign': CurrencyDollarIcon,
     'fa-shopping-cart': ShoppingCartIcon,
     'fa-box': CubeIcon,
+    'fa-eye': EyeIcon,
+    'fa-clock': ClockIcon,
+    'fa-check-circle': CheckCircleIcon,
+    'fa-arrow-right': ArrowRightIcon,
 };
 
 // Color mapping for dynamic classes
@@ -86,7 +94,7 @@ export function StatsCard({ stat }: StatsCardProps) {
     }, [stat.value]);
 
     return (
-        <div className="relative overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-lg transition-all duration-300 hover:shadow-xl dark:border-zinc-700 dark:from-gray-800 dark:to-gray-800/50">
+        <div className="relative overflow-hidden rounded-xl border border-zinc-200 bg-linear-to-br from-white to-gray-50 p-6 shadow-lg transition-all duration-300 hover:shadow-xl dark:border-zinc-700 dark:from-gray-800 dark:to-gray-800/50">
             <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-base font-semibold text-gray-600 dark:text-gray-300">
                     {stat.title}

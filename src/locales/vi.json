@@ -258,6 +258,14 @@
             "delete": "Xóa người dùng",
             "deleteConfirmTitle": "Xóa người dùng",
             "deleteConfirm": "Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.",
+            "columns": {
+                "user": "Người dùng",
+                "email": "Email",
+                "phone": "Điện thoại",
+                "role": "Vai trò",
+                "company": "Công ty",
+                "location": "Địa điểm"
+            },
             "form": {
                 "firstName": "Tên",
                 "lastName": "Họ",

@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     MoonIcon,
@@ -18,6 +19,7 @@ export function Header() {
     const { t } = useTranslation();
     const { darkMode, toggleDarkMode } = useTheme();
     const { sidebarOpen, toggleSidebar } = useSidebar();
+    const navigate = useNavigate();
 
     // Notifications state
     const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -53,6 +55,23 @@ export function Header() {
         setNotificationOpen(false);
     };
 
+    // User menu handlers
+    const handleProfile = () => {
+        setUserMenuOpen(false);
+        navigate('/profile');
+    };
+
+    const handleSettings = () => {
+        setUserMenuOpen(false);
+        navigate('/settings');
+    };
+
+    const handleSignOut = () => {
+        setUserMenuOpen(false);
+        // TODO: Clear auth state/tokens here if needed
+        navigate('/login');
+    };
+
     return (
         <header className="z-50 h-16 bg-white shadow-md transition-colors duration-300 dark:bg-zinc-800">
             <div className="mx-auto h-full px-4">
@@ -61,7 +80,7 @@ export function Header() {
                         {/* Hamburger/X button */}
                         <button
                             onClick={toggleSidebar}
-                            className="relative h-8 w-8 text-gray-600 transition-colors hover:text-gray-800 focus:outline-none dark:text-gray-300 dark:hover:text-gray-100"
+                            className="relative h-8 w-8 cursor-pointer text-gray-600 transition-colors hover:text-gray-800 focus:outline-none dark:text-gray-300 dark:hover:text-gray-100"
                         >
                             <span
                                 className={`absolute block h-0.5 w-6 transform rounded-full bg-current transition duration-300 ease-in-out ${
@@ -190,27 +209,27 @@ export function Header() {
                                             {user?.email || t('common.loading')}
                                         </span>
                                     </div>
-                                    <a
-                                        href="#"
-                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                                    <button
+                                        onClick={handleProfile}
+                                        className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <UserIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.profile')}
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="flex items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                                    </button>
+                                    <button
+                                        onClick={handleSettings}
+                                        className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <Cog6ToothIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.settings')}
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="flex items-center rounded-b-xl px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                                    </button>
+                                    <button
+                                        onClick={handleSignOut}
+                                        className="flex w-full items-center rounded-b-xl px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
                                     >
                                         <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400" />
                                         {t('common.signOut')}
-                                    </a>
+                                    </button>
                                 </div>
                             )}
                         </div>

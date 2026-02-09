@@ -8,7 +8,8 @@ import {
     EyeSlashIcon,
     ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import { Button, Input, Checkbox, Form } from '@heroui/react';
+import { Checkbox, Form } from '@heroui/react';
+import { Button, Input } from '@/components/common';
 
 export function Login() {
     const { t } = useTranslation();
@@ -66,7 +67,7 @@ export function Login() {
                 <div className="bg-opacity-90 dark:bg-opacity-90 overflow-hidden rounded-3xl border border-zinc-100 bg-white shadow-2xl backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-800">
                     <div className="p-8 sm:p-10">
                         <div className="mb-10 text-center">
-                            <div className="mb-6 inline-flex h-16 w-16 rotate-3 transform items-center justify-center rounded-2xl bg-blue-600 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg transition-transform duration-300 hover:rotate-6">
+                            <div className="mb-6 inline-flex h-16 w-16 rotate-3 transform items-center justify-center rounded-2xl bg-blue-600 bg-linear-to-br from-blue-500 to-indigo-600 text-white shadow-lg transition-transform duration-300 hover:rotate-6">
                                 <UserIcon className="h-8 w-8" />
                             </div>
                             <h2 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -90,22 +91,13 @@ export function Login() {
                                     return errors.username;
                                 }}
                                 label={t('auth.username')}
-                                labelPlacement="outside"
                                 name="username"
                                 placeholder="Enter your username"
                                 type="text"
-                                radius="full"
-                                variant="flat"
                                 color={errors.username ? 'danger' : 'default'}
                                 startContent={
-                                    <UserIcon className="text-default-400 pointer-events-none h-5 w-5 flex-shrink-0 text-2xl" />
+                                    <UserIcon className="pointer-events-none h-5 w-5 shrink-0 text-gray-400" />
                                 }
-                                classNames={{
-                                    inputWrapper:
-                                        'bg-gray-50 dark:bg-zinc-700/50 border-zinc-200 dark:border-zinc-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
-                                    label: 'text-md font-medium text-gray-700 dark:text-gray-300 mb-1.5',
-                                    input: 'text-base',
-                                }}
                             />
 
                             <Input
@@ -117,15 +109,12 @@ export function Login() {
                                     return errors.password;
                                 }}
                                 label={t('auth.password')}
-                                labelPlacement="outside"
                                 name="password"
                                 placeholder="Enter your password"
                                 type={isVisible ? 'text' : 'password'}
-                                radius="full"
-                                variant="flat"
                                 color={errors.password ? 'danger' : 'default'}
                                 startContent={
-                                    <LockClosedIcon className="text-default-400 pointer-events-none h-5 w-5 flex-shrink-0 text-2xl" />
+                                    <LockClosedIcon className="pointer-events-none h-5 w-5 shrink-0 text-gray-400" />
                                 }
                                 endContent={
                                     <button
@@ -135,18 +124,12 @@ export function Login() {
                                         aria-label="toggle password visibility"
                                     >
                                         {isVisible ? (
-                                            <EyeSlashIcon className="text-default-400 pointer-events-none h-5 w-5 text-2xl" />
+                                            <EyeSlashIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
                                         ) : (
-                                            <EyeIcon className="text-default-400 pointer-events-none h-5 w-5 text-2xl" />
+                                            <EyeIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
                                         )}
                                     </button>
                                 }
-                                classNames={{
-                                    inputWrapper:
-                                        'bg-gray-50 dark:bg-zinc-700/50 border-zinc-200 dark:border-zinc-600 data-[hover=true]:bg-gray-100 dark:data-[hover=true]:bg-gray-700 h-12',
-                                    label: 'text-md font-medium text-gray-700 dark:text-gray-300 mb-1.5',
-                                    input: 'text-base',
-                                }}
                             />
 
                             <div className="flex w-full items-center justify-between px-1 py-2">
@@ -168,11 +151,10 @@ export function Login() {
                             </div>
 
                             <Button
-                                className="h-12 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-base font-semibold text-white shadow-lg shadow-blue-500/30"
+                                className="h-12 w-full bg-linear-to-r from-blue-600 to-indigo-600 text-base font-semibold text-white shadow-lg shadow-blue-500/30"
                                 color="primary"
                                 type="submit"
-                                radius="full"
-                                variant="flat"
+                                variant="solid"
                                 isLoading={isLoading}
                             >
                                 {isLoading ? (
@@ -206,10 +188,9 @@ export function Login() {
                         <div className="grid grid-cols-2 gap-4">
                             <Button
                                 type="button"
+                                variant="bordered"
                                 onClick={() => handleSocialLogin('google')}
-                                className="group flex items-center justify-center border border-zinc-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-gray-700"
-                                radius="full"
-                                variant="flat"
+                                className="group h-12"
                             >
                                 <img
                                     src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -222,10 +203,9 @@ export function Login() {
                             </Button>
                             <Button
                                 type="button"
+                                variant="bordered"
                                 onClick={() => handleSocialLogin('github')}
-                                className="group flex items-center justify-center border border-zinc-200 bg-white px-4 py-3 transition-colors duration-200 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:bg-gray-700"
-                                radius="full"
-                                variant="flat"
+                                className="group h-12"
                             >
                                 <svg
                                     className="h-5 w-5 text-gray-900 transition-transform duration-200 group-hover:scale-110 dark:text-white"

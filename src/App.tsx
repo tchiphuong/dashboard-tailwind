@@ -41,7 +41,6 @@ import {
     PayrollSalaryPage,
     PayrollAdvancesPage,
     LeaveRequestPage,
-    LeaveApprovePage,
     RecruitmentJobsPage,
     RecruitmentCandidatesPage,
     TrainingCoursesPage,
@@ -59,35 +58,40 @@ import {
     StockAdjustmentPage,
     WarehousesPage,
     TransfersPage,
+} from '@/pages/inventory';
+import {
     PurchaseOrderListPage,
     CreatePurchaseOrderPage,
     SuppliersPage,
     ReceiptsPage,
-} from '@/pages/inventory_purchase';
+} from '@/pages/purchase';
+import { LeadListPage, AddLeadPage, OpportunitiesPage, ContactsPage } from '@/pages/crm';
 import {
-    LeadListPage,
-    AddLeadPage,
-    OpportunitiesPage,
-    ContactsPage,
     CampaignListPage,
     CreateCampaignPage,
     EmailMarketingPage,
     SocialMediaPage,
-} from '@/pages/crm_marketing';
+} from '@/pages/marketing';
 import {
     ChartOfAccountsPage,
     JournalListPage,
     NewJournalEntryPage,
     GeneralLedgerPage,
-    TicketListPage,
-    NewTicketPage,
-    ITAssetsPage,
-    KnowledgeBasePage,
-    TemplatesPage,
-    SignaturesPage,
-} from '@/pages/accounting_it_docs';
+} from '@/pages/accounting';
+import { TicketListPage, NewTicketPage, ITAssetsPage } from '@/pages/it';
+import { KnowledgeBasePage, TemplatesPage, SignaturesPage } from '@/pages/docs';
+import {
+    BOMListPage,
+    WorkOrdersPage,
+    ProductionPlanningPage,
+    ProductionReportsPage,
+} from '@/pages/manufacturing';
+import { QualityInspectionsPage, QualityStandardsPage } from '@/pages/quality';
+import { ContractListPage, ContractTemplatesPage } from '@/pages/contracts';
+import { MaintenanceSchedulePage, MaintenanceRequestsPage } from '@/pages/maintenance';
 
 import { Login } from '@/pages/auth/Login';
+import { NotFoundPage, UnauthorizedPage, ForbiddenPage, ServerErrorPage } from '@/pages/errors';
 
 function App() {
     return (
@@ -135,7 +139,10 @@ function App() {
                         <Route path="hr/payroll/salary" element={<PayrollSalaryPage />} />
                         <Route path="hr/payroll/advances" element={<PayrollAdvancesPage />} />
                         <Route path="hr/leave/request" element={<LeaveRequestPage />} />
-                        <Route path="hr/leave/approve" element={<LeaveApprovePage />} />
+                        <Route
+                            path="hr/leave/approve"
+                            element={<Navigate to="/approvals/pending" replace />}
+                        />
                         <Route path="hr/recruitment/jobs" element={<RecruitmentJobsPage />} />
                         <Route
                             path="hr/recruitment/candidates"
@@ -181,6 +188,24 @@ function App() {
                         <Route path="marketing/email" element={<EmailMarketingPage />} />
                         <Route path="marketing/social" element={<SocialMediaPage />} />
 
+                        {/* Manufacturing */}
+                        <Route path="manufacturing/bom" element={<BOMListPage />} />
+                        <Route path="manufacturing/work-orders" element={<WorkOrdersPage />} />
+                        <Route path="manufacturing/planning" element={<ProductionPlanningPage />} />
+                        <Route path="manufacturing/reports" element={<ProductionReportsPage />} />
+
+                        {/* Quality Control */}
+                        <Route path="quality/inspections" element={<QualityInspectionsPage />} />
+                        <Route path="quality/standards" element={<QualityStandardsPage />} />
+
+                        {/* Contracts */}
+                        <Route path="contracts" element={<ContractListPage />} />
+                        <Route path="contracts/templates" element={<ContractTemplatesPage />} />
+
+                        {/* Maintenance */}
+                        <Route path="maintenance/schedule" element={<MaintenanceSchedulePage />} />
+                        <Route path="maintenance/requests" element={<MaintenanceRequestsPage />} />
+
                         {/* Accounting */}
                         <Route path="accounting/chart" element={<ChartOfAccountsPage />} />
                         <Route path="accounting/journal" element={<JournalListPage />} />
@@ -224,6 +249,12 @@ function App() {
                         <Route path="comments" element={<CommentsList />} />
                         <Route path="quotes" element={<QuotesList />} />
                     </Route>
+
+                    {/* Error Pages */}
+                    <Route path="/401" element={<UnauthorizedPage />} />
+                    <Route path="/403" element={<ForbiddenPage />} />
+                    <Route path="/500" element={<ServerErrorPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </SidebarProvider>
         </ThemeProvider>

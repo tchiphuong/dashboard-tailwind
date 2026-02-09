@@ -1,30 +1,20 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, Chip, Avatar, SelectItem, Form } from '@heroui/react';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    Input,
-    Button,
-    Chip,
-    Pagination,
     Select,
-    SelectItem,
-    Avatar,
-    Form,
-} from '@heroui/react';
-import {
-    MagnifyingGlassIcon,
-    ArrowPathIcon,
-    PencilIcon,
-    TrashIcon,
-    EyeIcon,
-    PlusIcon,
-} from '@heroicons/react/24/outline';
-import { PageHeader, Modal as CommonModal, ConfirmModal } from '@/components/common';
+    PageHeader,
+    Modal as CommonModal,
+    ConfirmModal,
+    Table,
+    Input,
+    TableColumn,
+    TableAction,
+    useTableData,
+    FetchParams,
+    PagedResult,
+} from '@/components/common';
 
 interface User {
     id: number;
@@ -46,28 +36,57 @@ interface User {
     };
 }
 
-interface UsersResponse {
+interface UsersApiResponse {
     users: User[];
     total: number;
     skip: number;
     limit: number;
 }
 
-const rowsPerPageOptions = [
-    { key: '5', label: '5 rows' },
-    { key: '10', label: '10 rows' },
-    { key: '20', label: '20 rows' },
-    { key: '50', label: '50 rows' },
-];
+// Custom fetch function for DummyJSON API
+const fetchUsers = async (params: FetchParams): Promise<PagedResult<User>> => {
+    const skip = (params.page - 1) * params.pageSize;
+    const url = params.search
+        ? `https://dummyjson.com/users/search?q=${params.search}&limit=${params.pageSize}&skip=${skip}`
+        : `https://dummyjson.com/users?limit=${params.pageSize}&skip=${skip}`;
+
+    const res = await fetch(url);
+    const data: UsersApiResponse = await res.json();
+
+    return {
+        items: data.users,
+        paging: {
+            pageIndex: params.page,
+            pageSize: params.pageSize,
+            totalItems: data.total,
+            totalPages: Math.ceil(data.total / params.pageSize),
+        },
+    };
+};
 
 export function UsersList() {
     const { t } = useTranslation();
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [search, setSearch] = useState('');
-    const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    // Use the custom hook for data fetching
+    const {
+        items: users,
+        isLoading: loading,
+        total,
+        page,
+        pageSize,
+        search,
+        sortDescriptor,
+        filters,
+        setPage,
+        setPageSize,
+        setSearch,
+        setSortDescriptor,
+        setFilters,
+        refresh,
+    } = useTableData<User>({
+        fetchFn: fetchUsers,
+        initialPageSize: 10,
+    });
 
     // Modal state
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,39 +99,140 @@ export function UsersList() {
     const [formData, setFormData] = useState<Partial<User>>({});
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
-    const loadUsers = useCallback(async () => {
-        setLoading(true);
-        try {
-            const skip = (page - 1) * rowsPerPage;
-            const url = search
-                ? `https://dummyjson.com/users/search?q=${search}&limit=${rowsPerPage}&skip=${skip}`
-                : `https://dummyjson.com/users?limit=${rowsPerPage}&skip=${skip}`;
+    // Visible columns state (for column toggle)
+    const INITIAL_VISIBLE_COLUMNS = ['id', 'user', 'email', 'phone', 'role', 'company'] as const;
+    const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
+        new Set(INITIAL_VISIBLE_COLUMNS)
+    );
 
-            const res = await fetch(url);
-            const data: UsersResponse = await res.json();
-            setUsers(data.users);
-            setTotal(data.total);
-        } catch (error) {
-            console.error('Error loading users:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, [page, rowsPerPage, search]);
+    // Helper function for role colors
+    const getRoleColor = useCallback(
+        (role: string): 'primary' | 'success' | 'warning' | 'danger' => {
+            switch (role?.toLowerCase()) {
+                case 'admin':
+                    return 'danger';
+                case 'moderator':
+                    return 'warning';
+                default:
+                    return 'primary';
+            }
+        },
+        []
+    );
 
-    useEffect(() => {
-        loadUsers();
-    }, [loadUsers]);
+    // Define table columns
+    const columns: TableColumn<User>[] = useMemo(
+        () => [
+            {
+                key: 'id',
+                label: 'ID',
+                width: 60,
+                render: (user) => (
+                    <span className="text-gray-500 dark:text-gray-400">#{user.id}</span>
+                ),
+            },
+            {
+                key: 'user',
+                label: t('users.columns.user'),
+                render: (user) => (
+                    <div className="flex items-center gap-3">
+                        <Avatar src={user.image} alt={user.firstName} size="sm" isBordered />
+                        <div className="min-w-0">
+                            <p className="font-medium text-gray-800 dark:text-gray-200">
+                                {user.firstName} {user.lastName}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                @{user.username}
+                            </p>
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                key: 'email',
+                label: t('users.columns.email'),
+                sortable: true,
+                render: (user) => (
+                    <span className="block truncate text-sm text-gray-600 dark:text-gray-300">
+                        {user.email}
+                    </span>
+                ),
+            },
+            {
+                key: 'phone',
+                label: t('users.columns.phone'),
+                render: (user) => (
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{user.phone}</span>
+                ),
+            },
+            {
+                key: 'role',
+                label: t('users.columns.role'),
+                width: 100,
+                filterable: true,
+                filterType: 'select' as const,
+                filterOptions: [
+                    { key: 'admin', label: 'Admin' },
+                    { key: 'moderator', label: 'Moderator' },
+                    { key: 'user', label: 'User' },
+                ],
+                render: (user) => (
+                    <Chip size="sm" variant="flat" color={getRoleColor(user.role)}>
+                        {user.role}
+                    </Chip>
+                ),
+            },
+            {
+                key: 'company',
+                label: t('users.columns.company'),
+                render: (user) => (
+                    <div className="min-w-0">
+                        <p className="truncate text-sm text-gray-800 dark:text-gray-200">
+                            {user.company?.name || 'N/A'}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {user.company?.title || 'N/A'}
+                        </p>
+                    </div>
+                ),
+            },
+            {
+                key: 'location',
+                label: t('users.columns.location'),
+                width: 120,
+                render: (user) => (
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                        {user.address?.city || 'N/A'}
+                    </span>
+                ),
+            },
+        ],
+        [getRoleColor, t]
+    );
 
-    const handleSearchChange = (value: string) => {
-        setSearch(value);
-        setPage(1);
-    };
-
-    const handleRowsPerPageChange = (keys: Set<string> | string) => {
-        const value = typeof keys === 'string' ? keys : Array.from(keys)[0] || '10';
-        setRowsPerPage(Number(value));
-        setPage(1);
-    };
+    // Define table actions
+    const actions: TableAction<User>[] = useMemo(
+        () => [
+            {
+                key: 'view',
+                label: 'View',
+                onClick: () => {
+                    // Handle view
+                },
+            },
+            {
+                key: 'edit',
+                label: t('common.edit'),
+                onClick: (user: User) => handleEdit(user),
+            },
+            {
+                key: 'delete',
+                label: t('common.delete'),
+                onClick: (user: User) => handleDeleteClick(user),
+            },
+        ],
+        [t]
+    );
 
     // CRUD Handlers
     const handleAdd = () => {
@@ -149,7 +269,6 @@ export function UsersList() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Simple validation
         const errors: { [key: string]: string } = {};
         if (!formData.firstName) errors.firstName = 'First name is required';
         if (!formData.lastName) errors.lastName = 'Last name is required';
@@ -162,29 +281,10 @@ export function UsersList() {
         }
 
         setActionLoading(true);
-
         try {
-            // Simulate API call
             await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            if (modalMode === 'create') {
-                const newUser = {
-                    ...formData,
-                    id: Date.now(), // Fake ID
-                } as User;
-
-                // Optimistic update
-                setUsers([newUser, ...users]);
-                setTotal((prev) => prev + 1);
-            } else {
-                setUsers(
-                    users.map((u) =>
-                        u.id === selectedUser?.id ? ({ ...u, ...formData } as User) : u
-                    )
-                );
-            }
-
             setIsModalOpen(false);
+            refresh(); // Refresh data after save
         } catch (error) {
             console.error('Error saving user:', error);
         } finally {
@@ -197,30 +297,13 @@ export function UsersList() {
 
         setActionLoading(true);
         try {
-            // Simulate API call
             await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // Optimistic update
-            setUsers(users.filter((u) => u.id !== selectedUser.id));
-            setTotal((prev) => prev - 1);
             setIsDeleteOpen(false);
+            refresh(); // Refresh data after delete
         } catch (error) {
             console.error('Error deleting user:', error);
         } finally {
             setActionLoading(false);
-        }
-    };
-
-    const totalPages = Math.ceil(total / rowsPerPage);
-
-    const getRoleColor = (role: string): 'primary' | 'success' | 'warning' | 'danger' => {
-        switch (role?.toLowerCase()) {
-            case 'admin':
-                return 'danger';
-            case 'moderator':
-                return 'warning';
-            default:
-                return 'primary';
         }
     };
 
@@ -230,202 +313,58 @@ export function UsersList() {
                 title={t('pages.usersList')}
                 breadcrumbs={[{ label: t('menu.users') }]}
                 actions={
-                    <>
-                        <Button
-                            color="primary"
-                            onPress={handleAdd}
-                            startContent={<PlusIcon className="h-4 w-4" />}
-                            radius="full"
-                            className="font-medium"
-                        >
-                            {t('users.add')}
-                        </Button>
-                        <Button
-                            variant="bordered"
-                            startContent={
-                                <ArrowPathIcon
-                                    className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`}
-                                />
-                            }
-                            onPress={loadUsers}
-                            isLoading={loading}
-                            radius="full"
-                            className="font-medium"
-                        >
-                            {t('common.refresh')}
-                        </Button>
-                    </>
+                    <Button
+                        color="primary"
+                        onPress={handleAdd}
+                        startContent={<PlusIcon className="h-4 w-4" />}
+                        radius="full"
+                        className="font-medium"
+                    >
+                        {t('users.add')}
+                    </Button>
                 }
             />
 
-            {/* Filters */}
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row">
-                <Input
-                    isClearable
-                    className="w-full sm:max-w-xs"
-                    placeholder={t('common.search') + '...'}
-                    startContent={<MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />}
-                    value={search}
-                    onClear={() => handleSearchChange('')}
-                    onValueChange={handleSearchChange}
-                    variant="bordered"
-                    radius="full"
-                />
-                <Select
-                    className="w-full sm:max-w-[140px]"
-                    selectedKeys={[String(rowsPerPage)]}
-                    onSelectionChange={(keys) => handleRowsPerPageChange(keys as Set<string>)}
-                    variant="bordered"
-                    radius="full"
-                >
-                    {rowsPerPageOptions.map((opt) => (
-                        <SelectItem key={opt.key}>{opt.label}</SelectItem>
-                    ))}
-                </Select>
-                <div className="flex-1 self-center text-right text-sm text-gray-500 dark:text-gray-400">
-                    Total: <strong>{total}</strong> users
-                </div>
-            </div>
-
-            {/* Table */}
+            {/* Table with integrated search/filter/pagination */}
             <Table
-                aria-label="Users table"
-                isStriped
-                classNames={{
-                    wrapper: 'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700',
-                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300',
+                items={users}
+                columns={columns}
+                getRowKey={(user) => user.id}
+                actions={actions}
+                isLoading={loading}
+                enableSkeleton={true}
+                emptyContent="No users found"
+                // Scroll
+                isHeaderSticky
+                maxHeight="382px"
+                // Search
+                showSearch
+                searchPlaceholder={t('common.search') + '...'}
+                searchValue={search}
+                onSearchChange={setSearch}
+                // Filters
+                showFilters
+                filters={filters}
+                onFilterChange={setFilters}
+                // Refresh
+                showRefresh
+                onRefresh={refresh}
+                // Pagination
+                pagination={{
+                    page,
+                    pageSize,
+                    total,
+                    onPageChange: setPage,
+                    onPageSizeChange: setPageSize,
                 }}
-                bottomContent={
-                    totalPages > 0 && (
-                        <div className="flex items-center justify-between px-2 py-2">
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                                Showing {(page - 1) * rowsPerPage + 1} -{' '}
-                                {Math.min(page * rowsPerPage, total)} of {total}
-                            </span>
-                            <Pagination
-                                isCompact
-                                showControls
-                                showShadow
-                                color="primary"
-                                page={page}
-                                total={totalPages}
-                                onChange={setPage}
-                                radius="full"
-                            />
-                        </div>
-                    )
-                }
-                bottomContentPlacement="outside"
-            >
-                <TableHeader>
-                    <TableColumn width={60}>ID</TableColumn>
-                    <TableColumn>USER</TableColumn>
-                    <TableColumn width={150}>EMAIL</TableColumn>
-                    <TableColumn width={120}>PHONE</TableColumn>
-                    <TableColumn width={100}>ROLE</TableColumn>
-                    <TableColumn>COMPANY</TableColumn>
-                    <TableColumn width={120}>LOCATION</TableColumn>
-                    <TableColumn width={120}>ACTIONS</TableColumn>
-                </TableHeader>
-                <TableBody
-                    items={users}
-                    isLoading={loading}
-                    loadingContent={
-                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
-                    }
-                    emptyContent="No users found"
-                >
-                    {(user) => (
-                        <TableRow key={user.id}>
-                            <TableCell>
-                                <span className="text-gray-500 dark:text-gray-400">#{user.id}</span>
-                            </TableCell>
-                            <TableCell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar
-                                        src={user.image}
-                                        alt={user.firstName}
-                                        size="sm"
-                                        isBordered
-                                    />
-                                    <div className="min-w-0">
-                                        <p className="font-medium text-gray-800 dark:text-gray-200">
-                                            {user.firstName} {user.lastName}
-                                        </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                                            @{user.username}
-                                        </p>
-                                    </div>
-                                </div>
-                            </TableCell>
-                            <TableCell>
-                                <span className="block max-w-[140px] truncate text-sm text-gray-600 dark:text-gray-300">
-                                    {user.email}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <span className="text-sm text-gray-600 dark:text-gray-300">
-                                    {user.phone}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <Chip size="sm" variant="flat" color={getRoleColor(user.role)}>
-                                    {user.role}
-                                </Chip>
-                            </TableCell>
-                            <TableCell>
-                                <div className="min-w-0">
-                                    <p className="max-w-[150px] truncate text-sm text-gray-800 dark:text-gray-200">
-                                        {user.company?.name || 'N/A'}
-                                    </p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                        {user.company?.title || 'N/A'}
-                                    </p>
-                                </div>
-                            </TableCell>
-                            <TableCell>
-                                <span className="text-sm text-gray-600 dark:text-gray-300">
-                                    {user.address?.city || 'N/A'}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <div className="flex items-center gap-1">
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        variant="light"
-                                        radius="full"
-                                        aria-label="View"
-                                    >
-                                        <EyeIcon className="h-4 w-4 text-gray-500" />
-                                    </Button>
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        variant="light"
-                                        radius="full"
-                                        aria-label="Edit"
-                                        onPress={() => handleEdit(user)}
-                                    >
-                                        <PencilIcon className="h-4 w-4 text-blue-500" />
-                                    </Button>
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        variant="light"
-                                        color="danger"
-                                        radius="full"
-                                        aria-label="Delete"
-                                        onPress={() => handleDeleteClick(user)}
-                                    >
-                                        <TrashIcon className="h-4 w-4 text-red-500" />
-                                    </Button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                // Sorting
+                sortDescriptor={sortDescriptor}
+                onSortChange={setSortDescriptor}
+                // Column visibility
+                showColumnToggle
+                visibleColumns={visibleColumns}
+                onVisibleColumnsChange={setVisibleColumns}
+            />
 
             {/* Add/Edit User Modal */}
             <CommonModal

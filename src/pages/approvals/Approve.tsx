@@ -1,16 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
     Button,
     Chip,
     User,
-    Pagination,
     Modal,
     ModalContent,
     ModalHeader,
@@ -18,12 +11,12 @@ import {
     ModalFooter,
     Textarea,
     useDisclosure,
-    Tooltip,
 } from '@heroui/react';
-import { ArrowPathIcon, CheckIcon, XMarkIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Breadcrumb } from '@/components/layout';
 import { ApprovalTimeline, TimelineStep } from '@/components/approvals/ApprovalTimeline';
 import { useDateFormatter } from '@/hooks/useDateFormatter';
+import { Table, TableColumn, TableAction } from '@/components/common';
 
 interface ApprovalRequest {
     id: number;
@@ -189,12 +182,19 @@ const mockPendingRequests: ApprovalRequest[] = [
     },
 ];
 
+const typeColors: Record<string, 'primary' | 'secondary' | 'success' | 'warning' | 'danger'> = {
+    leave: 'primary',
+    expense: 'warning',
+    purchase: 'secondary',
+    travel: 'success',
+    overtime: 'danger',
+};
+
 export function ApprovalsApprove() {
     const { t } = useTranslation();
     const { formatDate } = useDateFormatter();
     const [requests, setRequests] = useState<ApprovalRequest[]>([]);
     const [loading, setLoading] = useState(true);
-    const [page, setPage] = useState(1);
     const [selectedRequest, setSelectedRequest] = useState<ApprovalRequest | null>(null);
     const [comment, setComment] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -222,20 +222,89 @@ export function ApprovalsApprove() {
         if (!selectedRequest) return;
         setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 500));
-
-        // Remove from pending list
         setRequests((prev) => prev.filter((r) => r.id !== selectedRequest.id));
         onClose();
         setLoading(false);
     };
 
-    const typeColors: Record<string, 'primary' | 'secondary' | 'success' | 'warning' | 'danger'> = {
-        leave: 'primary',
-        expense: 'warning',
-        purchase: 'secondary',
-        travel: 'success',
-        overtime: 'danger',
-    };
+    // Define columns
+    const columns: TableColumn<ApprovalRequest>[] = useMemo(
+        () => [
+            {
+                key: 'id',
+                label: 'ID',
+                width: 60,
+                render: (req) => <span>#{req.id}</span>,
+            },
+            {
+                key: 'requester',
+                label: t('approvals.requester'),
+                render: (req) => (
+                    <User
+                        name={req.requester.name}
+                        description={req.requester.email}
+                        avatarProps={{ src: req.requester.avatar, radius: 'full' }}
+                    />
+                ),
+            },
+            {
+                key: 'type',
+                label: t('approvals.type'),
+                filterable: true,
+                filterType: 'select',
+                filterOptions: [
+                    { key: 'leave', label: 'Leave' },
+                    { key: 'expense', label: 'Expense' },
+                    { key: 'purchase', label: 'Purchase' },
+                    { key: 'travel', label: 'Travel' },
+                    { key: 'overtime', label: 'Overtime' },
+                ],
+                render: (req) => (
+                    <Chip color={typeColors[req.type]} size="sm" variant="flat">
+                        {t(`approvals.types.${req.type}`)}
+                    </Chip>
+                ),
+            },
+            {
+                key: 'title',
+                label: t('approvals.title'),
+                render: (req) => <p className="line-clamp-1 font-medium">{req.title}</p>,
+            },
+            {
+                key: 'createdAt',
+                label: t('approvals.date'),
+                sortable: true,
+                render: (req) => <span>{formatDate(req.createdAt)}</span>,
+            },
+        ],
+        [t, formatDate]
+    );
+
+    // Define actions with custom icons for approve/reject
+    const actions: TableAction<ApprovalRequest>[] = useMemo(
+        () => [
+            {
+                key: 'view',
+                label: t('approvals.viewRequest'),
+                onClick: (req) => handleAction(req, 'view'),
+            },
+            {
+                key: 'approve',
+                label: t('menu.approve'),
+                color: 'success',
+                icon: <CheckIcon className="text-success-600 dark:text-success-400 h-4 w-4" />,
+                onClick: (req) => handleAction(req, 'approve'),
+            },
+            {
+                key: 'reject',
+                label: t('approvals.reject'),
+                color: 'danger',
+                icon: <XMarkIcon className="text-danger-600 dark:text-danger-400 h-4 w-4" />,
+                onClick: (req) => handleAction(req, 'reject'),
+            },
+        ],
+        [t]
+    );
 
     return (
         <>
@@ -255,119 +324,19 @@ export function ApprovalsApprove() {
                         {t('approvals.approveDescription')}
                     </p>
                 </div>
-                <Button
-                    variant="bordered"
-                    onPress={loadRequests}
-                    isLoading={loading}
-                    radius="full"
-                    startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
-                >
-                    {t('common.refresh')}
-                </Button>
             </div>
 
+            {/* Table */}
             <Table
-                aria-label="Approval requests table"
-                classNames={{
-                    wrapper:
-                        'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
-                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
-                }}
-                bottomContent={
-                    requests.length > 10 && (
-                        <div className="flex justify-center p-4">
-                            <Pagination
-                                isCompact
-                                showControls
-                                showShadow
-                                color="primary"
-                                page={page}
-                                total={Math.ceil(requests.length / 10)}
-                                onChange={setPage}
-                                radius="full"
-                            />
-                        </div>
-                    )
-                }
-            >
-                <TableHeader>
-                    <TableColumn width={60}>ID</TableColumn>
-                    <TableColumn>{t('approvals.requester')}</TableColumn>
-                    <TableColumn>{t('approvals.type')}</TableColumn>
-                    <TableColumn>{t('approvals.title')}</TableColumn>
-                    <TableColumn>{t('approvals.date')}</TableColumn>
-                    <TableColumn>{t('approvals.actions')}</TableColumn>
-                </TableHeader>
-                <TableBody
-                    items={requests}
-                    isLoading={loading}
-                    loadingContent={
-                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
-                    }
-                    emptyContent={t('approvals.noPending')}
-                >
-                    {(request) => (
-                        <TableRow key={request.id}>
-                            <TableCell>#{request.id}</TableCell>
-                            <TableCell>
-                                <User
-                                    name={request.requester.name}
-                                    description={request.requester.email}
-                                    avatarProps={{ src: request.requester.avatar, radius: 'full' }}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                <Chip color={typeColors[request.type]} size="sm" variant="flat">
-                                    {t(`approvals.types.${request.type}`)}
-                                </Chip>
-                            </TableCell>
-                            <TableCell>
-                                <p className="line-clamp-1 font-medium">{request.title}</p>
-                            </TableCell>
-                            <TableCell>{formatDate(request.createdAt)}</TableCell>
-                            <TableCell>
-                                <div className="flex gap-1">
-                                    <Tooltip content={t('approvals.viewRequest')}>
-                                        <Button
-                                            isIconOnly
-                                            size="sm"
-                                            variant="light"
-                                            radius="full"
-                                            onPress={() => handleAction(request, 'view')}
-                                        >
-                                            <EyeIcon className="h-4 w-4 text-gray-500" />
-                                        </Button>
-                                    </Tooltip>
-                                    <Tooltip content={t('menu.approve')} color="success">
-                                        <Button
-                                            isIconOnly
-                                            size="sm"
-                                            variant="light"
-                                            color="success"
-                                            radius="full"
-                                            onPress={() => handleAction(request, 'approve')}
-                                        >
-                                            <CheckIcon className="text-success-600 dark:text-success-400 h-4 w-4" />
-                                        </Button>
-                                    </Tooltip>
-                                    <Tooltip content={t('approvals.reject')} color="danger">
-                                        <Button
-                                            isIconOnly
-                                            size="sm"
-                                            variant="light"
-                                            color="danger"
-                                            radius="full"
-                                            onPress={() => handleAction(request, 'reject')}
-                                        >
-                                            <XMarkIcon className="text-danger-600 dark:text-danger-400 h-4 w-4" />
-                                        </Button>
-                                    </Tooltip>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                items={requests}
+                columns={columns}
+                getRowKey={(req) => req.id}
+                actions={actions}
+                isLoading={loading}
+                emptyContent={t('approvals.noPending')}
+                showRefresh
+                onRefresh={loadRequests}
+            />
 
             {/* Action Modal */}
             <Modal isOpen={isOpen} onClose={onClose} size="2xl" scrollBehavior="inside">

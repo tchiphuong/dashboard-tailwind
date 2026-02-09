@@ -264,10 +264,7 @@ const menuData: MenuItem[] = [
         icon: 'fa-calendar',
         description: 'menu.descriptions.leave',
         group: 'hr',
-        children: [
-            { title: 'menu.leaveRequest', link: '/hr/leave/request' },
-            { title: 'menu.leaveApprove', link: '/hr/leave/approve' },
-        ],
+        link: '/hr/leave/request',
     },
     {
         id: 'recruitment',
@@ -850,20 +847,15 @@ function SidebarMenuItem({
     );
 }
 
-import usFlag from '@/assets/flags/us.png';
-import vnFlag from '@/assets/flags/vn.png';
-import jpFlag from '@/assets/flags/jp.png';
-import cnFlag from '@/assets/flags/cn.png';
-import koFlag from '@/assets/flags/ko.png';
-import thFlag from '@/assets/flags/th.png';
+import { US, VN, JP, CN, KR, TH } from 'country-flag-icons/react/3x2';
 
 const languages = [
-    { code: 'en', name: 'English', flag: usFlag },
-    { code: 'vi', name: 'Tiếng Việt', flag: vnFlag },
-    { code: 'ja', name: '日本語', flag: jpFlag },
-    { code: 'zh', name: '中文', flag: cnFlag },
-    { code: 'ko', name: '한국어', flag: koFlag },
-    { code: 'th', name: 'ไทย', flag: thFlag },
+    { code: 'en', name: 'English', Flag: US },
+    { code: 'vi', name: 'Tiếng Việt', Flag: VN },
+    { code: 'ja', name: '日本語', Flag: JP },
+    { code: 'zh', name: '中文', Flag: CN },
+    { code: 'ko', name: '한국어', Flag: KR },
+    { code: 'th', name: 'ไทย', Flag: TH },
 ];
 
 const FAVORITES_KEY = 'sidebar-favorites';
@@ -972,7 +964,7 @@ export function Sidebar() {
             }`}
         >
             {/* Search Box */}
-            <div className="border-b border-zinc-200 p-3 dark:border-zinc-700">
+            <div className="dark:bg-content2 border-b border-zinc-200 p-3 dark:border-zinc-700">
                 <div className="relative">
                     <MagnifyingGlassIcon className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
@@ -1123,10 +1115,9 @@ export function Sidebar() {
                             onClick={() => setLangOpen(!langOpen)}
                             className="flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1 text-xs transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700/50"
                         >
-                            <img
-                                src={currentLang.flag}
-                                alt={currentLang.name}
-                                className="h-4 w-4 rounded-full object-cover"
+                            <currentLang.Flag
+                                title={currentLang.name}
+                                className="h-4 w-5 rounded-sm"
                             />
                             <ChevronDownIcon
                                 className={`h-3 w-3 text-gray-400 transition-transform ${langOpen ? 'rotate-180' : ''}`}
@@ -1143,10 +1134,9 @@ export function Sidebar() {
                                             onClick={() => changeLanguage(lang.code)}
                                             className="flex w-full items-center gap-2.5 px-3 py-2 text-sm transition-all hover:bg-gray-50 dark:hover:bg-gray-700/50"
                                         >
-                                            <img
-                                                src={lang.flag}
-                                                alt={lang.name}
-                                                className="h-5 w-5 rounded-full object-cover"
+                                            <lang.Flag
+                                                title={lang.name}
+                                                className="h-4 w-5 rounded-sm"
                                             />
                                             <span className="text-gray-700 dark:text-gray-300">
                                                 {lang.name}

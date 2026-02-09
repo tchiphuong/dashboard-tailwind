@@ -86,6 +86,73 @@ export function RolesPage() {
                 }
             />
 
+            {/* Dashboard Statistics */}
+            <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <Card className="p-4">
+                    <div className="flex items-center gap-4">
+                        <div className="rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
+                            <ShieldCheckIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {t('users.roles.stats.totalRoles', 'Total Roles')}
+                            </p>
+                            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                                {roles.length}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="p-4">
+                    <div className="flex items-center gap-4">
+                        <div className="rounded-lg bg-green-50 p-3 dark:bg-green-900/20">
+                            <UserGroupIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {t('users.roles.stats.totalUsers', 'Total Users')}
+                            </p>
+                            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                                {roles.reduce((acc, r) => acc + r.usersCount, 0)}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="p-4">
+                    <div className="flex items-center gap-4">
+                        <div className="rounded-lg bg-purple-50 p-3 dark:bg-purple-900/20">
+                            <ShieldCheckIcon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {t('users.roles.stats.systemRoles', 'System Roles')}
+                            </p>
+                            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                                {roles.filter((r) => r.isSystem).length}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="p-4">
+                    <div className="flex items-center gap-4">
+                        <div className="rounded-lg bg-orange-50 p-3 dark:bg-orange-900/20">
+                            <ShieldCheckIcon className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {t('users.roles.stats.avgPermissions', 'Avg. Permissions')}
+                            </p>
+                            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                                {Math.round(
+                                    roles.reduce((acc, r) => acc + r.permissions.length, 0) /
+                                        (roles.length || 1)
+                                )}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+            </div>
+
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {roles.map((role) => (
                     <Card key={role.id} className="group flex flex-col justify-between">
@@ -95,7 +162,7 @@ export function RolesPage() {
                                     <ShieldCheckIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 {!role.isSystem && (
-                                    <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                                    <div className="flex gap-1">
                                         <Button
                                             isIconOnly
                                             size="sm"

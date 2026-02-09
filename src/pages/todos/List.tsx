@@ -1,55 +1,111 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    Button,
-    Chip,
-    Pagination,
-} from '@heroui/react';
-import { ArrowPathIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { Chip } from '@heroui/react';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { Breadcrumb } from '@/components/layout';
+import { Table, TableColumn, useTableData, FetchParams, PagedResult } from '@/components/common';
 import { Todo } from '@/types';
 
-interface TodosResponse {
+interface TodosApiResponse {
     todos: Todo[];
     total: number;
     skip: number;
     limit: number;
 }
 
+// Custom fetch function
+const fetchTodos = async (params: FetchParams): Promise<PagedResult<Todo>> => {
+    const skip = (params.page - 1) * params.pageSize;
+    const res = await fetch(`https://dummyjson.com/todos?limit=${params.pageSize}&skip=${skip}`);
+    const data: TodosApiResponse = await res.json();
+
+    return {
+        items: data.todos,
+        paging: {
+            pageIndex: params.page,
+            pageSize: params.pageSize,
+            totalItems: data.total,
+            totalPages: Math.ceil(data.total / params.pageSize),
+        },
+    };
+};
+
 export function TodosList() {
     const { t } = useTranslation();
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
 
-    const loadTodos = useCallback(async () => {
-        setLoading(true);
-        try {
-            const skip = (page - 1) * limit;
-            const res = await fetch(`https://dummyjson.com/todos?limit=${limit}&skip=${skip}`);
-            const data: TodosResponse = await res.json();
-            setTodos(data.todos);
-            setTotal(data.total);
-        } catch (error) {
-            console.error('Error loading todos:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, [page, limit]);
+    const {
+        items: todos,
+        isLoading: loading,
+        total,
+        page,
+        pageSize,
+        setPage,
+        refresh,
+    } = useTableData<Todo>({
+        fetchFn: fetchTodos,
+        initialPageSize: 10,
+    });
 
-    useEffect(() => {
-        loadTodos();
-    }, [loadTodos]);
-
-    const totalPages = Math.ceil(total / limit);
+    // Define columns
+    const columns: TableColumn<Todo>[] = useMemo(
+        () => [
+            {
+                key: 'id',
+                label: 'ID',
+                width: 60,
+                render: (todo) => <span>#{todo.id}</span>,
+            },
+            {
+                key: 'todo',
+                label: 'TASK',
+                render: (todo) => (
+                    <span
+                        className={
+                            todo.completed
+                                ? 'text-gray-400 line-through'
+                                : 'text-gray-800 dark:text-gray-200'
+                        }
+                    >
+                        {todo.todo}
+                    </span>
+                ),
+            },
+            {
+                key: 'completed',
+                label: 'STATUS',
+                width: 100,
+                filterable: true,
+                filterType: 'select',
+                filterOptions: [
+                    { key: 'true', label: 'Done' },
+                    { key: 'false', label: 'Pending' },
+                ],
+                render: (todo) => (
+                    <Chip
+                        size="sm"
+                        color={todo.completed ? 'success' : 'warning'}
+                        variant="flat"
+                        startContent={
+                            todo.completed ? (
+                                <CheckCircleIcon className="h-4 w-4" />
+                            ) : (
+                                <XCircleIcon className="h-4 w-4" />
+                            )
+                        }
+                    >
+                        {todo.completed ? t('widgets.done') : t('widgets.pending')}
+                    </Chip>
+                ),
+            },
+            {
+                key: 'userId',
+                label: 'USER ID',
+                width: 100,
+                render: (todo) => <span>User #{todo.userId}</span>,
+            },
+        ],
+        [t]
+    );
 
     return (
         <>
@@ -59,91 +115,23 @@ export function TodosList() {
                 <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     {t('pages.todos')}
                 </h1>
-                <Button
-                    variant="bordered"
-                    onPress={loadTodos}
-                    isLoading={loading}
-                    className="font-medium"
-                    radius="full"
-                    startContent={!loading && <ArrowPathIcon className="h-4 w-4" />}
-                >
-                    {t('common.refresh')}
-                </Button>
             </div>
 
             <Table
-                aria-label="Todos table"
-                classNames={{
-                    wrapper:
-                        'rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
-                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
+                items={todos}
+                columns={columns}
+                getRowKey={(todo) => todo.id}
+                isLoading={loading}
+                emptyContent="No todos found"
+                showRefresh
+                onRefresh={refresh}
+                pagination={{
+                    page,
+                    pageSize,
+                    total,
+                    onPageChange: setPage,
                 }}
-                bottomContent={
-                    totalPages > 0 && (
-                        <div className="flex justify-center p-4">
-                            <Pagination
-                                isCompact
-                                showControls
-                                showShadow
-                                color="primary"
-                                page={page}
-                                total={totalPages}
-                                onChange={setPage}
-                                radius="full"
-                            />
-                        </div>
-                    )
-                }
-            >
-                <TableHeader>
-                    <TableColumn width={60}>ID</TableColumn>
-                    <TableColumn>TASK</TableColumn>
-                    <TableColumn width={100}>STATUS</TableColumn>
-                    <TableColumn width={100}>USER ID</TableColumn>
-                </TableHeader>
-                <TableBody
-                    items={todos}
-                    isLoading={loading}
-                    loadingContent={
-                        <ArrowPathIcon className="h-8 w-8 animate-spin text-blue-600" />
-                    }
-                    emptyContent={t('common.search')}
-                >
-                    {(todo) => (
-                        <TableRow key={todo.id}>
-                            <TableCell>#{todo.id}</TableCell>
-                            <TableCell>
-                                <span
-                                    className={
-                                        todo.completed
-                                            ? 'text-gray-400 line-through'
-                                            : 'text-gray-800 dark:text-gray-200'
-                                    }
-                                >
-                                    {todo.todo}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <Chip
-                                    size="sm"
-                                    color={todo.completed ? 'success' : 'warning'}
-                                    variant="flat"
-                                    startContent={
-                                        todo.completed ? (
-                                            <CheckCircleIcon className="h-4 w-4" />
-                                        ) : (
-                                            <XCircleIcon className="h-4 w-4" />
-                                        )
-                                    }
-                                >
-                                    {todo.completed ? t('widgets.done') : t('widgets.pending')}
-                                </Chip>
-                            </TableCell>
-                            <TableCell>User #{todo.userId}</TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+            />
         </>
     );
 }
