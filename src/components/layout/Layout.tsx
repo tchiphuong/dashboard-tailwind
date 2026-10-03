@@ -1,21 +1,23 @@
-import { Outlet } from 'react-router-dom';
-import { Header } from './Header';
-import { Sidebar } from './Sidebar';
+'use client';
 
-export function Layout() {
+import React from 'react';
+import { Header } from '@/app/(admin)/components/header';
+import { Navbar } from '@/app/(admin)/components/navbar';
+
+export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <div className="flex h-screen flex-col overflow-hidden">
+        <div className="bg-background text-foreground flex h-screen flex-col overflow-hidden">
             <Header />
-            <div className="bg-default-50 dark:bg-background flex flex-1 overflow-hidden">
-                <Sidebar />
-                <div className="flex flex-1 flex-col space-y-2">
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto">
-                        <div className="container mx-auto gap-3 p-3">
-                            <Outlet />
-                        </div>
+            <div className="flex flex-1 overflow-hidden">
+                <Navbar />
+                <div className="flex flex-1 flex-col overflow-hidden">
+                    <main className="bg-background text-foreground flex-1 overflow-x-hidden overflow-y-auto p-4">
+                        <div className="container mx-auto">{children}</div>
                     </main>
                 </div>
             </div>
         </div>
     );
 }
+
+export default Layout;

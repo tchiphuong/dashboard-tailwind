@@ -1,39 +1,53 @@
-import { useTranslation } from 'react-i18next';
-import { User } from '@heroui/react';
-import { Comment } from '@/types';
+'use client';
+
+import type { Comment } from '@/types';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+import { useTranslations } from 'next-intl';
+import { Avatar, Card } from '@/components/common';
 
 interface RecentCommentsProps {
     comments: Comment[];
 }
 
-export function RecentComments({ comments }: RecentCommentsProps) {
-    const { t } = useTranslation();
+export function RecentComments({ comments }: Readonly<RecentCommentsProps>) {
+    const t = useTranslations();
 
     return (
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
-            <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
-                <ChatBubbleLeftRightIcon className="mr-2 h-5 w-5 text-indigo-500" />
-                {t('widgets.recentFeedback')}
-            </h3>
-            <div className="space-y-4">
+        <Card className="relative overflow-hidden border border-b-4 border-indigo-500 bg-white/95 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md dark:border-indigo-500 dark:bg-zinc-900/90">
+            <Card.Header
+                icon={<ChatBubbleLeftRightIcon className="size-4" />}
+                iconColor="indigo"
+                title={t('widgets.recentFeedback')}
+                action={
+                    <span className="text-[0.6875rem] text-zinc-400 tabular-nums">
+                        {comments.length} phản hồi
+                    </span>
+                }
+            />
+
+            <div className="space-y-3">
                 {comments.map((comment) => (
                     <div
                         key={comment.id}
-                        className="rounded-lg bg-gray-50 p-3 transition-colors hover:bg-gray-100 dark:bg-zinc-700/50 dark:hover:bg-gray-700"
+                        className="rounded-xl border border-zinc-100 bg-zinc-50/50 p-3 transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-800/40 dark:hover:bg-zinc-800/70"
                     >
                         <div className="flex items-start gap-3">
-                            <User
-                                name={comment.user.username}
-                                description={`@${comment.user.username}`}
-                                avatarProps={{
-                                    src: `https://i.pravatar.cc/150?u=${comment.user.id}`,
-                                    size: 'sm',
-                                }}
-                                className="flex-shrink-0"
-                            />
+                            <Avatar size="sm" className="shrink-0 bg-indigo-500/10 text-indigo-600">
+                                <Avatar.Image
+                                    src={`https://i.pravatar.cc/150?u=${comment.user.id}`}
+                                    alt={comment.user.username}
+                                />
+                                <Avatar.Fallback>
+                                    {comment.user.username.slice(0, 2).toUpperCase()}
+                                </Avatar.Fallback>
+                            </Avatar>
                             <div className="min-w-0 flex-1">
-                                <p className="line-clamp-2 text-sm text-gray-600 italic dark:text-gray-300">
+                                <div className="mb-1 flex items-center justify-between">
+                                    <span className="truncate text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                                        @{comment.user.username}
+                                    </span>
+                                </div>
+                                <p className="line-clamp-2 text-xs text-zinc-600 italic dark:text-zinc-300">
                                     "{comment.body}"
                                 </p>
                             </div>
@@ -41,6 +55,6 @@ export function RecentComments({ comments }: RecentCommentsProps) {
                     </div>
                 ))}
             </div>
-        </div>
+        </Card>
     );
 }

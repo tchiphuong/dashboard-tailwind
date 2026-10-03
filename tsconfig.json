@@ -1,24 +1,51 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "incremental": true,
     "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "paths": {
+      "@heroui/compat": [
+        "src/heroui-compat.tsx"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "ES2017",
+    "baseUrl": "."
   },
-  "include": ["src"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ]
 }

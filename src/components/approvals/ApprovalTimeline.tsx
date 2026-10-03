@@ -1,5 +1,8 @@
-import { User } from '@heroui/react';
-import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
+"use client";
+
+import { Avatar } from "@heroui/react";
+import { CheckCircleIcon, XCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { useDateFormatter } from "@/hooks/use-date-formatter";
 
 export interface TimelineStep {
     id: number;
@@ -9,29 +12,27 @@ export interface TimelineStep {
         email: string;
         avatar: string;
     };
-    status: 'completed' | 'current' | 'pending' | 'rejected';
+    status: "completed" | "current" | "pending" | "rejected";
     timestamp?: string;
     comment?: string;
     subSteps?: TimelineStep[];
 }
 
-interface ApprovalTimelineProps {
+export interface ApprovalTimelineProps {
     steps: TimelineStep[];
     isSubStep?: boolean;
 }
 
-import { useDateFormatter } from '@/hooks/useDateFormatter';
-
 export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineProps) {
     const { formatDate } = useDateFormatter();
 
-    const getIcon = (status: TimelineStep['status']) => {
+    const getIcon = (status: TimelineStep["status"]) => {
         switch (status) {
-            case 'completed':
+            case "completed":
                 return <CheckCircleIcon className="text-success h-6 w-6" />;
-            case 'rejected':
+            case "rejected":
                 return <XCircleIcon className="text-danger h-6 w-6" />;
-            case 'current':
+            case "current":
                 return <ClockIcon className="text-primary h-6 w-6 animate-pulse" />;
             default:
                 return (
@@ -40,30 +41,30 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
         }
     };
 
-    const getStatusColor = (status: TimelineStep['status']) => {
+    const getStatusColor = (status: TimelineStep["status"]) => {
         switch (status) {
-            case 'completed':
-                return 'text-success-600 dark:text-success-400';
-            case 'rejected':
-                return 'text-danger-600 dark:text-danger-400';
-            case 'current':
-                return 'text-primary-600 dark:text-primary-400';
+            case "completed":
+                return "text-success";
+            case "rejected":
+                return "text-danger";
+            case "current":
+                return "text-primary";
             default:
-                return 'text-gray-400 dark:text-gray-500';
+                return "text-muted";
         }
     };
 
     return (
-        <div className={`relative ${isSubStep ? 'mt-4 pl-4' : 'py-4 pl-4'}`}>
+        <div className={`relative ${isSubStep ? "mt-4 pl-4" : "py-4 pl-4"}`}>
             {steps.map((step, index) => (
                 <div key={step.id} className="relative flex gap-4 pb-8 last:pb-0">
                     {/* Connecting Line */}
                     {index !== steps.length - 1 && (
                         <div
                             className={`absolute top-8 left-2.75 -ml-px h-full w-0.5 ${
-                                step.status === 'completed'
-                                    ? 'bg-success-300 dark:bg-success-700/50'
-                                    : 'border-l-2 border-dashed border-zinc-200 dark:border-zinc-700'
+                                step.status === "completed"
+                                    ? "bg-success-300 dark:bg-success-700/50"
+                                    : "border-l-2 border-dashed border-zinc-200 dark:border-zinc-700"
                             }`}
                         />
                     )}
@@ -80,29 +81,29 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
                                 <h4 className={`font-semibold ${getStatusColor(step.status)}`}>
                                     {step.title}
                                 </h4>
-                                <div className="mt-1">
-                                    <User
-                                        name={step.actor.name}
-                                        description={step.actor.email}
-                                        avatarProps={{
-                                            src: step.actor.avatar,
-                                            size: 'sm',
-                                        }}
-                                        classNames={{
-                                            name: 'text-xs text-gray-600 dark:text-gray-300',
-                                            description: 'text-[10px] text-gray-400',
-                                        }}
-                                    />
+                                <div className="mt-1 flex items-center gap-2">
+                                    <Avatar size="sm">
+                                        <Avatar.Image src={step.actor.avatar} alt={step.actor.name} />
+                                        <Avatar.Fallback>{step.actor.name.charAt(0)}</Avatar.Fallback>
+                                    </Avatar>
+                                    <div className="flex flex-col">
+                                        <span className="text-xs font-medium text-foreground">
+                                            {step.actor.name}
+                                        </span>
+                                        <span className="text-[10px] text-muted">
+                                            {step.actor.email}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             {step.timestamp && (
-                                <span className="text-xs whitespace-nowrap text-gray-400 dark:text-gray-500">
+                                <span className="text-xs whitespace-nowrap text-muted">
                                     {formatDate(step.timestamp)}
                                 </span>
                             )}
                         </div>
                         {step.comment && (
-                            <div className="mt-3 rounded-lg border border-zinc-100 bg-gray-50 p-3 text-sm text-gray-600 dark:border-zinc-700 dark:bg-zinc-700/50 dark:text-gray-300">
+                            <div className="mt-3 rounded-lg border border-zinc-100 bg-gray-50 p-3 text-sm text-foreground dark:border-zinc-700 dark:bg-zinc-700/50">
                                 <p className="italic">"{step.comment}"</p>
                             </div>
                         )}
@@ -118,3 +119,5 @@ export function ApprovalTimeline({ steps, isSubStep = false }: ApprovalTimelineP
         </div>
     );
 }
+
+export default ApprovalTimeline;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 interface FetchState<T> {
     data: T | null;
@@ -6,9 +6,12 @@ interface FetchState<T> {
     error: Error | null;
 }
 
+export * from "./use-api-handler";
+export * from "./use-confirm-delete";
+
 export function useFetch<T>(
     url: string,
-    options?: RequestInit
+    options?: RequestInit,
 ): FetchState<T> & { refetch: () => void } {
     const [state, setState] = useState<FetchState<T>>({
         data: null,
@@ -37,7 +40,10 @@ export function useFetch<T>(
     return { ...state, refetch: fetchData };
 }
 
-export function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void) {
+export function useClickOutside<T extends HTMLElement = HTMLElement>(
+    ref: React.RefObject<T | null>,
+    handler: () => void,
+) {
     useEffect(() => {
         const listener = (event: MouseEvent | TouchEvent) => {
             if (!ref.current || ref.current.contains(event.target as Node)) {
@@ -46,19 +52,19 @@ export function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () =
             handler();
         };
 
-        document.addEventListener('mousedown', listener);
-        document.addEventListener('touchstart', listener);
+        document.addEventListener("mousedown", listener);
+        document.addEventListener("touchstart", listener);
 
         return () => {
-            document.removeEventListener('mousedown', listener);
-            document.removeEventListener('touchstart', listener);
+            document.removeEventListener("mousedown", listener);
+            document.removeEventListener("touchstart", listener);
         };
     }, [ref, handler]);
 }
 
 export function useLocalStorage<T>(
     key: string,
-    initialValue: T
+    initialValue: T,
 ): [T, (value: T | ((prev: T) => T)) => void] {
     const [storedValue, setStoredValue] = useState<T>(() => {
         try {
@@ -71,11 +77,14 @@ export function useLocalStorage<T>(
 
     const setValue = (value: T | ((prev: T) => T)) => {
         try {
-            const valueToStore = value instanceof Function ? value(storedValue) : value;
+            const valueToStore =
+                typeof value === "function"
+                    ? (value as (prev: T) => T)(storedValue)
+                    : value;
             setStoredValue(valueToStore);
             window.localStorage.setItem(key, JSON.stringify(valueToStore));
         } catch (error) {
-            console.error('Error saving to localStorage:', error);
+            console.error("Error saving to localStorage:", error);
         }
     };
 

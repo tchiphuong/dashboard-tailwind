@@ -1,72 +1,90 @@
-import { useTranslation } from 'react-i18next';
+'use client';
+
+import { useTheme } from '@/contexts';
+import { ChartBarIcon } from '@heroicons/react/24/outline';
+import { useTranslations } from 'next-intl';
 import {
-    BarChart,
     Bar,
-    XAxis,
-    YAxis,
+    BarChart,
     CartesianGrid,
-    Tooltip,
     Legend,
     ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from 'recharts';
-import { useTheme } from '@/contexts/ThemeContext';
-import { ChartBarIcon } from '@heroicons/react/24/outline';
+import { Card } from '@/components/common';
 
 interface OrdersChartProps {
     data: { name: string; online: number; offline: number; unknown: number }[];
 }
 
-export function OrdersChart({ data }: OrdersChartProps) {
-    const { t } = useTranslation();
+export function OrdersChart({ data }: Readonly<OrdersChartProps>) {
+    const t = useTranslations();
     const { darkMode } = useTheme();
 
     return (
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
-            <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
-                <ChartBarIcon className="mr-2 h-5 w-5 text-green-500" />
-                {t('dashboard.ordersTrend')}
-            </h3>
+        <Card className="relative overflow-hidden border border-b-4 border-emerald-500 bg-white/95 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md dark:border-emerald-500 dark:bg-zinc-900/90">
+            <Card.Header
+                icon={<ChartBarIcon className="size-4" />}
+                iconColor="success"
+                title={t('dashboard.ordersTrend')}
+                action={<span className="text-[0.6875rem] text-zinc-400">Theo kênh bán hàng</span>}
+            />
+
             <div className="relative h-72">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid
                             strokeDasharray="3 3"
-                            stroke={darkMode ? '#374151' : '#E5E7EB'}
-                            opacity={0.5}
+                            stroke={darkMode ? '#27272a' : '#f4f4f5'}
+                            opacity={0.8}
                         />
                         <XAxis
                             dataKey="name"
-                            stroke={darkMode ? '#9CA3AF' : '#6B7280'}
-                            fontSize={12}
+                            stroke={darkMode ? '#71717a' : '#a1a1aa'}
+                            fontSize={11}
+                            tickLine={false}
                         />
-                        <YAxis stroke={darkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
+                        <YAxis
+                            stroke={darkMode ? '#71717a' : '#a1a1aa'}
+                            fontSize={11}
+                            tickLine={false}
+                            className="tabular-nums"
+                        />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: darkMode ? '#1F2937' : 'rgba(255,255,255,0.95)',
-                                borderRadius: '8px',
-                                border: darkMode ? '1px solid #374151' : '1px solid #e5e7eb',
-                                color: darkMode ? '#F3F4F6' : '#111827',
+                                backgroundColor: darkMode ? '#18181b' : 'rgba(255,255,255,0.95)',
+                                borderRadius: '12px',
+                                border: darkMode ? '1px solid #27272a' : '1px solid #e4e4e7',
+                                color: darkMode ? '#fafafa' : '#18181b',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                             }}
-                            itemStyle={{ color: darkMode ? '#F3F4F6' : '#111827' }}
-                            cursor={{ fill: darkMode ? '#374151' : '#F3F4F6', opacity: 0.4 }}
+                            itemStyle={{ color: darkMode ? '#fafafa' : '#18181b' }}
+                            cursor={{ fill: darkMode ? '#27272a' : '#f4f4f5', opacity: 0.5 }}
                         />
                         <Legend />
-                        <Bar dataKey="online" name="Online" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                        <Bar
+                            dataKey="online"
+                            name="Trực tuyến"
+                            fill="#3B82F6"
+                            radius={[6, 6, 0, 0]}
+                        />
                         <Bar
                             dataKey="offline"
-                            name="Offline"
+                            name="Tại quầy"
                             fill="#10B981"
-                            radius={[4, 4, 0, 0]}
+                            radius={[6, 6, 0, 0]}
                         />
                         <Bar
                             dataKey="unknown"
-                            name="Unknown"
+                            name="Kênh khác"
                             fill="#8B5CF6"
-                            radius={[4, 4, 0, 0]}
+                            radius={[6, 6, 0, 0]}
                         />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </Card>
     );
 }

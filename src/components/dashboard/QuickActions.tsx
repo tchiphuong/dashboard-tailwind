@@ -1,15 +1,18 @@
-import { useTranslation } from 'react-i18next';
+'use client';
+
 import {
+    ArrowUpTrayIcon,
+    BellIcon,
+    BoltIcon,
+    ChartBarIcon,
+    Cog6ToothIcon,
+    CubeIcon,
     PlusIcon,
     UserPlusIcon,
-    CubeIcon,
-    ChartBarIcon,
     UsersIcon,
-    Cog6ToothIcon,
-    BellIcon,
-    ArrowUpTrayIcon,
-    BoltIcon,
 } from '@heroicons/react/24/outline';
+import { useTranslations } from 'next-intl';
+import { Card } from '@/components/common';
 
 const actions = [
     { icon: PlusIcon, labelKey: 'dashboard.newOrder', color: 'blue' },
@@ -24,73 +27,84 @@ const actions = [
 
 const colorClasses: Record<string, { bg: string; border: string; icon: string }> = {
     blue: {
-        bg: 'bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50',
-        border: 'border-blue-200 dark:border-blue-700',
+        bg: 'bg-blue-500/5 hover:bg-blue-500/10 dark:bg-blue-500/10 dark:hover:bg-blue-500/20',
+        border: 'border-blue-100 hover:border-blue-300 dark:border-blue-900/40 dark:hover:border-blue-700/60',
         icon: 'text-blue-600 dark:text-blue-400',
     },
     green: {
-        bg: 'bg-green-50 dark:bg-green-900/30 hover:bg-green-100 dark:hover:bg-green-900/50',
-        border: 'border-green-200 dark:border-green-700',
-        icon: 'text-green-600 dark:text-green-400',
+        bg: 'bg-emerald-500/5 hover:bg-emerald-500/10 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20',
+        border: 'border-emerald-100 hover:border-emerald-300 dark:border-emerald-900/40 dark:hover:border-emerald-700/60',
+        icon: 'text-emerald-600 dark:text-emerald-400',
     },
     purple: {
-        bg: 'bg-purple-50 dark:bg-purple-900/30 hover:bg-purple-100 dark:hover:bg-purple-900/50',
-        border: 'border-purple-200 dark:border-purple-700',
+        bg: 'bg-purple-500/5 hover:bg-purple-500/10 dark:bg-purple-500/10 dark:hover:bg-purple-500/20',
+        border: 'border-purple-100 hover:border-purple-300 dark:border-purple-900/40 dark:hover:border-purple-700/60',
         icon: 'text-purple-600 dark:text-purple-400',
     },
     orange: {
-        bg: 'bg-orange-50 dark:bg-orange-900/30 hover:bg-orange-100 dark:hover:bg-orange-900/50',
-        border: 'border-orange-200 dark:border-orange-700',
-        icon: 'text-orange-600 dark:text-orange-400',
+        bg: 'bg-amber-500/5 hover:bg-amber-500/10 dark:bg-amber-500/10 dark:hover:bg-amber-500/20',
+        border: 'border-amber-100 hover:border-amber-300 dark:border-amber-900/40 dark:hover:border-amber-700/60',
+        icon: 'text-amber-600 dark:text-amber-400',
     },
     indigo: {
-        bg: 'bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50',
-        border: 'border-indigo-200 dark:border-indigo-700',
+        bg: 'bg-indigo-500/5 hover:bg-indigo-500/10 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20',
+        border: 'border-indigo-100 hover:border-indigo-300 dark:border-indigo-900/40 dark:hover:border-indigo-700/60',
         icon: 'text-indigo-600 dark:text-indigo-400',
     },
     gray: {
-        bg: 'bg-gray-50 dark:bg-zinc-700/50 hover:bg-gray-100 dark:hover:bg-gray-700',
-        border: 'border-zinc-200 dark:border-zinc-600',
-        icon: 'text-gray-600 dark:text-gray-400',
+        bg: 'bg-zinc-500/5 hover:bg-zinc-500/10 dark:bg-zinc-500/10 dark:hover:bg-zinc-500/20',
+        border: 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-700/40 dark:hover:border-zinc-600/60',
+        icon: 'text-zinc-600 dark:text-zinc-400',
     },
     red: {
-        bg: 'bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50',
-        border: 'border-red-200 dark:border-red-700',
-        icon: 'text-red-600 dark:text-red-400',
+        bg: 'bg-rose-500/5 hover:bg-rose-500/10 dark:bg-rose-500/10 dark:hover:bg-rose-500/20',
+        border: 'border-rose-100 hover:border-rose-300 dark:border-rose-900/40 dark:hover:border-rose-700/60',
+        icon: 'text-rose-600 dark:text-rose-400',
     },
     teal: {
-        bg: 'bg-teal-50 dark:bg-teal-900/30 hover:bg-teal-100 dark:hover:bg-teal-900/50',
-        border: 'border-teal-200 dark:border-teal-700',
+        bg: 'bg-teal-500/5 hover:bg-teal-500/10 dark:bg-teal-500/10 dark:hover:bg-teal-500/20',
+        border: 'border-teal-100 hover:border-teal-300 dark:border-teal-900/40 dark:hover:border-teal-700/60',
         icon: 'text-teal-600 dark:text-teal-400',
     },
 };
 
 export function QuickActions() {
-    const { t } = useTranslation();
+    const t = useTranslations();
 
     return (
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg lg:col-span-2 dark:border-zinc-700 dark:bg-zinc-800">
-            <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
-                <BoltIcon className="mr-2 h-5 w-5 text-yellow-500" />
-                {t('dashboard.quickActions')}
-            </h3>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+        <Card className="relative overflow-hidden border border-b-4 border-amber-500 bg-white/95 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md dark:border-amber-500 dark:bg-zinc-900/90">
+            <div className="mb-4 flex items-center justify-between border-b border-zinc-100 pb-3 dark:border-zinc-800">
+                <div className="flex items-center gap-2">
+                    <div className="flex size-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-500 dark:bg-amber-500/20">
+                        <BoltIcon className="size-4" />
+                    </div>
+                    <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
+                        {t('dashboard.quickActions')}
+                    </h3>
+                </div>
+                <span className="text-[11px] text-zinc-400">Phím tắt thao tác nhanh</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
                 {actions.map((action, index) => {
                     const colors = colorClasses[action.color];
                     const Icon = action.icon;
                     return (
                         <button
                             key={index}
-                            className={`flex flex-col items-center rounded-xl p-4 ${colors.bg} border transition-all duration-200 ${colors.border} hover:shadow-md`}
+                            type="button"
+                            className={`group flex flex-col items-center justify-center rounded-xl border p-3 transition-all duration-200 active:scale-95 ${colors.bg} ${colors.border} hover:shadow-sm`}
                         >
-                            <Icon className={`h-6 w-6 ${colors.icon} mb-2`} />
-                            <span className="text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <div className="mb-2 flex size-8 items-center justify-center rounded-lg bg-white shadow-2xs transition-transform group-hover:scale-110 dark:bg-zinc-800">
+                                <Icon className={`size-4.5 ${colors.icon}`} />
+                            </div>
+                            <span className="text-center text-xs font-semibold text-zinc-700 dark:text-zinc-200">
                                 {t(action.labelKey)}
                             </span>
                         </button>
                     );
                 })}
             </div>
-        </div>
+        </Card>
     );
 }

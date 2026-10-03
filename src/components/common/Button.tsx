@@ -1,44 +1,82 @@
 import { Button as HeroButton, ButtonProps as HeroButtonProps } from '@heroui/react';
+import React from 'react';
 
-export interface ButtonProps extends HeroButtonProps {
+export type LegacyButtonVariant = 'light' | 'flat' | 'bordered' | 'solid';
+
+export interface ButtonProps extends Omit<HeroButtonProps, 'children' | 'variant'> {
     isIconOnlyMobile?: boolean;
+    startContent?: React.ReactNode;
+    children?: React.ReactNode;
+    color?: 'primary' | 'secondary' | 'danger' | 'default' | 'success' | 'warning' | string;
+    variant?: HeroButtonProps['variant'] | LegacyButtonVariant;
+    isLoading?: boolean;
 }
 
-export function Button({
-    children,
-    radius = 'full',
-    className = '',
-    isIconOnlyMobile,
-    startContent,
-    ...props
-}: ButtonProps) {
-    if (isIconOnlyMobile) {
+function resolveButtonVariant(
+    variant?: ButtonProps['variant'],
+    color?: string
+): HeroButtonProps['variant'] {
+    if (color === 'danger') return 'danger';
+    if (variant === 'light') return 'ghost';
+    if (variant === 'flat') return 'tertiary';
+    if (variant === 'bordered') return 'outline';
+    if (variant === 'solid') return color === 'secondary' ? 'secondary' : 'primary';
+    if (variant) return variant as HeroButtonProps['variant'];
+    if (color === 'secondary') return 'secondary';
+    if (color === 'primary') return 'primary';
+    return undefined;
+}
+
+/**
+ * Button Component chuẩn hóa HeroUI v3
+ * Type-safe tuyệt đối, xóa sạch toàn bộ kiểu any lỏng lẻo
+ */
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+    (
+        {
+            children,
+            className,
+            isIconOnlyMobile,
+            startContent,
+            color,
+            variant,
+            isLoading,
+            ...props
+        },
+        ref
+    ) => {
+        const resolvedVariant = resolveButtonVariant(variant, color);
+        const isPending = isLoading ?? props.isPending;
+
+        if (isIconOnlyMobile) {
+            return (
+                <HeroButton
+                    ref={ref}
+                    variant={resolvedVariant}
+                    isPending={isPending}
+                    className={className}
+                    {...props}
+                >
+                    {startContent && <span>{startContent}</span>}
+                    <span className="hidden sm:inline">{children}</span>
+                </HeroButton>
+            );
+        }
+
         return (
             <HeroButton
-                radius={radius}
-                className={`h-10 w-10 min-w-0 p-0 font-medium sm:h-10 sm:w-auto sm:min-w-20 sm:px-4 ${className}`}
+                ref={ref}
+                variant={resolvedVariant}
+                isPending={isPending}
+                className={className}
                 {...props}
             >
-                <div className="flex items-center gap-2">
-                    {/* Show icon always, but size might need adjustment if passed manually */}
-                    {startContent ? (
-                        <span className="flex items-center justify-center">{startContent}</span>
-                    ) : null}
-                    {/* Hide text on mobile */}
-                    <span className="hidden sm:inline">{children}</span>
-                </div>
+                {startContent}
+                {children}
             </HeroButton>
         );
     }
+);
 
-    return (
-        <HeroButton
-            radius={radius}
-            className={`font-medium ${className}`}
-            startContent={startContent}
-            {...props}
-        >
-            {children}
-        </HeroButton>
-    );
-}
+Button.displayName = 'Button';
+export type { HeroButtonProps };

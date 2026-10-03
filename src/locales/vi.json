@@ -15,16 +15,698 @@
             "signOut": "Đăng xuất",
             "markAllAsRead": "Đánh dấu đã đọc tất cả",
             "notifications": "Thông báo",
-            "unreadNotifications": "Bạn có {{count}} thông báo chưa đọc",
+            "unreadNotifications": "Bạn có {change} thông báo chưa đọc",
             "favorites": "Yêu thích",
             "noResults": "Không tìm thấy kết quả",
             "close": "Đóng",
             "total": "Tổng cộng",
-            "showing": "Hiển thị {{from}} - {{to}} trên {{total}}",
-            "rowsPerPage": "{{count}} dòng",
+            "showing": "Hiển thị {change} - {change} trên {change}",
+            "rowsPerPage": "{change} dòng",
             "actions": "Thao tác",
             "id": "ID",
-            "status": "Trạng thái"
+            "status": "Trạng thái",
+            "confirmDialog": {
+                "btn": {
+                    "cancel": "Hủy",
+                    "confirm": "Xác nhận"
+                },
+                "lbl": {
+                    "deleteTitle": "Xác nhận xóa",
+                    "discardTitle": "Hủy thay đổi",
+                    "saveTitle": "Lưu thay đổi",
+                    "title": "Xác nhận hành động"
+                },
+                "msg": {
+                    "deleteMessage": "Dữ liệu này sẽ bị xóa vĩnh viễn và không thể khôi phục. Bạn có chắc chắn muốn tiếp tục?",
+                    "discardMessage": "Bạn có chắc chắn muốn hủy các thay đổi? Hành động này không thể hoàn tác.",
+                    "message": "Bạn có chắc chắn muốn thực hiện hành động này?",
+                    "saveMessage": "Bạn có muốn lưu các thay đổi không?"
+                }
+            },
+            "error": {
+                "msg": {
+                    "general": "Đã có lỗi xảy ra",
+                    "network": "Lỗi kết nối mạng",
+                    "notFound": "Không tìm thấy dữ liệu",
+                    "serverError": "Lỗi máy chủ",
+                    "tryAgain": "Vui lòng thử lại",
+                    "unauthorized": "Bạn không có quyền truy cập"
+                }
+            },
+            "func": {
+                "am": {
+                    "assetAdjustment": "Điều chỉnh tài sản",
+                    "assetAssignment": "Phân công tài sản",
+                    "assetCount": "Kiểm kê tài sản",
+                    "assetDisposal": "Thanh lý tài sản",
+                    "assetHandover": "Bàn giao tài sản",
+                    "assetRegister": "Sổ tài sản",
+                    "assetReturn": "Thu hồi tài sản",
+                    "assetStatus": "Trạng thái tài sản",
+                    "assetSummary": "Tổng hợp tài sản",
+                    "assetTransfer": "Điều chuyển tài sản",
+                    "depreciation": "Khấu hao",
+                    "maintenanceCost": "Chi phí bảo trì",
+                    "maintenanceHistory": "Lịch sử bảo trì",
+                    "maintenancePlan": "Kế hoạch bảo trì",
+                    "workOrder": "Lệnh làm việc"
+                },
+                "cr": {
+                    "assignment": "Phân công",
+                    "call": "Cuộc gọi",
+                    "campaign": "Chiến dịch",
+                    "campaignResult": "Kết quả chiến dịch",
+                    "conversion": "Chuyển đổi",
+                    "customerComplaint": "Khiếu nại khách hàng",
+                    "forecast": "Dự báo",
+                    "interactionHistory": "Lịch sử tương tác",
+                    "lead": "Khách hàng tiềm năng",
+                    "meeting": "Cuộc họp",
+                    "opportunity": "Cơ hội",
+                    "salesPipeline": "Đường ống bán hàng",
+                    "supportTicket": "Yêu cầu hỗ trợ",
+                    "target": "Mục tiêu",
+                    "task": "Công việc"
+                },
+                "db": {
+                    "executiveDashboard": "Bảng tổng quan Ban giám đốc",
+                    "financeDashboard": "Bảng tổng quan Tài chính",
+                    "financialSummary": "Tổng hợp Tài chính",
+                    "inventorySummary": "Tổng hợp Tồn kho",
+                    "myTasks": "Công việc của tôi",
+                    "notifications": "Thông báo",
+                    "pendingApprovals": "Chờ phê duyệt",
+                    "productionDashboard": "Bảng tổng quan Sản xuất",
+                    "productionSummary": "Tổng hợp Sản xuất",
+                    "salesDashboard": "Bảng tổng quan Bán hàng",
+                    "salesSummary": "Tổng hợp Bán hàng"
+                },
+                "dm": {
+                    "approvedDocuments": "Tài liệu đã duyệt",
+                    "document": "Tài liệu",
+                    "documentCategory": "Danh mục tài liệu",
+                    "documentType": "Loại tài liệu",
+                    "expiredDocuments": "Tài liệu hết hạn",
+                    "myDocuments": "Tài liệu của tôi",
+                    "pendingDocuments": "Tài liệu chờ duyệt",
+                    "recentDocuments": "Tài liệu gần đây",
+                    "searchDocuments": "Tìm kiếm tài liệu",
+                    "tags": "Thẻ/Từ khóa",
+                    "upload": "Tải lên",
+                    "versionControl": "Quản lý phiên bản"
+                },
+                "fi": {
+                    "apAging": "Phân tích tuổi nợ phải trả",
+                    "arAging": "Phân tích tuổi nợ phải thu",
+                    "assetDisposal": "Thanh lý tài sản",
+                    "assetRegister": "Sổ tài sản",
+                    "balanceSheet": "Bảng cân đối kế toán",
+                    "bankPayment": "Phiếu chi ngân hàng",
+                    "bankReceipt": "Phiếu thu ngân hàng",
+                    "bankReconciliation": "Đối chiếu ngân hàng",
+                    "budgetAllocation": "Phân bổ ngân sách",
+                    "budgetControl": "Kiểm soát ngân sách",
+                    "budgetPlanning": "Lập ngân sách",
+                    "cashBook": "Sổ quỹ tiền mặt",
+                    "cashFlow": "Lưu chuyển tiền tệ",
+                    "cashPayment": "Phiếu chi tiền mặt",
+                    "cashReceipt": "Phiếu thu tiền mặt",
+                    "closing": "Khóa sổ",
+                    "customerInvoice": "Hóa đơn khách hàng",
+                    "customerReceipt": "Thu tiền khách hàng",
+                    "depreciation": "Khấu hao",
+                    "fiscalPeriod": "Kỳ kế toán",
+                    "generalLedger": "Sổ cái chung",
+                    "incomeStatement": "Báo cáo kết quả kinh doanh",
+                    "journalEntry": "Bút toán sổ nhật ký",
+                    "supplierInvoice": "Hóa đơn nhà cung cấp",
+                    "supplierPayment": "Thanh toán nhà cung cấp"
+                },
+                "group": {
+                    "am": {
+                        "assets": "Tài sản",
+                        "assignment": "Phân công",
+                        "inventory": "Kiểm kê",
+                        "maintenance": "Bảo trì",
+                        "reports": "Báo cáo"
+                    },
+                    "cr": {
+                        "activities": "Hoạt động",
+                        "campaign": "Chiến dịch",
+                        "customerService": "Chăm sóc khách hàng",
+                        "lead": "Khách hàng tiềm năng",
+                        "opportunity": "Cơ hội"
+                    },
+                    "db": {
+                        "myWorkspace": "Không gian làm việc",
+                        "overview": "Tổng quan",
+                        "quickReports": "Báo cáo nhanh"
+                    },
+                    "dm": {
+                        "approval": "Phê duyệt",
+                        "categories": "Danh mục",
+                        "documents": "Tài liệu",
+                        "search": "Tìm kiếm"
+                    },
+                    "fi": {
+                        "accountsPayable": "Phải trả",
+                        "accountsReceivable": "Phải thu",
+                        "bank": "Ngân hàng",
+                        "budget": "Ngân sách",
+                        "cash": "Tiền mặt",
+                        "fixedAssets": "Tài sản cố định",
+                        "generalLedger": "Sổ cái chung",
+                        "reports": "Báo cáo"
+                    },
+                    "hr": {
+                        "attendance": "Chấm công",
+                        "employee": "Nhân viên",
+                        "leave": "Nghỉ phép",
+                        "overtime": "Tăng ca",
+                        "payroll": "Lương",
+                        "performance": "Đánh giá năng lực",
+                        "recruitment": "Tuyển dụng",
+                        "reports": "Báo cáo",
+                        "training": "Đào tạo"
+                    },
+                    "iv": {
+                        "issuing": "Xuất kho",
+                        "lotSerial": "Lô/Serial",
+                        "receiving": "Nhập kho",
+                        "reports": "Báo cáo",
+                        "stockCount": "Kiểm kê kho",
+                        "transfer": "Chuyển kho"
+                    },
+                    "ms": {
+                        "assets": "Tài sản",
+                        "businessPartners": "Đối tác kinh doanh",
+                        "common": "Chung",
+                        "finance": "Tài chính",
+                        "humanResources": "Nhân sự",
+                        "inventory": "Kho",
+                        "organization": "Tổ chức",
+                        "production": "Sản xuất",
+                        "projects": "Dự án",
+                        "purchasing": "Mua hàng",
+                        "quality": "Chất lượng",
+                        "sales": "Bán hàng"
+                    },
+                    "pm": {
+                        "cost": "Chi phí",
+                        "execution": "Thực thi",
+                        "planning": "Lập kế hoạch",
+                        "project": "Dự án",
+                        "reports": "Báo cáo"
+                    },
+                    "pr": {
+                        "finishedGoods": "Thành phẩm",
+                        "materialIssue": "Cấp phát vật tư",
+                        "planning": "Lập kế hoạch",
+                        "productionOrder": "Lệnh sản xuất",
+                        "reports": "Báo cáo",
+                        "shopFloor": "Phân xưởng"
+                    },
+                    "pu": {
+                        "goodsReceipt": "Nhận hàng",
+                        "purchaseOrder": "Đơn mua hàng",
+                        "purchaseRequest": "Yêu cầu mua hàng",
+                        "reports": "Báo cáo",
+                        "rfq": "Yêu cầu báo giá",
+                        "supplierReturn": "Trả hàng nhà cung cấp"
+                    },
+                    "qm": {
+                        "finalInspection": "Kiểm tra cuối cùng",
+                        "inProcessInspection": "Kiểm tra trong quá trình",
+                        "incomingInspection": "Kiểm tra đầu vào",
+                        "nonConformance": "Sản phẩm không phù hợp",
+                        "reports": "Báo cáo"
+                    },
+                    "rp": {
+                        "customReports": "Báo cáo tùy chỉnh",
+                        "financialReports": "Báo cáo tài chính",
+                        "managementReports": "Báo cáo quản trị",
+                        "operationalReports": "Báo cáo vận hành"
+                    },
+                    "sa": {
+                        "delivery": "Giao hàng",
+                        "invoice": "Hóa đơn",
+                        "quotation": "Báo giá",
+                        "reports": "Báo cáo",
+                        "return": "Trả hàng",
+                        "salesOrder": "Đơn bán hàng"
+                    },
+                    "sy": {
+                        "audit": "Nhật ký hệ thống",
+                        "configuration": "Cấu hình",
+                        "integration": "Tích hợp",
+                        "navigation": "Điều hướng",
+                        "numbering": "Đánh số",
+                        "security": "Bảo mật",
+                        "templates": "Biểu mẫu",
+                        "utilities": "Tiện ích"
+                    },
+                    "wf": {
+                        "approval": "Phê duyệt",
+                        "delegation": "Ủy quyền",
+                        "workflow": "Quy trình"
+                    }
+                },
+                "hr": {
+                    "attendanceAdjustment": "Điều chỉnh chấm công",
+                    "attendanceLog": "Nhật ký chấm công",
+                    "attendanceSheet": "Bảng chấm công",
+                    "attendanceSummary": "Tổng hợp chấm công",
+                    "candidate": "Ứng viên",
+                    "certification": "Chứng chỉ",
+                    "employee": "Nhân viên",
+                    "employeeEvaluation": "Đánh giá nhân viên",
+                    "employeeProfile": "Hồ sơ nhân viên",
+                    "employmentContract": "Hợp đồng lao động",
+                    "headcount": "Số lượng nhân sự",
+                    "interview": "Phỏng vấn",
+                    "kpi": "KPI",
+                    "leaveApproval": "Duyệt nghỉ phép",
+                    "leaveBalance": "Số dư phép năm",
+                    "leaveRequest": "Yêu cầu nghỉ phép",
+                    "overtimeApproval": "Duyệt tăng ca",
+                    "overtimeRequest": "Yêu cầu tăng ca",
+                    "overtimeSummary": "Tổng hợp tăng ca",
+                    "payrollAdjustment": "Điều chỉnh lương",
+                    "payrollCalculation": "Tính lương",
+                    "payrollSummary": "Tổng hợp lương",
+                    "payslip": "Phiếu lương",
+                    "performanceReview": "Đánh giá hiệu suất",
+                    "recruitmentRequest": "Yêu cầu tuyển dụng",
+                    "trainingCourse": "Khóa đào tạo",
+                    "trainingPlan": "Kế hoạch đào tạo",
+                    "turnover": "Tỷ lệ nghỉ việc"
+                },
+                "iv": {
+                    "countPlan": "Kế hoạch kiểm kê",
+                    "expiringInventory": "Hàng sắp hết hạn",
+                    "inventoryAging": "Tuổi hàng tồn kho",
+                    "inventoryMovement": "Luân chuyển hàng hóa",
+                    "lotTracking": "Theo dõi theo lô",
+                    "miscellaneousIssue": "Xuất kho khác",
+                    "miscellaneousReceipt": "Nhập kho khác",
+                    "productionIssue": "Xuất sản xuất",
+                    "productionReceipt": "Nhập thành phẩm",
+                    "purchaseReceipt": "Nhập hàng mua",
+                    "returnIssue": "Xuất trả hàng",
+                    "returnReceipt": "Nhập hàng trả lại",
+                    "salesIssue": "Xuất bán hàng",
+                    "serialTracking": "Theo dõi theo Serial",
+                    "stockAdjustment": "Điều chỉnh tồn kho",
+                    "stockBalance": "Số dư tồn kho",
+                    "stockCount": "Kiểm kê kho",
+                    "stockTransfer": "Chuyển kho",
+                    "traceability": "Truy xuất nguồn gốc",
+                    "transferConfirmation": "Xác nhận chuyển kho",
+                    "transferRequest": "Yêu cầu chuyển kho"
+                },
+                "ms": {
+                    "accountGroup": "Nhóm tài khoản",
+                    "assetCategory": "Danh mục tài sản",
+                    "assetLocation": "Vị trí tài sản",
+                    "assetType": "Loại tài sản",
+                    "bank": "Ngân hàng",
+                    "bankBranch": "Chi nhánh ngân hàng",
+                    "barcode": "Mã vạch",
+                    "bom": "Định mức nguyên liệu (BOM)",
+                    "bomVersion": "Phiên bản BOM",
+                    "branch": "Chi nhánh",
+                    "brand": "Thương hiệu",
+                    "businessUnit": "Đơn vị kinh doanh",
+                    "buyer": "Nhân viên mua hàng",
+                    "calendar": "Lịch làm việc",
+                    "carrier": "Đơn vị vận chuyển",
+                    "chartOfAccounts": "Hệ thống tài khoản",
+                    "city": "Thành phố/Quận huyện",
+                    "company": "Công ty",
+                    "contactPerson": "Người liên hệ",
+                    "contractType": "Loại hợp đồng",
+                    "costCenter": "Trung tâm chi phí",
+                    "country": "Quốc gia",
+                    "currency": "Tiền tệ",
+                    "customer": "Khách hàng",
+                    "customerGroup": "Nhóm khách hàng",
+                    "customerPriceGroup": "Nhóm giá khách hàng",
+                    "defectCategory": "Nhóm lỗi",
+                    "defectCode": "Mã lỗi",
+                    "deliveryMethod": "Phương thức giao hàng",
+                    "deliveryTerm": "Điều khoản giao hàng",
+                    "department": "Phòng ban",
+                    "depreciationMethod": "Phương pháp khấu hao",
+                    "discountGroup": "Nhóm chiết khấu",
+                    "distributor": "Nhà phân phối",
+                    "employeeType": "Loại nhân viên",
+                    "exchangeRate": "Tỷ giá hối đoái",
+                    "holiday": "Ngày nghỉ/Lễ",
+                    "incoterms": "Incoterms",
+                    "inspectionItem": "Chỉ tiêu kiểm tra",
+                    "inspectionMethod": "Phương pháp kiểm tra",
+                    "inspectionStandard": "Tiêu chuẩn kiểm tra",
+                    "item": "Vật tư/Hàng hóa",
+                    "itemCategory": "Danh mục vật tư",
+                    "itemGroup": "Nhóm vật tư",
+                    "jobTitle": "Chức danh",
+                    "language": "Ngôn ngữ",
+                    "leaveType": "Loại nghỉ phép",
+                    "lotRule": "Quy tắc quản lý lô",
+                    "machine": "Máy móc",
+                    "manufacturer": "Nhà sản xuất",
+                    "mold": "Khuôn mẫu",
+                    "operation": "Công đoạn",
+                    "overtimeType": "Loại tăng ca",
+                    "packaging": "Quy cách đóng gói",
+                    "paymentMethod": "Phương thức thanh toán",
+                    "paymentTerm": "Điều khoản thanh toán",
+                    "payrollGroup": "Nhóm lương",
+                    "plant": "Nhà máy",
+                    "position": "Vị trí công việc",
+                    "priority": "Độ ưu tiên",
+                    "productionLine": "Dây chuyền sản xuất",
+                    "profitCenter": "Trung tâm lợi nhuận",
+                    "projectCategory": "Danh mục dự án",
+                    "projectStage": "Giai đoạn dự án",
+                    "projectType": "Loại dự án",
+                    "purchaseCategory": "Danh mục mua hàng",
+                    "purchasePriceList": "Bảng giá mua",
+                    "reason": "Lý do",
+                    "routing": "Quy trình sản xuất",
+                    "routingVersion": "Phiên bản quy trình",
+                    "salesChannel": "Kênh bán hàng",
+                    "salesPriceList": "Bảng giá bán",
+                    "salesRegion": "Vùng bán hàng",
+                    "salesperson": "Nhân viên bán hàng",
+                    "samplingRule": "Quy tắc lấy mẫu",
+                    "section": "Bộ phận",
+                    "serialRule": "Quy tắc quản lý Serial",
+                    "shift": "Ca làm việc",
+                    "shiftPattern": "Chu kỳ ca",
+                    "stateProvince": "Tỉnh/Thành phố",
+                    "supplier": "Nhà cung cấp",
+                    "supplierGroup": "Nhóm nhà cung cấp",
+                    "taxCode": "Mã thuế",
+                    "taxRate": "Thuế suất",
+                    "team": "Đội/Nhóm",
+                    "timeZone": "Múi giờ",
+                    "tool": "Công cụ/Dụng cụ",
+                    "unit": "Đơn vị tính",
+                    "unitConversion": "Quy đổi đơn vị",
+                    "warehouse": "Kho",
+                    "warehouseLocation": "Vị trí kho",
+                    "warehouseZone": "Khu vực kho",
+                    "workCenter": "Khu vực làm việc"
+                },
+                "pm": {
+                    "actualCost": "Chi phí thực tế",
+                    "budget": "Ngân sách",
+                    "closeProject": "Đóng dự án",
+                    "createProject": "Tạo dự án",
+                    "issue": "Vấn đề phát sinh",
+                    "milestone": "Cột mốc",
+                    "project": "Dự án",
+                    "projectCost": "Chi phí dự án",
+                    "projectProgress": "Tiến độ dự án",
+                    "resourcePlan": "Kế hoạch nguồn lực",
+                    "resourceUtilization": "Sử dụng nguồn lực",
+                    "revenue": "Doanh thu",
+                    "task": "Công việc",
+                    "timesheet": "Bảng chấm công",
+                    "wbs": "Cấu trúc phân việc (WBS)"
+                },
+                "pr": {
+                    "capacityPlanning": "Hoạch định công suất",
+                    "closeOrder": "Đóng lệnh sản xuất",
+                    "finishedGoodsReceipt": "Nhập kho thành phẩm",
+                    "laborTime": "Thời gian nhân công",
+                    "machineEfficiency": "Hiệu suất máy móc",
+                    "machineTime": "Thời gian chạy máy",
+                    "materialIssue": "Cấp phát vật tư",
+                    "materialRequest": "Yêu cầu vật tư",
+                    "materialReturn": "Trả lại vật tư",
+                    "mrp": "Hoạch định nhu cầu NVL (MRP)",
+                    "packaging": "Đóng gói",
+                    "productionOrders": "Lệnh sản xuất",
+                    "productionOutput": "Sản lượng sản xuất",
+                    "productionPlan": "Kế hoạch sản xuất",
+                    "productionProgress": "Tiến độ sản xuất",
+                    "productionReport": "Báo cáo sản xuất",
+                    "productionSchedule": "Lịch trình sản xuất",
+                    "releaseOrder": "Phát hành lệnh",
+                    "scrapAnalysis": "Phân tích phế phẩm",
+                    "scrapReport": "Báo cáo phế phẩm",
+                    "semiFinishedGoods": "Bán thành phẩm"
+                },
+                "pu": {
+                    "approval": "Phê duyệt",
+                    "createPurchaseOrder": "Tạo đơn mua hàng",
+                    "createRequest": "Tạo yêu cầu",
+                    "deliveryPerformance": "Tiến độ giao hàng",
+                    "goodsReceiptNote": "Phiếu nhận hàng",
+                    "outstandingPurchaseOrders": "Đơn mua hàng tồn đọng",
+                    "purchaseAnalysis": "Phân tích mua hàng",
+                    "purchaseOrders": "Đơn mua hàng",
+                    "quotationComparison": "So sánh báo giá",
+                    "receivingInspection": "Kiểm tra đầu vào",
+                    "requestForQuotation": "Yêu cầu báo giá",
+                    "requests": "Yêu cầu mua hàng",
+                    "returnRequest": "Yêu cầu trả hàng",
+                    "returnShipment": "Xuất trả hàng",
+                    "stockReceipt": "Nhập kho",
+                    "supplierCredit": "Công nợ nhà cung cấp",
+                    "supplierPerformance": "Đánh giá nhà cung cấp",
+                    "supplierSelection": "Lựa chọn nhà cung cấp"
+                },
+                "qm": {
+                    "acceptance": "Nghiệm thu",
+                    "capa": "Hành động khắc phục & phòng ngừa (CAPA)",
+                    "correctiveAction": "Hành động khắc phục",
+                    "costOfQuality": "Chi phí chất lượng",
+                    "defectAnalysis": "Phân tích lỗi",
+                    "defectRecording": "Ghi nhận lỗi",
+                    "finalInspection": "Kiểm tra cuối cùng",
+                    "inspectionPlan": "Kế hoạch kiểm tra",
+                    "inspectionResult": "Kết quả kiểm tra",
+                    "ncr": "Báo cáo không phù hợp (NCR)",
+                    "processInspection": "Kiểm tra trong quá trình",
+                    "qualityCertificate": "Chứng nhận chất lượng",
+                    "qualityPerformance": "Hiệu quả chất lượng",
+                    "rootCauseAnalysis": "Phân tích nguyên nhân gốc",
+                    "shipmentApproval": "Phê duyệt xuất hàng",
+                    "supplierQuality": "Chất lượng nhà cung cấp"
+                },
+                "rp": {
+                    "arAp": "Phải thu/Phải trả",
+                    "balanceSheet": "Bảng cân đối kế toán",
+                    "cashFlow": "Lưu chuyển tiền tệ",
+                    "executiveReports": "Báo cáo điều hành",
+                    "inventory": "Kho",
+                    "kpiDashboard": "Bảng tổng quan KPI",
+                    "performanceAnalysis": "Phân tích hiệu suất",
+                    "production": "Sản xuất",
+                    "profitLoss": "Lãi/Lỗ",
+                    "purchasing": "Mua hàng",
+                    "reportDesigner": "Thiết kế báo cáo",
+                    "reportLibrary": "Thư viện báo cáo",
+                    "sales": "Bán hàng",
+                    "scheduledReports": "Báo cáo định kỳ"
+                },
+                "sa": {
+                    "approveQuotation": "Phê duyệt báo giá",
+                    "approveSalesOrder": "Phê duyệt đơn bán hàng",
+                    "createQuotation": "Tạo báo giá",
+                    "createSalesOrder": "Tạo đơn bán hàng",
+                    "creditNote": "Giấy báo có",
+                    "deliveryConfirmation": "Xác nhận giao hàng",
+                    "deliveryOrder": "Lệnh giao hàng",
+                    "invoiceAdjustment": "Điều chỉnh hóa đơn",
+                    "invoiceCancellation": "Hủy hóa đơn",
+                    "outstandingOrders": "Đơn hàng tồn đọng",
+                    "profitAnalysis": "Phân tích lợi nhuận",
+                    "proofOfDelivery": "Bằng chứng giao hàng",
+                    "quotations": "Báo giá",
+                    "returnReceipt": "Phiếu nhận hàng trả",
+                    "returnRequest": "Yêu cầu trả hàng",
+                    "salesAnalysis": "Phân tích bán hàng",
+                    "salesInvoice": "Hóa đơn bán hàng",
+                    "salesOrders": "Đơn bán hàng",
+                    "salesPerformance": "Hiệu quả bán hàng"
+                },
+                "sy": {
+                    "action": "Hành động",
+                    "apiClient": "API Client",
+                    "auditLog": "Nhật ký kiểm toán",
+                    "backup": "Sao lưu",
+                    "changeLog": "Nhật ký thay đổi",
+                    "companySettings": "Cài đặt công ty",
+                    "config": "Cài đặt",
+                    "dataExport": "Xuất dữ liệu",
+                    "dataImport": "Nhập dữ liệu",
+                    "dataSynchronization": "Đồng bộ dữ liệu",
+                    "documentType": "Loại chứng từ",
+                    "emailSettings": "Cài đặt Email",
+                    "emailTemplate": "Mẫu Email",
+                    "errorLog": "Nhật ký lỗi",
+                    "function": "Chức năng",
+                    "importExportTemplate": "Mẫu Nhập/Xuất",
+                    "loginLog": "Nhật ký đăng nhập",
+                    "menu": "Quản lý Menu",
+                    "notificationTemplate": "Mẫu thông báo",
+                    "numberingRule": "Quy tắc đánh số",
+                    "permission": "Quyền hạn",
+                    "reportTemplate": "Mẫu báo cáo",
+                    "restore": "Khôi phục",
+                    "role": "Vai trò",
+                    "sequence": "Dãy số",
+                    "storageSettings": "Cài đặt lưu trữ",
+                    "systemParameters": "Tham số hệ thống",
+                    "user": "Người dùng",
+                    "userGroup": "Nhóm người dùng",
+                    "webhook": "Webhook"
+                },
+                "wf": {
+                    "activeDelegations": "Ủy quyền đang hiệu lực",
+                    "approvalHistory": "Lịch sử phê duyệt",
+                    "approvalLevel": "Cấp phê duyệt",
+                    "approver": "Người phê duyệt",
+                    "delegateApproval": "Ủy quyền phê duyệt",
+                    "delegationHistory": "Lịch sử ủy quyền",
+                    "myRequests": "Yêu cầu của tôi",
+                    "pendingApproval": "Chờ phê duyệt",
+                    "workflowDefinition": "Định nghĩa quy trình"
+                }
+            },
+            "global": {
+                "btn": {
+                    "add": "Thêm",
+                    "back": "Quay lại",
+                    "cancel": "Hủy",
+                    "close": "Đóng",
+                    "confirm": "Xác nhận",
+                    "delete": "Xóa",
+                    "edit": "Sửa",
+                    "export": "Xuất dữ liệu",
+                    "filter": "Lọc",
+                    "import": "Nhập dữ liệu",
+                    "markAllAsRead": "Đánh dấu tất cả đã đọc",
+                    "next": "Tiếp theo",
+                    "no": "Không",
+                    "previous": "Trước",
+                    "reset": "Đặt lại",
+                    "save": "Lưu",
+                    "search": "Tìm kiếm",
+                    "signOut": "Đăng xuất",
+                    "submit": "Gửi",
+                    "yes": "Có"
+                },
+                "lbl": {
+                    "all": "Tất cả",
+                    "appDescription": "Hệ thống quản lý đại học toàn diện",
+                    "appName": "UniManage",
+                    "favorites": "Yêu thích",
+                    "info": "Thông báo",
+                    "language": "Ngôn ngữ",
+                    "languageEnglish": "Tiếng Anh",
+                    "languageSelect": "Chọn ngôn ngữ",
+                    "languageVietnamese": "Tiếng Việt",
+                    "loading": "Đang tải...",
+                    "noResults": "Không tìm thấy kết quả",
+                    "notifications": "Thông báo",
+                    "profile": "Hồ sơ cá nhân",
+                    "requiredField": "Trường này là bắt buộc",
+                    "search": "Tìm kiếm",
+                    "success": "Thành công"
+                },
+                "msg": {
+                    "unreadNotifications": "{count} thông báo chưa đọc"
+                }
+            },
+            "menu": {
+                "lbl": {
+                    "attendance": "Điểm danh",
+                    "companySettings": "Cài đặt công ty",
+                    "customers": "Khách hàng",
+                    "dashboard": "Trang chủ",
+                    "departments": "Phòng ban",
+                    "employees": "Nhân viên",
+                    "hr": "Nhân sự",
+                    "inventory": "Kho",
+                    "items": "Sản phẩm",
+                    "main": "Tổng quan",
+                    "menus": "Quản lý menu",
+                    "orders": "Đơn hàng",
+                    "positions": "Chức vụ",
+                    "roles": "Phân quyền",
+                    "salaries": "Lương",
+                    "sales": "Bán hàng",
+                    "settings": "Cài đặt",
+                    "system": "Hệ thống",
+                    "users": "Người dùng"
+                }
+            },
+            "module": {
+                "assetManagement": "Quản lý tài sản",
+                "crm": "Quản lý khách hàng",
+                "dashboard": "Trang chủ",
+                "documentManagement": "Quản lý tài liệu",
+                "financeAccounting": "Tài chính - Kế toán",
+                "humanResources": "Nhân sự",
+                "inventory": "Kho",
+                "masterData": "Dữ liệu gốc",
+                "production": "Sản xuất",
+                "projectManagement": "Quản lý dự án",
+                "purchasing": "Mua hàng",
+                "qualityManagement": "Quản lý chất lượng",
+                "reports": "Báo cáo",
+                "sales": "Bán hàng",
+                "system": "Hệ thống",
+                "workflow": "Quy trình"
+            },
+            "nav": {
+                "lbl": {
+                    "classes": "Lớp học",
+                    "courses": "Môn học",
+                    "dashboard": "Trang chủ",
+                    "finance": "Tài chính",
+                    "grades": "Điểm số",
+                    "profile": "Hồ sơ",
+                    "reports": "Báo cáo",
+                    "schedules": "Thời khóa biểu",
+                    "settings": "Cài đặt",
+                    "students": "Sinh viên",
+                    "teachers": "Giảng viên"
+                }
+            },
+            "pagination": {
+                "lbl": {
+                    "of": "của",
+                    "page": "Trang",
+                    "results": "kết quả",
+                    "rowsPerPage": "Số dòng mỗi trang",
+                    "showing": "Đang xem"
+                }
+            },
+            "success": {
+                "msg": {
+                    "created": "Tạo mới thành công",
+                    "deleted": "Xóa thành công",
+                    "saved": "Lưu thành công",
+                    "updated": "Cập nhật thành công"
+                }
+            },
+            "validation": {
+                "err": {
+                    "email": "Địa chỉ email không hợp lệ",
+                    "max": "{field} phải nhỏ hơn hoặc bằng {max}",
+                    "maxLength": "{field} không được vượt quá {max} ký tự",
+                    "min": "{field} phải lớn hơn hoặc bằng {min}",
+                    "minLength": "{field} phải có ít nhất {min} ký tự",
+                    "phone": "Số điện thoại không hợp lệ",
+                    "required": "{field} là bắt buộc"
+                }
+            }
         },
         "menu": {
             "dashboard": "Bảng điều khiển",
@@ -139,7 +821,8 @@
                 "workflow": "Quy trình",
                 "reports": "Báo cáo",
                 "system": "Hệ thống",
-                "apps": "Ứng dụng"
+                "apps": "Ứng dụng",
+                "communication": "Giao tiếp"
             },
             "descriptions": {
                 "dashboard": "Xem phân tích và tổng quan hệ thống",
@@ -192,7 +875,13 @@
                 "profile": "Hồ sơ người dùng của tôi",
                 "surveys": "Tạo và quản lý khảo sát",
                 "help": "Trung tâm trợ giúp và hỗ trợ"
-            }
+            },
+            "chat": "Chat",
+            "notifications": "Notifications",
+            "advancedReports": "AdvancedReports",
+            "auditLog": "AuditLog",
+            "profile": "Profile",
+            "help": "Help"
         },
         "dashboard": {
             "title": "Tổng quan Bảng điều khiển",
@@ -200,7 +889,7 @@
             "revenue": "Doanh thu",
             "orders": "Đơn hàng",
             "products": "Sản phẩm",
-            "fromLastMonth": "{{change}}% so với tháng trước",
+            "fromLastMonth": "{change}% so với tháng trước",
             "quickActions": "Thao tác nhanh",
             "newOrder": "Đơn hàng mới",
             "addUser": "Thêm người dùng",
@@ -212,7 +901,38 @@
             "revenueTrend": "Xu hướng doanh thu",
             "ordersTrend": "Xu hướng đơn hàng",
             "performanceMetrics": "Chỉ số hiệu suất",
-            "recentActivities": "Hoạt động gần đây"
+            "recentActivities": "Hoạt động gần đây",
+            "overview": {
+                "btn": {
+                    "addUser": "Thêm Người Dùng",
+                    "newReport": "Báo Cáo Mới",
+                    "refresh": "Làm Mới",
+                    "support": "Hỗ Trợ"
+                },
+                "lbl": {
+                    "activeSessions": "Phiên Hoạt Động",
+                    "conversionRate": "Tỉ Lệ Chuyển Đổi",
+                    "customer": "Khách Hàng",
+                    "orderId": "Mã Đơn",
+                    "orders": "Đơn Hàng",
+                    "pendingTasks": "Công Việc Chờ",
+                    "quickActions": "Thao Tác Nhanh",
+                    "recentActivity": "Hoạt Động Gần Đây",
+                    "recentOrders": "Đơn Hàng Gần Đây",
+                    "revenue": "Doanh Thu",
+                    "salesOverview": "Tổng Quan Bán Hàng",
+                    "status": "Trạng Thái",
+                    "title": "Tổng quan",
+                    "total": "Tổng Cộng",
+                    "totalUsers": "Tổng Người Dùng",
+                    "userGrowth": "Tăng Trưởng Người Dùng"
+                },
+                "msg": {
+                    "areaChartPlaceholder": "Khu vực biểu đồ Area",
+                    "barChartPlaceholder": "Khu vực biểu đồ Bar",
+                    "welcome": "Chào mừng trở lại! Dưới đây là tình hình hôm nay."
+                }
+            }
         },
         "pages": {
             "comingSoon": "Sắp ra mắt...",
@@ -250,7 +970,82 @@
             "dontHaveAccount": "Chưa có tài khoản?",
             "signUp": "Đăng ký",
             "rememberMe": "Ghi nhớ đăng nhập",
-            "loggingIn": "Đang đăng nhập..."
+            "loggingIn": "Đang đăng nhập...",
+            "global": {
+                "btn": {
+                    "changePassword": "Đổi mật khẩu",
+                    "logout": "Đăng xuất",
+                    "resetPassword": "Đặt lại mật khẩu"
+                },
+                "msg": {
+                    "logoutSuccess": "Đăng xuất thành công"
+                }
+            },
+            "login": {
+                "btn": {
+                    "createAccount": "Tạo tài khoản",
+                    "forgotPassword": "Quên mật khẩu?",
+                    "login": "Đăng nhập",
+                    "signInWithFacebook": "Đăng nhập với Facebook",
+                    "signInWithGoogle": "Đăng nhập với Google"
+                },
+                "err": {
+                    "failed": "Đăng nhập thất bại",
+                    "invalidCredentials": "Tên đăng nhập hoặc mật khẩu không đúng",
+                    "passwordRequired": "Vui lòng nhập mật khẩu",
+                    "usernameRequired": "Vui lòng nhập tên đăng nhập"
+                },
+                "lbl": {
+                    "noAccount": "Chưa có tài khoản?",
+                    "orContinueWith": "Hoặc tiếp tục với",
+                    "password": "Mật khẩu",
+                    "rememberMe": "Ghi nhớ đăng nhập",
+                    "subtitle": "Đăng nhập vào tài khoản của bạn",
+                    "title": "Chào mừng trở lại",
+                    "username": "Tên đăng nhập"
+                },
+                "msg": {
+                    "loggingIn": "Đang đăng nhập...",
+                    "success": "Đăng nhập thành công"
+                },
+                "ph": {
+                    "password": "Nhập mật khẩu",
+                    "username": "Nhập tên đăng nhập"
+                }
+            },
+            "register": {
+                "btn": {
+                    "login": "Đăng nhập",
+                    "register": "Đăng ký"
+                },
+                "err": {
+                    "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
+                    "failed": "Đăng ký thất bại. Vui lòng thử lại.",
+                    "fullNameRequired": "Vui lòng nhập họ và tên",
+                    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+                    "passwordsDoNotMatch": "Mật khẩu không khớp",
+                    "usernameMinLength": "Tên đăng nhập phải có ít nhất 3 ký tự"
+                },
+                "lbl": {
+                    "agreeToTerms": "Tôi đồng ý với các Điều khoản và Điều kiện",
+                    "alreadyHaveAccount": "Đã có tài khoản?",
+                    "confirmPassword": "Xác nhận mật khẩu",
+                    "email": "Email",
+                    "fullName": "Họ và tên",
+                    "password": "Mật khẩu",
+                    "subtitle": "Tham gia với chúng tôi ngay hôm nay",
+                    "username": "Tên đăng nhập"
+                },
+                "msg": {
+                    "termsRequired": "Bạn phải đồng ý với các điều khoản"
+                },
+                "ph": {
+                    "confirmPassword": "Nhập lại mật khẩu",
+                    "fullName": "Nhập họ và tên",
+                    "password": "Nhập mật khẩu",
+                    "username": "Nhập tên đăng nhập"
+                }
+            }
         },
         "users": {
             "add": "Thêm người dùng",
@@ -283,8 +1078,8 @@
                 "delete": "Xóa vai trò",
                 "deleteConfirmTitle": "Xóa vai trò",
                 "deleteConfirm": "Bạn có chắc chắn muốn xóa vai trò này? Hành động này không thể hoàn tác.",
-                "usersCount": "{{count}} người dùng",
-                "permsCount": "{{count}} quyền",
+                "usersCount": "{change} người dùng",
+                "permsCount": "{change} quyền",
                 "form": {
                     "name": "Tên vai trò",
                     "namePlaceholder": "vd: Quản lý dự án",
@@ -461,6 +1256,51 @@
             "deleteConfirmTitle": "Xóa công việc",
             "deleteConfirm": "Bạn có chắc chắn muốn xóa công việc này?",
             "searchPlaceholder": "Tìm kiếm công việc..."
+        },
+        "home": {
+            "landing": {
+                "btn": {
+                    "learnMore": "Tìm hiểu thêm"
+                },
+                "lbl": {
+                    "coursesDesc": "Quản lý chương trình đào tạo và lịch học",
+                    "coursesTitle": "Quản lý môn học",
+                    "studentsDesc": "Quản lý thông tin, điểm số và hoạt động của sinh viên",
+                    "studentsTitle": "Quản lý sinh viên",
+                    "teachersDesc": "Quản lý hồ sơ, lịch giảng dạy và nghiên cứu",
+                    "teachersTitle": "Quản lý giảng viên",
+                    "title": "UniManage - Hệ thống quản lý đại học"
+                }
+            }
+        },
+        "system": {
+            "users": {
+                "btn": {
+                    "add": "Thêm người dùng",
+                    "cancel": "Hủy",
+                    "changePassword": "Đổi mật khẩu",
+                    "delete": "Xóa",
+                    "edit": "Chỉnh sửa",
+                    "save": "Lưu"
+                },
+                "fields": {
+                    "createdAt": "Ngày tạo",
+                    "email": "Email",
+                    "employeeCode": "Mã nhân viên",
+                    "password": "Mật khẩu",
+                    "role": "Vai trò",
+                    "status": "Trạng thái",
+                    "username": "Tên đăng nhập"
+                },
+                "msg": {
+                    "changePasswordDev": "Đổi mật khẩu: Tính năng đang phát triển cho người dùng {username}",
+                    "createSuccess": "Tạo người dùng thành công",
+                    "deleteConfirm": "Bạn có chắc chắn muốn xóa người dùng này không?",
+                    "deleteSuccess": "Xóa người dùng thành công",
+                    "updateSuccess": "Cập nhật người dùng thành công"
+                },
+                "title": "Quản lý người dùng"
+            }
         }
     }
 }

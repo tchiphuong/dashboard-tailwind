@@ -1,33 +1,28 @@
-import { ReactNode, useMemo, useCallback } from 'react';
-import {
-    Table as HeroTable,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    Pagination,
-    Button,
-    Tooltip,
-    Input,
-    SortDescriptor,
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
-    SelectItem,
-    Skeleton,
-    Spinner,
-} from '@heroui/react';
-import { Select } from '@/components/common';
+import React, { ReactNode, useCallback, useMemo } from 'react';
 import {
     ArrowPathIcon,
+    ChevronDownIcon,
     EyeIcon,
+    MagnifyingGlassIcon,
     PencilIcon,
     TrashIcon,
-    MagnifyingGlassIcon,
-    ChevronDownIcon,
 } from '@heroicons/react/24/outline';
+import {
+    Table as BaseTable,
+    Button,
+    Dropdown,
+    Input,
+    Label,
+    Pagination,
+    Skeleton,
+    SortDescriptor,
+    Spinner,
+    Tooltip,
+} from '@heroui/react';
+import { EmptyState } from './empty-state';
+import { TablePaginationFooter } from './table-pagination-footer';
+
+export type { SortDescriptor } from '@heroui/react';
 
 // ==================== TYPES ====================
 
@@ -76,11 +71,13 @@ export interface TableFilter {
     [key: string]: string | number | undefined;
 }
 
-// Table props
-export interface CommonTableProps<T> {
-    items: T[];
-    columns: TableColumn<T>[];
-    getRowKey: (item: T) => string | number;
+export interface CommonTableProps<T extends object = Record<string, unknown>> {
+    children?: ReactNode;
+    variant?: 'primary' | 'secondary';
+    className?: string;
+    items?: T[];
+    columns?: TableColumn<T>[];
+    getRowKey?: (item: T) => string | number;
 
     // Optional features
     isLoading?: boolean;
@@ -90,6 +87,8 @@ export interface CommonTableProps<T> {
     loadingContent?: ReactNode;
 
     // Pagination
+    enablePagination?: boolean; // Cho phép on/off phân trang, mặc định true (default on)
+    defaultPageSize?: number;
     pagination?: TablePagination;
     showPaginationInfo?: boolean;
 
@@ -113,6 +112,7 @@ export interface CommonTableProps<T> {
 
     // Actions column
     actions?: TableAction<T>[];
+    onRowAction?: (key: string | number) => void; // Allow row click
     actionsLabel?: string;
     actionsWidth?: number;
 
@@ -148,21 +148,592 @@ const defaultIcons: Record<string, ReactNode> = {
     delete: <TrashIcon className="h-4 w-4 text-red-500" />,
 };
 
-const defaultColors: Record<
-    string,
-    'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
-> = {
-    view: 'default',
-    edit: 'primary',
-    delete: 'danger',
-};
+// Quy chuẩn căn lề dữ liệu bảng: số canh phải, ngày canh giữa, text canh trái
+function getColumnAlignmentClass(col?: { key?: string; label?: string; align?: string }) {
+    if (!col) return 'text-left';
+    if (col.align === 'end') return 'text-right';
+    if (col.align === 'center') return 'text-center';
+    if (col.align === 'start') return 'text-left';
+
+    const keyLower = (col.key || '').toLowerCase();
+    const labelLower = (col.label || '').toLowerCase();
+
+    // 1. Ngày tháng / Thời gian / Deadline: Canh giữa
+    if (
+        keyLower.includes('date') ||
+        keyLower.includes('time') ||
+        keyLower.includes('createdat') ||
+        keyLower.includes('updatedat') ||
+        keyLower.includes('deadline') ||
+        labelLower.includes('ngày') ||
+        labelLower.includes('thời gian') ||
+        labelLower.includes('thời hạn')
+    ) {
+        return 'text-center';
+    }
+
+    // 2. Số liệu / Tiền tệ / Ngân sách / Phần trăm / Số lượng: Canh phải
+    if (
+        keyLower.includes('amount') ||
+        keyLower.includes('budget') ||
+        keyLower.includes('price') ||
+        keyLower.includes('total') ||
+        keyLower.includes('cost') ||
+        keyLower.includes('salary') ||
+        keyLower.includes('spent') ||
+        keyLower.includes('revenue') ||
+        keyLower.includes('quantity') ||
+        keyLower.includes('count') ||
+        keyLower.includes('rate') ||
+        keyLower.includes('percent') ||
+        labelLower.includes('giá') ||
+        labelLower.includes('ngân sách') ||
+        labelLower.includes('số tiền') ||
+        labelLower.includes('tổng tiền') ||
+        labelLower.includes('doanh thu') ||
+        labelLower.includes('chi phí') ||
+        labelLower.includes('tỷ lệ') ||
+        labelLower.includes('phần trăm')
+    ) {
+        return 'text-right';
+    }
+
+    // 3. Actions column: Canh phải
+    if (col.key === '_actions') {
+        return 'text-right';
+    }
+
+    // 4. Text / Thông tin danh mục: Mặc định canh trái
+    return 'text-left';
+}
+
+function resolveRowKey<T>(
+    item: T,
+    index: number,
+    getRowKey?: (item: T) => string | number
+): string | number {
+    const record = item as Record<string, unknown>;
+    if (record._isSkeleton) {
+        return String(record.id);
+    }
+    if (getRowKey) {
+        return getRowKey(item);
+    }
+    return (record.id as string | number) ?? index;
+}
+
+// ==================== SUB-COMPONENTS ====================
+
+export interface TableCompoundPaginationProps {
+    page: number;
+    pageSize: number;
+    total: number;
+    onPageChange: (page: number) => void;
+    pageSizeOptions?: number[];
+    onPageSizeChange?: (pageSize: number) => void;
+    showPaginationInfo?: boolean;
+    enablePagination?: boolean;
+    className?: string;
+}
+
+export function TableCompoundPagination({
+    page,
+    pageSize,
+    total,
+    onPageChange,
+    pageSizeOptions = [5, 10, 20, 50],
+    onPageSizeChange,
+    showPaginationInfo = true,
+    enablePagination = true,
+    className = '',
+}: Readonly<TableCompoundPaginationProps>) {
+    if (!enablePagination || total <= 0) return null;
+
+    const totalPages = Math.ceil(total / pageSize);
+    const startItem = Math.min((page - 1) * pageSize + 1, total);
+    const endItem = Math.min(page * pageSize, total);
+
+    return (
+        <div
+            className={`border-separator flex flex-col items-center justify-between gap-4 border-t p-4 sm:flex-row ${className}`}
+        >
+            {/* 1. Bên trái: Chọn số item / trang */}
+            <div className="flex w-full items-center justify-start gap-2 sm:w-auto">
+                {onPageSizeChange && (
+                    <>
+                        <span className="text-muted text-xs">Hiển thị:</span>
+                        <div className="w-28">
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <Button variant="ghost" size="sm">
+                                        {pageSize} / trang
+                                        <ChevronDownIcon className="h-4 w-4" />
+                                    </Button>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <Dropdown.Menu
+                                        aria-label="Số dòng mỗi trang"
+                                        selectionMode="single"
+                                        selectedKeys={new Set([String(pageSize)])}
+                                        onSelectionChange={(keys) => {
+                                            const selected = Array.from(keys)[0];
+                                            if (selected) {
+                                                onPageSizeChange(Number(selected));
+                                            }
+                                        }}
+                                    >
+                                        {pageSizeOptions.map((size: number) => (
+                                            <Dropdown.Item
+                                                id={String(size)}
+                                                key={String(size)}
+                                                textValue={`${size} / trang`}
+                                            >
+                                                <Label>{size} / trang</Label>
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
+                            </Dropdown>
+                        </div>
+                    </>
+                )}
+            </div>
+
+            {/* 2. Ở giữa: Hiển thị thông tin số item */}
+            <div className="text-center">
+                {showPaginationInfo && (
+                    <span className="text-muted text-xs tabular-nums">
+                        Hiển thị <strong>{startItem}</strong> - <strong>{endItem}</strong> trên tổng
+                        số <strong>{total}</strong> dòng
+                    </span>
+                )}
+            </div>
+
+            {/* 3. Bên phải: Chọn trang */}
+            <div className="flex w-full justify-center sm:w-auto sm:justify-end">
+                <Pagination size="sm" className="justify-center sm:justify-end">
+                    <Pagination.Content>
+                        <Pagination.Item>
+                            <Pagination.Previous
+                                isDisabled={page <= 1}
+                                onPress={() => onPageChange(page - 1)}
+                            >
+                                Trước
+                            </Pagination.Previous>
+                        </Pagination.Item>
+
+                        {totalPages > 0 && (
+                            <>
+                                <Pagination.Item>
+                                    <Pagination.Link
+                                        isActive={page === 1}
+                                        onPress={() => onPageChange(1)}
+                                    >
+                                        1
+                                    </Pagination.Link>
+                                </Pagination.Item>
+
+                                {page > 3 && totalPages > 3 && (
+                                    <Pagination.Item>
+                                        <Pagination.Ellipsis />
+                                    </Pagination.Item>
+                                )}
+
+                                {[page - 1, page, page + 1]
+                                    .filter((p) => p > 1 && p < totalPages)
+                                    .map((p) => (
+                                        <Pagination.Item key={`comp-page-${p}`}>
+                                            <Pagination.Link
+                                                isActive={page === p}
+                                                onPress={() => onPageChange(p)}
+                                            >
+                                                {p}
+                                            </Pagination.Link>
+                                        </Pagination.Item>
+                                    ))}
+
+                                {page < totalPages - 2 && totalPages > 3 && (
+                                    <Pagination.Item>
+                                        <Pagination.Ellipsis />
+                                    </Pagination.Item>
+                                )}
+
+                                {totalPages > 1 && (
+                                    <Pagination.Item>
+                                        <Pagination.Link
+                                            isActive={page === totalPages}
+                                            onPress={() => onPageChange(totalPages)}
+                                        >
+                                            {totalPages}
+                                        </Pagination.Link>
+                                    </Pagination.Item>
+                                )}
+                            </>
+                        )}
+
+                        <Pagination.Item>
+                            <Pagination.Next
+                                isDisabled={page >= totalPages}
+                                onPress={() => onPageChange(page + 1)}
+                            >
+                                Sau
+                            </Pagination.Next>
+                        </Pagination.Item>
+                    </Pagination.Content>
+                </Pagination>
+            </div>
+        </div>
+    );
+}
+
+interface TablePaginationBarProps {
+    pagination?: TablePagination;
+    totalPages: number;
+    startItem: number;
+    endItem: number;
+    showPaginationInfo?: boolean;
+    enablePagination?: boolean;
+    selectionMode?: string;
+    selectedKeys?: unknown;
+}
+
+function TablePaginationBar({
+    pagination,
+    totalPages,
+    startItem,
+    endItem,
+    showPaginationInfo = true,
+    enablePagination = true,
+    selectionMode,
+    selectedKeys,
+}: Readonly<TablePaginationBarProps>) {
+    if (!enablePagination || !pagination || totalPages <= 0) return null;
+
+    let selectionSummary = null;
+    if (showPaginationInfo) {
+        if (selectionMode !== 'none' && selectedKeys && selectedKeys !== 'all') {
+            const count = selectedKeys instanceof Set ? selectedKeys.size : 0;
+            selectionSummary = `${count} of ${pagination.total} selected`;
+        } else {
+            selectionSummary = `Hiển thị ${startItem}-${endItem} / ${pagination.total}`;
+        }
+    }
+
+    return (
+        <div className="border-separator flex flex-col items-center justify-between gap-4 border-t p-4 sm:flex-row">
+            {/* 1. Bên trái: Chọn số item / trang */}
+            <div className="flex w-full items-center justify-start gap-2 sm:w-auto">
+                {pagination.onPageSizeChange && (
+                    <>
+                        <span className="text-muted text-xs">Hiển thị:</span>
+                        <div className="w-28">
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <Button variant="ghost" size="sm">
+                                        {pagination.pageSize} / trang
+                                        <ChevronDownIcon className="h-4 w-4" />
+                                    </Button>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <Dropdown.Menu
+                                        aria-label="Số dòng mỗi trang"
+                                        selectionMode="single"
+                                        selectedKeys={new Set([String(pagination.pageSize)])}
+                                        onSelectionChange={(keys) => {
+                                            const selected = Array.from(keys)[0];
+                                            if (selected) {
+                                                pagination.onPageSizeChange?.(Number(selected));
+                                            }
+                                        }}
+                                    >
+                                        {(pagination.pageSizeOptions || [5, 10, 20, 50]).map(
+                                            (size: number) => (
+                                                <Dropdown.Item
+                                                    id={String(size)}
+                                                    key={String(size)}
+                                                    textValue={`${size} / trang`}
+                                                >
+                                                    <Label>{size} / trang</Label>
+                                                </Dropdown.Item>
+                                            )
+                                        )}
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
+                            </Dropdown>
+                        </div>
+                    </>
+                )}
+            </div>
+
+            {/* 2. Ở giữa: Hiển thị thông tin số item */}
+            <div className="text-center">
+                {selectionSummary && (
+                    <span className="text-muted text-xs tabular-nums">{selectionSummary}</span>
+                )}
+            </div>
+
+            {/* 3. Bên phải: Chọn trang */}
+            <div className="flex w-full justify-center sm:w-auto sm:justify-end">
+                <Pagination size="sm" className="flex justify-center sm:justify-end">
+                    <Pagination.Content>
+                        <Pagination.Item>
+                            <Pagination.Previous
+                                isDisabled={pagination.page <= 1}
+                                onPress={() => pagination.onPageChange(pagination.page - 1)}
+                            >
+                                Trước
+                            </Pagination.Previous>
+                        </Pagination.Item>
+
+                        {totalPages > 0 && (
+                            <>
+                                <Pagination.Item>
+                                    <Pagination.Link
+                                        isActive={pagination.page === 1}
+                                        onPress={() => pagination.onPageChange(1)}
+                                    >
+                                        1
+                                    </Pagination.Link>
+                                </Pagination.Item>
+
+                                {pagination.page > 3 && totalPages > 3 && (
+                                    <Pagination.Item>
+                                        <Pagination.Ellipsis />
+                                    </Pagination.Item>
+                                )}
+
+                                {[pagination.page - 1, pagination.page, pagination.page + 1]
+                                    .filter((p) => p > 1 && p < totalPages)
+                                    .map((p) => (
+                                        <Pagination.Item key={`page-${p}`}>
+                                            <Pagination.Link
+                                                isActive={pagination.page === p}
+                                                onPress={() => pagination.onPageChange(p)}
+                                            >
+                                                {p}
+                                            </Pagination.Link>
+                                        </Pagination.Item>
+                                    ))}
+
+                                {pagination.page < totalPages - 2 && totalPages > 3 && (
+                                    <Pagination.Item>
+                                        <Pagination.Ellipsis />
+                                    </Pagination.Item>
+                                )}
+
+                                {totalPages > 1 && (
+                                    <Pagination.Item>
+                                        <Pagination.Link
+                                            isActive={pagination.page === totalPages}
+                                            onPress={() => pagination.onPageChange(totalPages)}
+                                        >
+                                            {totalPages}
+                                        </Pagination.Link>
+                                    </Pagination.Item>
+                                )}
+                            </>
+                        )}
+
+                        <Pagination.Item>
+                            <Pagination.Next
+                                isDisabled={pagination.page >= totalPages}
+                                onPress={() => pagination.onPageChange(pagination.page + 1)}
+                            >
+                                Sau
+                            </Pagination.Next>
+                        </Pagination.Item>
+                    </Pagination.Content>
+                </Pagination>
+            </div>
+        </div>
+    );
+}
+
+interface TableToolbarProps<T extends object> {
+    showSearch?: boolean;
+    searchPlaceholder?: string;
+    searchValue?: string;
+    onSearchChange?: (val: string) => void;
+    showFilters?: boolean;
+    filterableColumns: TableColumn<T>[];
+    filters: Record<string, unknown>;
+    handleFilterChange: (key: string, value: string) => void;
+    pagination?: TablePagination;
+    toolbarContent?: ReactNode;
+    showRefresh?: boolean;
+    isLoading?: boolean;
+    onRefresh?: () => void;
+}
+
+function TableToolbar<T extends object>({
+    showSearch,
+    searchPlaceholder,
+    searchValue,
+    onSearchChange,
+    showFilters,
+    filterableColumns,
+    filters,
+    handleFilterChange,
+    pagination,
+    toolbarContent,
+    showRefresh,
+    isLoading,
+    onRefresh,
+}: Readonly<TableToolbarProps<T>>) {
+    return (
+        <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="flex flex-1 flex-wrap items-center gap-3">
+                    {showSearch && (
+                        <div className="relative w-full sm:max-w-50">
+                            <MagnifyingGlassIcon className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                            <Input
+                                className="w-full pl-10"
+                                placeholder={searchPlaceholder}
+                                value={searchValue}
+                                onChange={(e) => onSearchChange?.(e.target.value)}
+                            />
+                        </div>
+                    )}
+
+                    {showFilters &&
+                        filterableColumns.map((column) => {
+                            if (column.filterType === 'select' && column.filterOptions) {
+                                return (
+                                    <Dropdown key={column.key}>
+                                        <Dropdown.Trigger>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="hidden sm:flex"
+                                            >
+                                                {column.label}
+                                                {Boolean(filters[column.key]) && (
+                                                    <span className="text-primary ml-1">
+                                                        ({String(filters[column.key])})
+                                                    </span>
+                                                )}
+                                                <ChevronDownIcon className="ml-1 h-4 w-4" />
+                                            </Button>
+                                        </Dropdown.Trigger>
+                                        <Dropdown.Popover>
+                                            <Dropdown.Menu
+                                                disallowEmptySelection={false}
+                                                aria-label={`Filter by ${column.label}`}
+                                                selectedKeys={
+                                                    filters[column.key]
+                                                        ? new Set([String(filters[column.key])])
+                                                        : new Set()
+                                                }
+                                                selectionMode="single"
+                                                onSelectionChange={(keys) => {
+                                                    const selected = Array.from(keys)[0];
+                                                    handleFilterChange(
+                                                        column.key,
+                                                        selected ? String(selected) : ''
+                                                    );
+                                                }}
+                                            >
+                                                {column.filterOptions.map((opt) => (
+                                                    <Dropdown.Item
+                                                        id={opt.key}
+                                                        key={opt.key}
+                                                        textValue={opt.label}
+                                                    >
+                                                        <Label>{opt.label}</Label>
+                                                    </Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown.Popover>
+                                    </Dropdown>
+                                );
+                            }
+                            return null;
+                        })}
+                </div>
+
+                <div className="flex items-center gap-3">
+                    {pagination && (
+                        <span className="text-small text-default-400">
+                            Total: <strong>{pagination.total}</strong> row(s)
+                        </span>
+                    )}
+
+                    {toolbarContent}
+
+                    {pagination?.onPageSizeChange && (
+                        <div className="flex items-center gap-1">
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <Button variant="ghost" size="sm">
+                                        {pagination.pageSize} / page
+                                        <ChevronDownIcon className="h-4 w-4" />
+                                    </Button>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <Dropdown.Menu
+                                        aria-label="Rows per page"
+                                        selectionMode="single"
+                                        selectedKeys={new Set([String(pagination.pageSize)])}
+                                        onSelectionChange={(keys) => {
+                                            const selected = Array.from(keys)[0];
+                                            if (selected) {
+                                                pagination.onPageSizeChange?.(Number(selected));
+                                            }
+                                        }}
+                                    >
+                                        {(pagination.pageSizeOptions || [5, 10, 20, 50]).map(
+                                            (size: number) => (
+                                                <Dropdown.Item
+                                                    id={String(size)}
+                                                    key={String(size)}
+                                                    textValue={String(size)}
+                                                >
+                                                    <Label>{String(size)}</Label>
+                                                </Dropdown.Item>
+                                            )
+                                        )}
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
+                            </Dropdown>
+                        </div>
+                    )}
+
+                    {showRefresh && (
+                        <Tooltip>
+                            <Tooltip.Trigger>
+                                <Button
+                                    isIconOnly
+                                    variant="ghost"
+                                    size="sm"
+                                    isPending={isLoading}
+                                    onPress={onRefresh}
+                                >
+                                    <ArrowPathIcon
+                                        className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`}
+                                    />
+                                </Button>
+                            </Tooltip.Trigger>
+                            <Tooltip.Content>Refresh</Tooltip.Content>
+                        </Tooltip>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 // ==================== COMPONENT ====================
 
-export function Table<T>({
-    items,
-    columns,
-    getRowKey,
+function InternalDataTable<T extends object = Record<string, unknown>>({
+    items = [],
+    columns = [],
+    actions = [],
+    onRowAction,
+    getRowKey = (item: T) => {
+        const record = item as Record<string, unknown>;
+        return (record.id as string | number) ?? (record.key as string | number) ?? 'item';
+    },
     isLoading = false,
     enableSkeleton = true,
     skeletonRows = 10,
@@ -180,25 +751,24 @@ export function Table<T>({
     filters = {},
     onFilterChange,
     visibleColumns = 'all',
-    onVisibleColumnsChange,
-    showColumnToggle = false,
-    actions,
+    onVisibleColumnsChange: _onVisibleColumnsChange,
+    showColumnToggle: _showColumnToggle = false,
     actionsLabel = 'Actions',
     actionsWidth = 120,
     toolbarContent,
     showRefresh = false,
     onRefresh,
-    isStriped = true,
-    isCompact = false,
+    isStriped: _isStriped = true,
+    isCompact: _isCompact = false,
     selectionMode = 'none',
     selectedKeys,
     onSelectionChange,
     topContent,
     bottomContent,
-    isHeaderSticky = true,
+    isHeaderSticky: _isHeaderSticky = true,
     maxHeight,
     'aria-label': ariaLabel = 'Data table',
-}: CommonTableProps<T>) {
+}: Readonly<CommonTableProps<T>>) {
     // Calculate pagination info
     const totalPages = pagination ? Math.ceil(pagination.total / pagination.pageSize) : 0;
     const startItem = pagination ? (pagination.page - 1) * pagination.pageSize + 1 : 0;
@@ -244,10 +814,9 @@ export function Table<T>({
         [filters, onFilterChange]
     );
 
-    // Render cell content
     const renderCell = (item: T, columnKey: string, index: number) => {
         // Check for skeleton
-        if ((item as any)._isSkeleton) {
+        if ((item as Record<string, unknown>)._isSkeleton) {
             return (
                 <Skeleton className="w-full rounded-lg">
                     <div className="bg-default-200 h-3 w-4/5 rounded-lg"></div>
@@ -266,26 +835,24 @@ export function Table<T>({
 
                         const isDisabled = action.isDisabled ? action.isDisabled(item) : false;
                         const icon = action.icon || defaultIcons[action.key];
-                        const color = action.color || defaultColors[action.key] || 'default';
+
+                        let textColorClass = 'text-primary';
+                        if (action.color === 'danger') textColorClass = 'text-danger';
+                        else if (action.color === 'success') textColorClass = 'text-success';
 
                         return (
-                            <Tooltip
-                                key={action.key}
-                                content={action.label}
-                                color={color === 'default' ? undefined : color}
-                            >
-                                <Button
-                                    isIconOnly
-                                    size="sm"
-                                    variant="light"
-                                    color={color}
-                                    radius="full"
-                                    aria-label={action.label}
-                                    isDisabled={isDisabled}
-                                    onPress={() => action.onClick(item)}
-                                >
-                                    {icon}
-                                </Button>
+                            <Tooltip key={action.key}>
+                                <Tooltip.Trigger>
+                                    <Button
+                                        className={`hover:bg-default-100 min-h-8 min-w-8 bg-transparent p-1 ${textColorClass}`}
+                                        aria-label={action.label}
+                                        isDisabled={isDisabled}
+                                        onPress={() => action.onClick(item)}
+                                    >
+                                        {icon}
+                                    </Button>
+                                </Tooltip.Trigger>
+                                <Tooltip.Content>{action.label}</Tooltip.Content>
                             </Tooltip>
                         );
                     })}
@@ -304,7 +871,13 @@ export function Table<T>({
         if (value === null || value === undefined) {
             return <span className="text-gray-400">-</span>;
         }
-        return String(value);
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+            return String(value);
+        }
+        if (typeof value === 'object') {
+            return JSON.stringify(value);
+        }
+        return '';
     };
 
     // ==================== TOOLBAR ====================
@@ -320,278 +893,172 @@ export function Table<T>({
         () => [
             ...displayColumns,
             ...(actions && actions.length > 0
-                ? [{ key: '_actions', label: actionsLabel, width: actionsWidth }]
+                ? [
+                      {
+                          key: '_actions',
+                          label: actionsLabel,
+                          width: actionsWidth,
+                      },
+                  ]
                 : []),
         ],
         [displayColumns, actions, actionsLabel, actionsWidth]
     );
 
     const defaultTopContent = (
-        <div className="flex flex-col gap-4">
-            {/* Main toolbar row */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                {/* Left side: Search + Filter dropdowns */}
-                <div className="flex flex-1 flex-wrap items-center gap-3">
-                    {showSearch && (
-                        <Input
-                            isClearable
-                            className="w-full sm:max-w-50"
-                            placeholder={searchPlaceholder}
-                            startContent={<MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />}
-                            value={searchValue}
-                            onClear={() => onSearchChange?.('')}
-                            onValueChange={onSearchChange}
-                            variant="bordered"
-                            radius="lg"
-                            size="sm"
-                        />
-                    )}
-
-                    {/* Inline filter dropdowns */}
-                    {showFilters &&
-                        filterableColumns.map((column) => {
-                            if (column.filterType === 'select' && column.filterOptions) {
-                                return (
-                                    <Dropdown key={column.key}>
-                                        <DropdownTrigger className="hidden sm:flex">
-                                            <Button
-                                                endContent={<ChevronDownIcon className="h-4 w-4" />}
-                                                variant="flat"
-                                                size="sm"
-                                                radius="lg"
-                                            >
-                                                {column.label}
-                                                {filters[column.key] && (
-                                                    <span className="text-primary ml-1">
-                                                        ({filters[column.key]})
-                                                    </span>
-                                                )}
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu
-                                            disallowEmptySelection={false}
-                                            aria-label={`Filter by ${column.label}`}
-                                            closeOnSelect
-                                            selectedKeys={
-                                                filters[column.key]
-                                                    ? new Set([String(filters[column.key])])
-                                                    : new Set()
-                                            }
-                                            selectionMode="single"
-                                            onSelectionChange={(keys) => {
-                                                const selected = Array.from(keys)[0];
-                                                handleFilterChange(
-                                                    column.key,
-                                                    (selected as string) || ''
-                                                );
-                                            }}
-                                        >
-                                            {[
-                                                { key: '', label: 'All' },
-                                                ...column.filterOptions,
-                                            ].map((opt) => (
-                                                <DropdownItem key={opt.key}>
-                                                    {opt.label}
-                                                </DropdownItem>
-                                            ))}
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                );
-                            }
-                            return null;
-                        })}
-
-                    {/* Columns visibility dropdown */}
-                    {showColumnToggle && (
-                        <Dropdown>
-                            <DropdownTrigger className="hidden sm:flex">
-                                <Button
-                                    endContent={<ChevronDownIcon className="h-4 w-4" />}
-                                    variant="flat"
-                                    size="sm"
-                                    radius="lg"
-                                >
-                                    Columns
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                disallowEmptySelection
-                                aria-label="Toggle columns"
-                                closeOnSelect={false}
-                                selectedKeys={
-                                    visibleColumns === 'all'
-                                        ? new Set(columns.map((c) => c.key))
-                                        : visibleColumns
-                                }
-                                selectionMode="multiple"
-                                onSelectionChange={(keys) => {
-                                    onVisibleColumnsChange?.(keys as Set<string>);
-                                }}
-                            >
-                                {columns.map((column) => (
-                                    <DropdownItem key={column.key} className="capitalize">
-                                        {column.label}
-                                    </DropdownItem>
-                                ))}
-                            </DropdownMenu>
-                        </Dropdown>
-                    )}
-                </div>
-
-                {/* Right side: Custom content, rows per page & Refresh */}
-                <div className="flex items-center gap-3">
-                    {pagination && (
-                        <span className="text-small text-default-400">
-                            Total: <strong>{pagination.total}</strong> row(s)
-                        </span>
-                    )}
-
-                    {toolbarContent}
-
-                    {pagination?.onPageSizeChange && (
-                        <div className="flex items-center gap-1">
-                            {/* <div className="text-small text-default-400">Rows per page:</div> */}
-                            <Select
-                                items={(pagination.pageSizeOptions || [5, 10, 20, 50]).map(
-                                    (size) => ({
-                                        key: String(size),
-                                        label: String(size),
-                                    })
-                                )}
-                                selectedKeys={new Set([String(pagination.pageSize)])}
-                                disallowEmptySelection
-                                aria-label="Rows per page"
-                                size="sm"
-                                className="min-w-20"
-                                onSelectionChange={(keys) => {
-                                    const selected = Array.from(keys)[0];
-                                    if (selected) {
-                                        pagination.onPageSizeChange?.(Number(selected));
-                                    }
-                                }}
-                            >
-                                {(item) => (
-                                    <SelectItem key={item.key} textValue={item.label}>
-                                        {item.label}
-                                    </SelectItem>
-                                )}
-                            </Select>
-                        </div>
-                    )}
-
-                    {showRefresh && (
-                        <Tooltip content="Refresh">
-                            <Button
-                                isIconOnly
-                                variant="flat"
-                                radius="lg"
-                                size="sm"
-                                isLoading={isLoading}
-                                onPress={onRefresh}
-                            >
-                                <ArrowPathIcon
-                                    className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`}
-                                />
-                            </Button>
-                        </Tooltip>
-                    )}
-                </div>
-            </div>
-        </div>
+        <TableToolbar
+            showSearch={showSearch}
+            searchPlaceholder={searchPlaceholder}
+            searchValue={searchValue}
+            onSearchChange={onSearchChange}
+            showFilters={showFilters}
+            filterableColumns={filterableColumns}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            pagination={pagination}
+            toolbarContent={toolbarContent}
+            showRefresh={showRefresh}
+            isLoading={isLoading}
+            onRefresh={onRefresh}
+        />
     );
 
-    // ==================== PAGINATION ====================
-    const defaultBottomContent = pagination && totalPages > 0 && (
-        <div className="flex items-center justify-between px-2 py-2">
-            {showPaginationInfo && (
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                    Showing {startItem} - {endItem} of {pagination.total}
-                </span>
-            )}
-            <Pagination
-                showControls
-                color="primary"
-                page={pagination.page}
-                total={totalPages}
-                onChange={pagination.onPageChange}
-                radius="full"
-                variant="light"
-                isDisabled={isLoading}
-            />
-        </div>
+    const defaultBottomContent = (
+        <TablePaginationBar
+            pagination={pagination}
+            totalPages={totalPages}
+            startItem={startItem}
+            endItem={endItem}
+            showPaginationInfo={showPaginationInfo}
+            selectionMode={selectionMode}
+            selectedKeys={selectedKeys}
+        />
     );
-
-    // Default loading content
-    const defaultLoadingContent = <Spinner size="lg" color="primary" />;
 
     // ==================== RENDER ====================
+
     return (
         <div className="flex flex-col gap-4">
-            {/* Top content / Toolbar */}
-            {(showSearch || showFilters || showColumnToggle || toolbarContent || showRefresh) &&
-                (topContent || defaultTopContent)}
+            {topContent !== undefined ? topContent : defaultTopContent}
 
-            {/* Table */}
-            <HeroTable
-                aria-label={ariaLabel}
-                isStriped={isStriped}
-                isCompact={isCompact}
-                isHeaderSticky={isHeaderSticky}
-                selectionMode={selectionMode}
-                selectedKeys={selectedKeys as any}
-                onSelectionChange={onSelectionChange as any}
-                sortDescriptor={sortDescriptor}
-                onSortChange={handleSortChange}
-                classNames={{
-                    wrapper: `rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 ${
-                        maxHeight ? 'overflow-y-auto' : ''
-                    }`,
-                    th: 'bg-gray-50 dark:bg-zinc-700/50 text-gray-600 dark:text-gray-300 font-semibold',
-                }}
-                style={{
-                    maxHeight: maxHeight,
-                }}
-                bottomContent={bottomContent || defaultBottomContent}
-                bottomContentPlacement="outside"
-            >
-                <TableHeader>
-                    {tableColumnsFiltered.map((column) => (
-                        <TableColumn
-                            key={column.key}
-                            width={column.width}
-                            align={column.align}
-                            allowsSorting={column.sortable}
+            <BaseTable className="w-full">
+                <BaseTable.ScrollContainer>
+                    <BaseTable.Content
+                        aria-label={ariaLabel}
+                        selectionMode={selectionMode === 'none' ? undefined : selectionMode}
+                        selectedKeys={selectedKeys}
+                        onSelectionChange={
+                            onSelectionChange as
+                                | ((keys: 'all' | Set<React.Key>) => void)
+                                | undefined
+                        }
+                        sortDescriptor={sortDescriptor}
+                        onSortChange={handleSortChange}
+                        className={maxHeight ? `max-h-[${maxHeight}]` : ''}
+                    >
+                        <BaseTable.Header>
+                            {tableColumnsFiltered.map((col, index) => {
+                                const alignClass = getColumnAlignmentClass(col);
+                                return (
+                                    <BaseTable.Column
+                                        key={col.key}
+                                        id={col.key}
+                                        isRowHeader={index === 0}
+                                        allowsSorting={col.sortable}
+                                        className={alignClass}
+                                    >
+                                        {col.sortable
+                                            ? ({ sortDirection }) => (
+                                                  <BaseTable.SortableColumnHeader
+                                                      sortDirection={sortDirection}
+                                                  >
+                                                      {col.label}
+                                                  </BaseTable.SortableColumnHeader>
+                                              )
+                                            : col.label}
+                                    </BaseTable.Column>
+                                );
+                            })}
+                        </BaseTable.Header>
+
+                        <BaseTable.Body
+                            renderEmptyState={() => (
+                                <div className="text-default-500 flex w-full flex-col items-center justify-center py-10">
+                                    {tableIsLoading
+                                        ? loadingContent || <Spinner size="md" />
+                                        : emptyContent}
+                                </div>
+                            )}
                         >
-                            {column.label}
-                        </TableColumn>
-                    ))}
-                </TableHeader>
-                <TableBody
-                    items={displayItems}
-                    isLoading={tableIsLoading}
-                    loadingContent={loadingContent || defaultLoadingContent}
-                    emptyContent={emptyContent}
-                >
-                    {(item) => (
-                        <TableRow key={getRowKey(item)}>
-                            {tableColumnsFiltered.map((column, index) => (
-                                <TableCell key={column.key}>
-                                    {renderCell(item, column.key, index)}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    )}
-                </TableBody>
-            </HeroTable>
+                            {displayItems.map((item, index) => {
+                                const record = item as Record<string, unknown>;
+                                const key = resolveRowKey(item, index, getRowKey);
+
+                                return (
+                                    <BaseTable.Row
+                                        key={key}
+                                        id={key}
+                                        className={
+                                            onRowAction && !record._isSkeleton
+                                                ? 'hover:bg-default-100 cursor-pointer'
+                                                : ''
+                                        }
+                                    >
+                                        {tableColumnsFiltered.map((col) => {
+                                            const alignClass = getColumnAlignmentClass(col);
+                                            return (
+                                                <BaseTable.Cell
+                                                    key={col.key}
+                                                    className={alignClass}
+                                                >
+                                                    {renderCell(item, col.key, index)}
+                                                </BaseTable.Cell>
+                                            );
+                                        })}
+                                    </BaseTable.Row>
+                                );
+                            })}
+                        </BaseTable.Body>
+                    </BaseTable.Content>
+                </BaseTable.ScrollContainer>
+            </BaseTable>
+
+            {bottomContent !== undefined ? bottomContent : defaultBottomContent}
         </div>
     );
 }
 
-// Re-export types
-export type {
-    TableColumn as ColumnDef,
-    TableAction as ActionDef,
-    TablePagination as PaginationInfo,
-    TableSort as SortInfo,
-    TableFilter as FilterValues,
-};
+/**
+ * Table Component - Hỗ trợ cả 2 chế độ:
+ * 1. Compound Pattern của HeroUI v3 (nếu truyền children): Table.ScrollContainer, Table.Content, Table.Header, Table.Body...
+ * 2. Data Table thông minh (nếu truyền items, columns, pagination, filters...)
+ */
+export function Table<T extends object = Record<string, unknown>>(
+    props: Readonly<CommonTableProps<T>>
+) {
+    if (props.children) {
+        return (
+            <BaseTable variant={props.variant} className={props.className}>
+                {props.children}
+            </BaseTable>
+        );
+    }
+    return <InternalDataTable {...props} />;
+}
+
+Table.ScrollContainer = BaseTable.ScrollContainer;
+Table.Content = BaseTable.Content;
+Table.Header = BaseTable.Header;
+Table.Column = BaseTable.Column;
+Table.Body = BaseTable.Body;
+Table.Row = BaseTable.Row;
+Table.Cell = BaseTable.Cell;
+Table.Footer = BaseTable.Footer;
+Table.SortableColumnHeader = BaseTable.SortableColumnHeader;
+Table.ColumnResizer = BaseTable.ColumnResizer;
+Table.LoadMore = BaseTable.LoadMore;
+Table.LoadMoreContent = BaseTable.LoadMoreContent;
+Table.EmptyState = EmptyState;
+Table.PaginationFooter = TablePaginationFooter;
+
+export { BaseTable };

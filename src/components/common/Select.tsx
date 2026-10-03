@@ -1,132 +1,150 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Select as HeroSelect, SelectProps as HeroSelectProps, Spinner } from '@heroui/react';
-import { FetchParams, PagedResult, ApiResponse } from './useTableData';
+'use client';
 
-export interface SelectProps<T extends object = object> extends Omit<
-    HeroSelectProps<T>,
-    'children'
-> {
-    fetchFn?: (params: FetchParams) => Promise<ApiResponse<PagedResult<T>> | PagedResult<T>>;
-    pageSize?: number;
-    dependencies?: any[];
+import { Description, FieldError, Label, ListBox, Select as HeroSelect } from '@heroui/react';
+import type { Key } from '@react-types/shared';
+import React, { type ReactNode } from 'react';
+
+export type SelectProps<T extends object = Record<string, unknown>> = {
+    label?: React.ReactNode;
+    placeholder?: string;
+    description?: React.ReactNode;
+    errorMessage?: React.ReactNode;
     children?: React.ReactNode | ((item: T) => React.ReactNode);
+    items?: Iterable<T>;
+    selectedKey?: Key | null;
+    selectedKeys?: Iterable<Key>;
+    defaultSelectedKeys?: Iterable<Key>;
+    onSelectionChange?: (key: Key | null | Iterable<Key>) => void;
+    selectionMode?: 'single' | 'multiple';
+    className?: string;
+    isDisabled?: boolean;
+    isRequired?: boolean;
+    isInvalid?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    variant?: 'primary' | 'secondary';
+    [key: string]: unknown;
+};
+
+export interface SelectItemProps extends React.ComponentPropsWithoutRef<typeof ListBox.Item> {
+    id: string | number;
+    children: React.ReactNode;
+    textValue?: string;
 }
 
-export function Select<T extends object = object>({
+/**
+ * SelectItem bọc chuẩn HeroUI v3 ListBox.Item
+ */
+export function SelectItem({
+    id,
     children,
-    radius = 'full',
-    variant = 'bordered',
-    labelPlacement = 'outside-top',
-    classNames,
-    fetchFn,
-    pageSize = 10,
-    dependencies = [],
-    items: propItems,
+    textValue,
+    className,
     ...props
-}: SelectProps<T>) {
-    // Async State
-    const [items, setItems] = useState<T[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
-    const [initialLoaded, setInitialLoaded] = useState(false);
+}: Readonly<SelectItemProps>) {
+    const computedText = textValue || (typeof children === 'string' ? children : undefined);
+    return (
+        <ListBox.Item id={id} textValue={computedText} className={className} {...props}>
+            {children}
+            <ListBox.ItemIndicator />
+        </ListBox.Item>
+    );
+}
 
-    // Initial Fetch (Triggered by Open)
-    useEffect(() => {
-        if (!fetchFn || !isOpen || initialLoaded) return;
+/**
+ * Select Component chuẩn hóa HeroUI v3 thuần túy
+ * Xóa sạch toàn bộ class Tailwind tự chế, sử dụng 100% Design Tokens và Theme gốc của HeroUI
+ */
+export function Select<T extends object = Record<string, unknown>>({
+    label,
+    placeholder = 'Chọn một mục',
+    description,
+    errorMessage,
+    children,
+    items,
+    selectedKey,
+    selectedKeys,
+    defaultSelectedKeys,
+    onSelectionChange,
+    selectionMode = 'single',
+    className,
+    isDisabled,
+    isRequired,
+    isInvalid,
+    ...props
+}: Readonly<SelectProps<T>>) {
+    const hasDirectTrigger = React.Children.toArray(
+        typeof children === 'function' ? null : children
+    ).some((child: unknown) => React.isValidElement(child) && child.type === HeroSelect.Trigger);
 
-        let active = true;
+    const getSelectedKey = (keys: unknown): Key | undefined => {
+        if (!keys) return undefined;
+        if (Array.isArray(keys)) return keys[0] as Key;
+        if (keys instanceof Set) return keys.values().next().value as Key;
+        return keys as Key;
+    };
 
-        const loadInitial = async () => {
-            setIsLoading(true);
-            try {
-                const result = await fetchFn({ page: 1, pageSize });
-                const data = 'data' in result ? result.data : result;
+    const currentKey = selectedKey ?? getSelectedKey(selectedKeys ?? defaultSelectedKeys);
 
-                if (active) {
-                    setItems(data.items);
-                    setHasMore(data.items.length >= pageSize);
-                    setPage(1);
-                    setInitialLoaded(true);
-                }
-            } catch (error) {
-                console.error('Failed to load select items', error);
-            } finally {
-                if (active) setIsLoading(false);
-            }
-        };
-
-        loadInitial();
-
-        return () => {
-            active = false;
-        };
-    }, [fetchFn, pageSize, isOpen, initialLoaded, ...dependencies]);
-
-    // Reset when dependencies change
-    useEffect(() => {
-        setInitialLoaded(false);
-        setItems([]);
-        setPage(1);
-        setHasMore(true);
-    }, [...dependencies]);
-
-    // Load More
-    const onLoadMore = useCallback(async () => {
-        if (!fetchFn || !hasMore || isLoading) return;
-
-        setIsLoading(true);
+    const handleSelectionChange = (key: Key | null) => {
+        if (!onSelectionChange) return;
         try {
-            const nextPage = page + 1;
-            const result = await fetchFn({ page: nextPage, pageSize });
-            const data = 'data' in result ? result.data : result;
-
-            setItems((prev) => [...prev, ...data.items]);
-            setHasMore(data.items.length >= pageSize);
-            setPage(nextPage);
-        } catch (error) {
-            console.error('Failed to load more select items', error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [fetchFn, hasMore, isLoading, page, pageSize]);
-
-    // Scroll Handler
-    const onScroll = (e: React.UIEvent<HTMLElement>) => {
-        const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-        if (scrollHeight - scrollTop <= clientHeight + 50) {
-            // Threshold 50px
-            onLoadMore();
+            onSelectionChange(key);
+        } catch {
+            onSelectionChange(new Set(key ? [key] : []));
         }
     };
 
-    const finalItems = fetchFn ? items : propItems;
+    if (hasDirectTrigger) {
+        return (
+            <HeroSelect
+                value={currentKey}
+                onChange={handleSelectionChange}
+                isDisabled={isDisabled}
+                isRequired={isRequired}
+                isInvalid={isInvalid}
+                placeholder={placeholder}
+                className={className}
+                {...props}
+            >
+                {label && <Label>{label}</Label>}
+                {children as React.ReactNode}
+                {description && <Description>{description}</Description>}
+                {errorMessage && <FieldError>{errorMessage}</FieldError>}
+            </HeroSelect>
+        );
+    }
 
     return (
         <HeroSelect
-            radius={radius}
-            variant={variant}
-            labelPlacement={labelPlacement}
-            items={finalItems}
-            isLoading={isLoading && items.length === 0}
-            scrollRef={(ref) => {
-                if (ref) {
-                    ref.onscroll = onScroll as any;
-                }
-            }}
-            onOpenChange={setIsOpen}
-            listboxProps={{
-                bottomContent:
-                    hasMore && items.length > 0 && isLoading ? (
-                        <div className="flex w-full justify-center p-2">
-                            <Spinner size="sm" color="current" />
-                        </div>
-                    ) : null,
-            }}
+            value={currentKey}
+            onChange={handleSelectionChange}
+            isDisabled={isDisabled}
+            isRequired={isRequired}
+            isInvalid={isInvalid}
+            placeholder={placeholder}
+            className={className}
             {...props}
         >
-            {children as any}
+            {label && <Label>{label}</Label>}
+            <HeroSelect.Trigger>
+                <HeroSelect.Value />
+                <HeroSelect.Indicator />
+            </HeroSelect.Trigger>
+            {description && <Description>{description}</Description>}
+            {errorMessage && <FieldError>{errorMessage}</FieldError>}
+            <HeroSelect.Popover>
+                <ListBox items={items} selectionMode={selectionMode}>
+                    {children as ReactNode}
+                </ListBox>
+            </HeroSelect.Popover>
         </HeroSelect>
     );
 }
+
+Select.Trigger = HeroSelect.Trigger;
+Select.Value = HeroSelect.Value;
+Select.Indicator = HeroSelect.Indicator;
+Select.Popover = HeroSelect.Popover;
+Select.Item = SelectItem;
+
+export { ListBox };

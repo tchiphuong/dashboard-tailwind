@@ -1,30 +1,52 @@
+import type { BaseEntity } from "./api";
+
+export * from "./api";
+export * from "./auth";
+export * from "./user.types";
+export * from "./product.types";
+export * from "./role.types";
+export * from "./department.types";
+export * from "./position.types";
+export * from "./todo.types";
+export * from "./quote.types";
+export * from "./comment.types";
+export * from "./utility.types";
+export * from "./dashboard.types";
+export * from "./post.types";
+export * from "./audit-log.types";
+export * from "./asset.types";
+export * from "./project.types";
+export * from "./notification.types";
+export * from "./finance.types";
+export * from "./analytics.types";
+
 // Menu groups
 export type MenuGroup =
-    | 'main'
-    | 'management'
-    | 'hr'
-    | 'sales'
-    | 'inventory'
-    | 'purchase'
-    | 'crm'
-    | 'marketing'
-    | 'accounting'
-    | 'it'
-    | 'documents'
-    | 'content'
-    | 'communication'
-    | 'workflow'
-    | 'reports'
-    | 'apps'
-    | 'system';
+    | "main"
+    | "management"
+    | "hr"
+    | "sales"
+    | "inventory"
+    | "purchase"
+    | "crm"
+    | "marketing"
+    | "accounting"
+    | "it"
+    | "documents"
+    | "content"
+    | "communication"
+    | "workflow"
+    | "reports"
+    | "apps"
+    | "system";
 
 // Menu types
-export interface MenuItem {
+export interface NavbarItem {
     id?: string;
     title: string;
     icon?: string;
     link?: string;
-    children?: MenuItem[];
+    children?: NavbarItem[];
     open?: boolean;
     badge?: number;
     shortcut?: string;
@@ -32,12 +54,14 @@ export interface MenuItem {
     group?: MenuGroup;
 }
 
+export type MenuItem = NavbarItem;
+
 // Stats types
 export interface StatCard {
     title: string;
     value: number;
     change: number;
-    changeType: 'up' | 'down';
+    changeType: "up" | "down";
     color: string;
     icon: string;
     prefix?: string;
@@ -50,13 +74,13 @@ export interface Notification {
     name: string;
     email: string;
     body: string;
-    type?: 'info' | 'success' | 'warning';
+    type?: "info" | "success" | "warning";
     title?: string;
     time?: string;
 }
 
-// User types
-export interface User {
+// Random User types (cho mock)
+export interface RandomUser {
     name: {
         first: string;
         last: string;
@@ -75,34 +99,19 @@ export interface User {
 }
 
 // Order types
-export interface Order {
+export interface Order extends BaseEntity {
     id: number;
     userId: number;
     total: number;
     discountedTotal?: number;
     totalProducts: number;
-    status?: string;
     statusColor?: string;
     customer?: string;
     amount?: string;
 }
 
-// Product types
-export interface Product {
-    id: number;
-    title: string;
-    price: number;
-    rating: number;
-    stock: number;
-    name?: string;
-    sales?: number;
-    revenue?: number;
-    growth?: number;
-}
-
 // Activity types
-export interface Activity {
-    id?: number;
+export interface Activity extends BaseEntity {
     title: string;
     description?: string;
     message?: string;
@@ -138,32 +147,5 @@ export interface ChartData {
         online: number[];
         offline: number[];
         unknown: number[];
-    };
-}
-
-// Quote types
-export interface Quote {
-    id: number;
-    quote: string;
-    author: string;
-}
-
-// Todo types
-export interface Todo {
-    id: number;
-    todo: string;
-    completed: boolean;
-    userId: number;
-}
-
-// Comment types
-export interface Comment {
-    id: number;
-    body: string;
-    postId: number;
-    user: {
-        id: number;
-        username: string;
-        fullName: string;
     };
 }

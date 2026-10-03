@@ -7,3 +7,4 @@ export * from './ActivityTimeline';
 export * from './DashboardQuote';
 export * from './RecentComments';
 export * from './TodoListWidget';
+export * from './VietnamMarketWidget';

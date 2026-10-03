@@ -1,81 +1,93 @@
-import { useTranslation } from 'react-i18next';
-import { Activity } from '@/types';
+'use client';
+
+import type { Activity } from '@/types';
 import { ClockIcon } from '@heroicons/react/24/outline';
+import { useTranslations } from 'next-intl';
+import { Card, Chip } from '@/components/common';
 
 interface ActivityTimelineProps {
     activities: Activity[];
 }
 
-const colorClasses: Record<string, { dot: string; badge: string }> = {
+const colorMap: Record<
+    string,
+    { dot: string; chipColor: 'accent' | 'success' | 'warning' | 'danger' | 'default' }
+> = {
     blue: {
-        dot: 'bg-blue-500 dark:bg-blue-400',
-        badge: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300',
+        dot: 'bg-blue-500 ring-4 ring-blue-50 dark:ring-blue-950/50',
+        chipColor: 'accent',
     },
     green: {
-        dot: 'bg-green-500 dark:bg-green-400',
-        badge: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300',
+        dot: 'bg-emerald-500 ring-4 ring-emerald-50 dark:ring-emerald-950/50',
+        chipColor: 'success',
     },
     purple: {
-        dot: 'bg-purple-500 dark:bg-purple-400',
-        badge: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-300',
+        dot: 'bg-purple-500 ring-4 ring-purple-50 dark:ring-purple-950/50',
+        chipColor: 'accent',
     },
     yellow: {
-        dot: 'bg-yellow-500 dark:bg-yellow-400',
-        badge: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300',
+        dot: 'bg-amber-500 ring-4 ring-amber-50 dark:ring-amber-950/50',
+        chipColor: 'warning',
     },
     red: {
-        dot: 'bg-red-500 dark:bg-red-400',
-        badge: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-300',
+        dot: 'bg-rose-500 ring-4 ring-rose-50 dark:ring-rose-950/50',
+        chipColor: 'danger',
     },
     orange: {
-        dot: 'bg-orange-500 dark:bg-orange-400',
-        badge: 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-300',
+        dot: 'bg-orange-500 ring-4 ring-orange-50 dark:ring-orange-950/50',
+        chipColor: 'warning',
     },
 };
 
-export function ActivityTimeline({ activities }: ActivityTimelineProps) {
-    const { t } = useTranslation();
+export function ActivityTimeline({ activities }: Readonly<ActivityTimelineProps>) {
+    const t = useTranslations();
 
     return (
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
-            <h3 className="mb-6 flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
-                <ClockIcon className="mr-2 h-5 w-5 text-gray-500" />
-                {t('dashboard.recentActivities')}
-            </h3>
+        <Card className="relative overflow-hidden border border-b-4 border-blue-500 bg-white/95 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md dark:border-blue-500 dark:bg-zinc-900/90">
+            <Card.Header
+                icon={<ClockIcon className="size-4" />}
+                iconColor="primary"
+                title={t('dashboard.recentActivities')}
+                action={<span className="text-[0.6875rem] text-zinc-400">Nhật ký hệ thống</span>}
+            />
+
             <div className="relative">
                 {/* Timeline line */}
-                <div className="absolute top-0 bottom-0 left-3 w-0.5 bg-gray-200 dark:bg-zinc-700" />
+                <div className="absolute top-2 bottom-2 left-2 w-0.5 bg-zinc-200 dark:bg-zinc-800" />
 
-                <div className="space-y-5">
+                <div className="space-y-4">
                     {activities.map((activity, index) => {
-                        const colors = colorClasses[activity.color] || colorClasses.blue;
+                        const meta = colorMap[activity.color] || colorMap.blue;
                         return (
-                            <div key={index} className="relative ml-2 flex items-start">
+                            <div key={index} className="relative ml-0.5 flex items-start">
                                 {/* Timeline dot */}
                                 <div
-                                    className={`absolute left-0 h-2.5 w-2.5 rounded-full ${colors.dot} border-2 border-white dark:border-zinc-800`}
+                                    className={`relative z-10 mt-1 size-3 rounded-full ${meta.dot}`}
                                 />
 
-                                <div className="ml-6 flex-1">
-                                    <div className="mb-1 flex items-center justify-between">
-                                        <h4 className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                                <div className="ml-5 flex-1 rounded-xl border border-zinc-100 bg-zinc-50/50 p-3 transition-colors hover:bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-800/30 dark:hover:bg-zinc-800/60">
+                                    <div className="mb-1 flex items-center justify-between gap-2">
+                                        <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-100">
                                             {activity.title}
                                         </h4>
-                                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                                        <span className="shrink-0 text-[10px] text-zinc-400 tabular-nums">
                                             {activity.time}
                                         </span>
                                     </div>
                                     {activity.description && (
-                                        <p className="mb-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                                        <p className="mb-2 line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">
                                             {activity.description}
                                         </p>
                                     )}
                                     {activity.type && (
-                                        <span
-                                            className={`rounded-full px-2 py-1 text-xs ${colors.badge}`}
+                                        <Chip
+                                            size="sm"
+                                            variant="soft"
+                                            color={meta.chipColor}
+                                            className="h-5 text-[10px] font-semibold"
                                         >
                                             {activity.type}
-                                        </span>
+                                        </Chip>
                                     )}
                                 </div>
                             </div>
@@ -83,6 +95,6 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
                     })}
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }

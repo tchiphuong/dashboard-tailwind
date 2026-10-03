@@ -15,16 +15,698 @@
             "signOut": "Sign out",
             "markAllAsRead": "Mark all as read",
             "notifications": "Notifications",
-            "unreadNotifications": "You have {{count}} unread notifications",
+            "unreadNotifications": "You have {change} unread notifications",
             "favorites": "Favorites",
             "noResults": "No results found",
             "close": "Close",
             "total": "Total",
-            "showing": "Showing {{from}} - {{to}} of {{total}}",
-            "rowsPerPage": "{{count}} rows",
+            "showing": "Showing {change} - {change} of {change}",
+            "rowsPerPage": "{change} rows",
             "actions": "Actions",
             "id": "ID",
-            "status": "Status"
+            "status": "Status",
+            "confirmDialog": {
+                "btn": {
+                    "cancel": "Cancel",
+                    "confirm": "Confirm"
+                },
+                "lbl": {
+                    "deleteTitle": "Confirm Deletion",
+                    "discardTitle": "Discard Changes",
+                    "saveTitle": "Save Changes",
+                    "title": "Confirm Action"
+                },
+                "msg": {
+                    "deleteMessage": "This data will be permanently deleted and cannot be recovered. Are you sure you want to continue?",
+                    "discardMessage": "Are you sure you want to discard your changes? This action cannot be undone.",
+                    "message": "Are you sure you want to proceed with this action?",
+                    "saveMessage": "Do you want to save your changes?"
+                }
+            },
+            "error": {
+                "msg": {
+                    "general": "An error occurred",
+                    "network": "Network connection error",
+                    "notFound": "Data not found",
+                    "serverError": "Server error",
+                    "tryAgain": "Please try again",
+                    "unauthorized": "You don't have permission to access"
+                }
+            },
+            "func": {
+                "am": {
+                    "assetAdjustment": "Asset Adjustment",
+                    "assetAssignment": "Asset Assignment",
+                    "assetCount": "Asset Count",
+                    "assetDisposal": "Asset Disposal",
+                    "assetHandover": "Asset Handover",
+                    "assetRegister": "Asset Register",
+                    "assetReturn": "Asset Return",
+                    "assetStatus": "Asset Status",
+                    "assetSummary": "Asset Summary",
+                    "assetTransfer": "Asset Transfer",
+                    "depreciation": "Depreciation",
+                    "maintenanceCost": "Maintenance Cost",
+                    "maintenanceHistory": "Maintenance History",
+                    "maintenancePlan": "Maintenance Plan",
+                    "workOrder": "Work Order"
+                },
+                "cr": {
+                    "assignment": "Assignment",
+                    "call": "Call",
+                    "campaign": "Campaign",
+                    "campaignResult": "Campaign Result",
+                    "conversion": "Conversion",
+                    "customerComplaint": "Customer Complaint",
+                    "forecast": "Forecast",
+                    "interactionHistory": "Interaction History",
+                    "lead": "Lead",
+                    "meeting": "Meeting",
+                    "opportunity": "Opportunity",
+                    "salesPipeline": "Sales Pipeline",
+                    "supportTicket": "Support Ticket",
+                    "target": "Target",
+                    "task": "Task"
+                },
+                "db": {
+                    "executiveDashboard": "Executive Dashboard",
+                    "financeDashboard": "Finance Dashboard",
+                    "financialSummary": "Financial Summary",
+                    "inventorySummary": "Inventory Summary",
+                    "myTasks": "My Tasks",
+                    "notifications": "Notifications",
+                    "pendingApprovals": "Pending Approvals",
+                    "productionDashboard": "Production Dashboard",
+                    "productionSummary": "Production Summary",
+                    "salesDashboard": "Sales Dashboard",
+                    "salesSummary": "Sales Summary"
+                },
+                "dm": {
+                    "approvedDocuments": "Approved Documents",
+                    "document": "Document",
+                    "documentCategory": "Document Category",
+                    "documentType": "Document Type",
+                    "expiredDocuments": "Expired Documents",
+                    "myDocuments": "My Documents",
+                    "pendingDocuments": "Pending Documents",
+                    "recentDocuments": "Recent Documents",
+                    "searchDocuments": "Search Documents",
+                    "tags": "Tags",
+                    "upload": "Upload",
+                    "versionControl": "Version Control"
+                },
+                "fi": {
+                    "apAging": "A/P Aging",
+                    "arAging": "A/R Aging",
+                    "assetDisposal": "Asset Disposal",
+                    "assetRegister": "Asset Register",
+                    "balanceSheet": "Balance Sheet",
+                    "bankPayment": "Bank Payment",
+                    "bankReceipt": "Bank Receipt",
+                    "bankReconciliation": "Bank Reconciliation",
+                    "budgetAllocation": "Budget Allocation",
+                    "budgetControl": "Budget Control",
+                    "budgetPlanning": "Budget Planning",
+                    "cashBook": "Cash Book",
+                    "cashFlow": "Cash Flow",
+                    "cashPayment": "Cash Payment",
+                    "cashReceipt": "Cash Receipt",
+                    "closing": "Closing",
+                    "customerInvoice": "Customer Invoice",
+                    "customerReceipt": "Customer Receipt",
+                    "depreciation": "Depreciation",
+                    "fiscalPeriod": "Fiscal Period",
+                    "generalLedger": "General Ledger",
+                    "incomeStatement": "Income Statement",
+                    "journalEntry": "Journal Entry",
+                    "supplierInvoice": "Supplier Invoice",
+                    "supplierPayment": "Supplier Payment"
+                },
+                "group": {
+                    "am": {
+                        "assets": "Assets",
+                        "assignment": "Assignment",
+                        "inventory": "Inventory",
+                        "maintenance": "Maintenance",
+                        "reports": "Reports"
+                    },
+                    "cr": {
+                        "activities": "Activities",
+                        "campaign": "Campaign",
+                        "customerService": "Customer Service",
+                        "lead": "Lead",
+                        "opportunity": "Opportunity"
+                    },
+                    "db": {
+                        "myWorkspace": "My Workspace",
+                        "overview": "Overview",
+                        "quickReports": "Quick Reports"
+                    },
+                    "dm": {
+                        "approval": "Approval",
+                        "categories": "Categories",
+                        "documents": "Documents",
+                        "search": "Search"
+                    },
+                    "fi": {
+                        "accountsPayable": "Accounts Payable",
+                        "accountsReceivable": "Accounts Receivable",
+                        "bank": "Bank",
+                        "budget": "Budget",
+                        "cash": "Cash",
+                        "fixedAssets": "Fixed Assets",
+                        "generalLedger": "General Ledger",
+                        "reports": "Reports"
+                    },
+                    "hr": {
+                        "attendance": "Attendance",
+                        "employee": "Employee",
+                        "leave": "Leave",
+                        "overtime": "Overtime",
+                        "payroll": "Payroll",
+                        "performance": "Performance",
+                        "recruitment": "Recruitment",
+                        "reports": "Reports",
+                        "training": "Training"
+                    },
+                    "iv": {
+                        "issuing": "Issuing",
+                        "lotSerial": "Lot/Serial",
+                        "receiving": "Receiving",
+                        "reports": "Reports",
+                        "stockCount": "Stock Count",
+                        "transfer": "Transfer"
+                    },
+                    "ms": {
+                        "assets": "Assets",
+                        "businessPartners": "Business Partners",
+                        "common": "Common",
+                        "finance": "Finance",
+                        "humanResources": "Human Resources",
+                        "inventory": "Inventory",
+                        "organization": "Organization",
+                        "production": "Production",
+                        "projects": "Projects",
+                        "purchasing": "Purchasing",
+                        "quality": "Quality",
+                        "sales": "Sales"
+                    },
+                    "pm": {
+                        "cost": "Cost",
+                        "execution": "Execution",
+                        "planning": "Planning",
+                        "project": "Project",
+                        "reports": "Reports"
+                    },
+                    "pr": {
+                        "finishedGoods": "Finished Goods",
+                        "materialIssue": "Material Issue",
+                        "planning": "Planning",
+                        "productionOrder": "Production Order",
+                        "reports": "Reports",
+                        "shopFloor": "Shop Floor"
+                    },
+                    "pu": {
+                        "goodsReceipt": "Goods Receipt",
+                        "purchaseOrder": "Purchase Order",
+                        "purchaseRequest": "Purchase Request",
+                        "reports": "Reports",
+                        "rfq": "RFQ",
+                        "supplierReturn": "Supplier Return"
+                    },
+                    "qm": {
+                        "finalInspection": "Final Inspection",
+                        "inProcessInspection": "In-Process Inspection",
+                        "incomingInspection": "Incoming Inspection",
+                        "nonConformance": "Non-Conformance",
+                        "reports": "Reports"
+                    },
+                    "rp": {
+                        "customReports": "Custom Reports",
+                        "financialReports": "Financial Reports",
+                        "managementReports": "Management Reports",
+                        "operationalReports": "Operational Reports"
+                    },
+                    "sa": {
+                        "delivery": "Delivery",
+                        "invoice": "Invoice",
+                        "quotation": "Quotation",
+                        "reports": "Reports",
+                        "return": "Return",
+                        "salesOrder": "Sales Order"
+                    },
+                    "sy": {
+                        "audit": "Audit Log",
+                        "configuration": "Configuration",
+                        "integration": "Integration",
+                        "navigation": "Navigation",
+                        "numbering": "Numbering",
+                        "security": "Security",
+                        "templates": "Templates",
+                        "utilities": "Utilities"
+                    },
+                    "wf": {
+                        "approval": "Approval",
+                        "delegation": "Delegation",
+                        "workflow": "Workflow"
+                    }
+                },
+                "hr": {
+                    "attendanceAdjustment": "Attendance Adjustment",
+                    "attendanceLog": "Attendance Log",
+                    "attendanceSheet": "Attendance Sheet",
+                    "attendanceSummary": "Attendance Summary",
+                    "candidate": "Candidate",
+                    "certification": "Certification",
+                    "employee": "Employee",
+                    "employeeEvaluation": "Employee Evaluation",
+                    "employeeProfile": "Employee Profile",
+                    "employmentContract": "Employment Contract",
+                    "headcount": "Headcount",
+                    "interview": "Interview",
+                    "kpi": "KPI",
+                    "leaveApproval": "Leave Approval",
+                    "leaveBalance": "Leave Balance",
+                    "leaveRequest": "Leave Request",
+                    "overtimeApproval": "Overtime Approval",
+                    "overtimeRequest": "Overtime Request",
+                    "overtimeSummary": "Overtime Summary",
+                    "payrollAdjustment": "Payroll Adjustment",
+                    "payrollCalculation": "Payroll Calculation",
+                    "payrollSummary": "Payroll Summary",
+                    "payslip": "Payslip",
+                    "performanceReview": "Performance Review",
+                    "recruitmentRequest": "Recruitment Request",
+                    "trainingCourse": "Training Course",
+                    "trainingPlan": "Training Plan",
+                    "turnover": "Turnover"
+                },
+                "iv": {
+                    "countPlan": "Count Plan",
+                    "expiringInventory": "Expiring Inventory",
+                    "inventoryAging": "Inventory Aging",
+                    "inventoryMovement": "Inventory Movement",
+                    "lotTracking": "Lot Tracking",
+                    "miscellaneousIssue": "Miscellaneous Issue",
+                    "miscellaneousReceipt": "Miscellaneous Receipt",
+                    "productionIssue": "Production Issue",
+                    "productionReceipt": "Production Receipt",
+                    "purchaseReceipt": "Purchase Receipt",
+                    "returnIssue": "Return Issue",
+                    "returnReceipt": "Return Receipt",
+                    "salesIssue": "Sales Issue",
+                    "serialTracking": "Serial Tracking",
+                    "stockAdjustment": "Stock Adjustment",
+                    "stockBalance": "Stock Balance",
+                    "stockCount": "Stock Count",
+                    "stockTransfer": "Stock Transfer",
+                    "traceability": "Traceability",
+                    "transferConfirmation": "Transfer Confirmation",
+                    "transferRequest": "Transfer Request"
+                },
+                "ms": {
+                    "accountGroup": "Account Group",
+                    "assetCategory": "Asset Category",
+                    "assetLocation": "Asset Location",
+                    "assetType": "Asset Type",
+                    "bank": "Bank",
+                    "bankBranch": "Bank Branch",
+                    "barcode": "Barcode",
+                    "bom": "BOM (Bill of Materials)",
+                    "bomVersion": "BOM Version",
+                    "branch": "Branch",
+                    "brand": "Brand",
+                    "businessUnit": "Business Unit",
+                    "buyer": "Buyer",
+                    "calendar": "Calendar",
+                    "carrier": "Carrier",
+                    "chartOfAccounts": "Chart of Accounts",
+                    "city": "City",
+                    "company": "Company",
+                    "contactPerson": "Contact Person",
+                    "contractType": "Contract Type",
+                    "costCenter": "Cost Center",
+                    "country": "Country",
+                    "currency": "Currency",
+                    "customer": "Customer",
+                    "customerGroup": "Customer Group",
+                    "customerPriceGroup": "Customer Price Group",
+                    "defectCategory": "Defect Category",
+                    "defectCode": "Defect Code",
+                    "deliveryMethod": "Delivery Method",
+                    "deliveryTerm": "Delivery Term",
+                    "department": "Department",
+                    "depreciationMethod": "Depreciation Method",
+                    "discountGroup": "Discount Group",
+                    "distributor": "Distributor",
+                    "employeeType": "Employee Type",
+                    "exchangeRate": "Exchange Rate",
+                    "holiday": "Holiday",
+                    "incoterms": "Incoterms",
+                    "inspectionItem": "Inspection Item",
+                    "inspectionMethod": "Inspection Method",
+                    "inspectionStandard": "Inspection Standard",
+                    "item": "Item",
+                    "itemCategory": "Item Category",
+                    "itemGroup": "Item Group",
+                    "jobTitle": "Job Title",
+                    "language": "Language",
+                    "leaveType": "Leave Type",
+                    "lotRule": "Lot Rule",
+                    "machine": "Machine",
+                    "manufacturer": "Manufacturer",
+                    "mold": "Mold",
+                    "operation": "Operation",
+                    "overtimeType": "Overtime Type",
+                    "packaging": "Packaging",
+                    "paymentMethod": "Payment Method",
+                    "paymentTerm": "Payment Term",
+                    "payrollGroup": "Payroll Group",
+                    "plant": "Plant",
+                    "position": "Position",
+                    "priority": "Priority",
+                    "productionLine": "Production Line",
+                    "profitCenter": "Profit Center",
+                    "projectCategory": "Project Category",
+                    "projectStage": "Project Stage",
+                    "projectType": "Project Type",
+                    "purchaseCategory": "Purchase Category",
+                    "purchasePriceList": "Purchase Price List",
+                    "reason": "Reason",
+                    "routing": "Routing",
+                    "routingVersion": "Routing Version",
+                    "salesChannel": "Sales Channel",
+                    "salesPriceList": "Sales Price List",
+                    "salesRegion": "Sales Region",
+                    "salesperson": "Salesperson",
+                    "samplingRule": "Sampling Rule",
+                    "section": "Section",
+                    "serialRule": "Serial Rule",
+                    "shift": "Shift",
+                    "shiftPattern": "Shift Pattern",
+                    "stateProvince": "State/Province",
+                    "supplier": "Supplier",
+                    "supplierGroup": "Supplier Group",
+                    "taxCode": "Tax Code",
+                    "taxRate": "Tax Rate",
+                    "team": "Team",
+                    "timeZone": "Time Zone",
+                    "tool": "Tool",
+                    "unit": "Unit",
+                    "unitConversion": "Unit Conversion",
+                    "warehouse": "Warehouse",
+                    "warehouseLocation": "Warehouse Location",
+                    "warehouseZone": "Warehouse Zone",
+                    "workCenter": "Work Center"
+                },
+                "pm": {
+                    "actualCost": "Actual Cost",
+                    "budget": "Budget",
+                    "closeProject": "Close Project",
+                    "createProject": "Create Project",
+                    "issue": "Issue",
+                    "milestone": "Milestone",
+                    "project": "Project",
+                    "projectCost": "Project Cost",
+                    "projectProgress": "Project Progress",
+                    "resourcePlan": "Resource Plan",
+                    "resourceUtilization": "Resource Utilization",
+                    "revenue": "Revenue",
+                    "task": "Task",
+                    "timesheet": "Timesheet",
+                    "wbs": "WBS"
+                },
+                "pr": {
+                    "capacityPlanning": "Capacity Planning",
+                    "closeOrder": "Close Order",
+                    "finishedGoodsReceipt": "Finished Goods Receipt",
+                    "laborTime": "Labor Time",
+                    "machineEfficiency": "Machine Efficiency",
+                    "machineTime": "Machine Time",
+                    "materialIssue": "Material Issue",
+                    "materialRequest": "Material Request",
+                    "materialReturn": "Material Return",
+                    "mrp": "MRP",
+                    "packaging": "Packaging",
+                    "productionOrders": "Production Orders",
+                    "productionOutput": "Production Output",
+                    "productionPlan": "Production Plan",
+                    "productionProgress": "Production Progress",
+                    "productionReport": "Production Report",
+                    "productionSchedule": "Production Schedule",
+                    "releaseOrder": "Release Order",
+                    "scrapAnalysis": "Scrap Analysis",
+                    "scrapReport": "Scrap Report",
+                    "semiFinishedGoods": "Semi-finished Goods"
+                },
+                "pu": {
+                    "approval": "Approval",
+                    "createPurchaseOrder": "Create Purchase Order",
+                    "createRequest": "Create Request",
+                    "deliveryPerformance": "Delivery Performance",
+                    "goodsReceiptNote": "Goods Receipt Note",
+                    "outstandingPurchaseOrders": "Outstanding Purchase Orders",
+                    "purchaseAnalysis": "Purchase Analysis",
+                    "purchaseOrders": "Purchase Orders",
+                    "quotationComparison": "Quotation Comparison",
+                    "receivingInspection": "Receiving Inspection",
+                    "requestForQuotation": "Request for Quotation",
+                    "requests": "Purchase Requests",
+                    "returnRequest": "Return Request",
+                    "returnShipment": "Return Shipment",
+                    "stockReceipt": "Stock Receipt",
+                    "supplierCredit": "Supplier Credit",
+                    "supplierPerformance": "Supplier Performance",
+                    "supplierSelection": "Supplier Selection"
+                },
+                "qm": {
+                    "acceptance": "Acceptance",
+                    "capa": "CAPA",
+                    "correctiveAction": "Corrective Action",
+                    "costOfQuality": "Cost of Quality",
+                    "defectAnalysis": "Defect Analysis",
+                    "defectRecording": "Defect Recording",
+                    "finalInspection": "Final Inspection",
+                    "inspectionPlan": "Inspection Plan",
+                    "inspectionResult": "Inspection Result",
+                    "ncr": "Non-Conformance Report (NCR)",
+                    "processInspection": "Process Inspection",
+                    "qualityCertificate": "Quality Certificate",
+                    "qualityPerformance": "Quality Performance",
+                    "rootCauseAnalysis": "Root Cause Analysis",
+                    "shipmentApproval": "Shipment Approval",
+                    "supplierQuality": "Supplier Quality"
+                },
+                "rp": {
+                    "arAp": "A/R & A/P",
+                    "balanceSheet": "Balance Sheet",
+                    "cashFlow": "Cash Flow",
+                    "executiveReports": "Executive Reports",
+                    "inventory": "Inventory",
+                    "kpiDashboard": "KPI Dashboard",
+                    "performanceAnalysis": "Performance Analysis",
+                    "production": "Production",
+                    "profitLoss": "Profit & Loss",
+                    "purchasing": "Purchasing",
+                    "reportDesigner": "Report Designer",
+                    "reportLibrary": "Report Library",
+                    "sales": "Sales",
+                    "scheduledReports": "Scheduled Reports"
+                },
+                "sa": {
+                    "approveQuotation": "Approve Quotation",
+                    "approveSalesOrder": "Approve Sales Order",
+                    "createQuotation": "Create Quotation",
+                    "createSalesOrder": "Create Sales Order",
+                    "creditNote": "Credit Note",
+                    "deliveryConfirmation": "Delivery Confirmation",
+                    "deliveryOrder": "Delivery Order",
+                    "invoiceAdjustment": "Invoice Adjustment",
+                    "invoiceCancellation": "Invoice Cancellation",
+                    "outstandingOrders": "Outstanding Orders",
+                    "profitAnalysis": "Profit Analysis",
+                    "proofOfDelivery": "Proof of Delivery",
+                    "quotations": "Quotations",
+                    "returnReceipt": "Return Receipt",
+                    "returnRequest": "Return Request",
+                    "salesAnalysis": "Sales Analysis",
+                    "salesInvoice": "Sales Invoice",
+                    "salesOrders": "Sales Orders",
+                    "salesPerformance": "Sales Performance"
+                },
+                "sy": {
+                    "action": "Action",
+                    "apiClient": "API Client",
+                    "auditLog": "Audit Log",
+                    "backup": "Backup",
+                    "changeLog": "Change Log",
+                    "companySettings": "Company Settings",
+                    "config": "Settings",
+                    "dataExport": "Data Export",
+                    "dataImport": "Data Import",
+                    "dataSynchronization": "Data Synchronization",
+                    "documentType": "Document Type",
+                    "emailSettings": "Email Settings",
+                    "emailTemplate": "Email Template",
+                    "errorLog": "Error Log",
+                    "function": "Function",
+                    "importExportTemplate": "Import/Export Template",
+                    "loginLog": "Login Log",
+                    "menu": "Menu Management",
+                    "notificationTemplate": "Notification Template",
+                    "numberingRule": "Numbering Rule",
+                    "permission": "Permission",
+                    "reportTemplate": "Report Template",
+                    "restore": "Restore",
+                    "role": "Role",
+                    "sequence": "Sequence",
+                    "storageSettings": "Storage Settings",
+                    "systemParameters": "System Parameters",
+                    "user": "User",
+                    "userGroup": "User Group",
+                    "webhook": "Webhook"
+                },
+                "wf": {
+                    "activeDelegations": "Active Delegations",
+                    "approvalHistory": "Approval History",
+                    "approvalLevel": "Approval Level",
+                    "approver": "Approver",
+                    "delegateApproval": "Delegate Approval",
+                    "delegationHistory": "Delegation History",
+                    "myRequests": "My Requests",
+                    "pendingApproval": "Pending Approval",
+                    "workflowDefinition": "Workflow Definition"
+                }
+            },
+            "global": {
+                "btn": {
+                    "add": "Add",
+                    "back": "Back",
+                    "cancel": "Cancel",
+                    "close": "Close",
+                    "confirm": "Confirm",
+                    "delete": "Delete",
+                    "edit": "Edit",
+                    "export": "Export",
+                    "filter": "Filter",
+                    "import": "Import",
+                    "markAllAsRead": "Mark all as read",
+                    "next": "Next",
+                    "no": "No",
+                    "previous": "Previous",
+                    "reset": "Reset",
+                    "save": "Save",
+                    "search": "Search",
+                    "signOut": "Sign Out",
+                    "submit": "Submit",
+                    "yes": "Yes"
+                },
+                "lbl": {
+                    "all": "All",
+                    "appDescription": "Comprehensive University Management System",
+                    "appName": "UniManage",
+                    "favorites": "Favorites",
+                    "info": "Information",
+                    "language": "Language",
+                    "languageEnglish": "English",
+                    "languageSelect": "Select language",
+                    "languageVietnamese": "Vietnamese",
+                    "loading": "Loading...",
+                    "noResults": "No results found",
+                    "notifications": "Notifications",
+                    "profile": "Profile",
+                    "requiredField": "This field is required",
+                    "search": "Search",
+                    "success": "Success"
+                },
+                "msg": {
+                    "unreadNotifications": "{count} unread notifications"
+                }
+            },
+            "menu": {
+                "lbl": {
+                    "attendance": "Attendance",
+                    "companySettings": "Company Settings",
+                    "customers": "Customers",
+                    "dashboard": "Dashboard",
+                    "departments": "Departments",
+                    "employees": "Employees",
+                    "hr": "Human Resources",
+                    "inventory": "Inventory",
+                    "items": "Items",
+                    "main": "Overview",
+                    "menus": "Menu Management",
+                    "orders": "Orders",
+                    "positions": "Positions",
+                    "roles": "Roles",
+                    "salaries": "Salaries",
+                    "sales": "Sales",
+                    "settings": "Settings",
+                    "system": "System",
+                    "users": "Users"
+                }
+            },
+            "module": {
+                "assetManagement": "Asset Management",
+                "crm": "Crm",
+                "dashboard": "Dashboard",
+                "documentManagement": "Document Management",
+                "financeAccounting": "Finance Accounting",
+                "humanResources": "Human Resources",
+                "inventory": "Inventory",
+                "masterData": "Master Data",
+                "production": "Production",
+                "projectManagement": "Project Management",
+                "purchasing": "Purchasing",
+                "qualityManagement": "Quality Management",
+                "reports": "Reports",
+                "sales": "Sales",
+                "system": "System",
+                "workflow": "Workflow"
+            },
+            "nav": {
+                "lbl": {
+                    "classes": "Classes",
+                    "courses": "Courses",
+                    "dashboard": "Dashboard",
+                    "finance": "Finance",
+                    "grades": "Grades",
+                    "profile": "Profile",
+                    "reports": "Reports",
+                    "schedules": "Schedules",
+                    "settings": "Settings",
+                    "students": "Students",
+                    "teachers": "Teachers"
+                }
+            },
+            "pagination": {
+                "lbl": {
+                    "of": "of",
+                    "page": "Page",
+                    "results": "results",
+                    "rowsPerPage": "Rows per page",
+                    "showing": "Showing"
+                }
+            },
+            "success": {
+                "msg": {
+                    "created": "Created successfully",
+                    "deleted": "Deleted successfully",
+                    "saved": "Saved successfully",
+                    "updated": "Updated successfully"
+                }
+            },
+            "validation": {
+                "err": {
+                    "email": "Invalid email address",
+                    "max": "{field} must be less than or equal to {max}",
+                    "maxLength": "{field} must not exceed {max} characters",
+                    "min": "{field} must be greater than or equal to {min}",
+                    "minLength": "{field} must be at least {min} characters",
+                    "phone": "Invalid phone number",
+                    "required": "{field} is required"
+                }
+            }
         },
         "menu": {
             "dashboard": "Dashboard",
@@ -139,7 +821,8 @@
                 "workflow": "Workflow",
                 "reports": "Reports",
                 "system": "System",
-                "apps": "Applications"
+                "apps": "Applications",
+                "communication": "Communication"
             },
             "descriptions": {
                 "dashboard": "View analytics and system overview",
@@ -192,7 +875,13 @@
                 "profile": "My user profile",
                 "surveys": "Create and manage surveys",
                 "help": "Help center and support"
-            }
+            },
+            "chat": "Chat",
+            "notifications": "Notifications",
+            "advancedReports": "AdvancedReports",
+            "auditLog": "AuditLog",
+            "profile": "Profile",
+            "help": "Help"
         },
         "dashboard": {
             "title": "Dashboard Overview",
@@ -200,7 +889,7 @@
             "revenue": "Revenue",
             "orders": "Orders",
             "products": "Products",
-            "fromLastMonth": "{{change}}% from last month",
+            "fromLastMonth": "{change}% from last month",
             "quickActions": "Quick Actions",
             "newOrder": "New Order",
             "addUser": "Add User",
@@ -212,7 +901,38 @@
             "revenueTrend": "Revenue Trend",
             "ordersTrend": "Orders Trend",
             "performanceMetrics": "Performance Metrics",
-            "recentActivities": "Recent Activities"
+            "recentActivities": "Recent Activities",
+            "overview": {
+                "btn": {
+                    "addUser": "Add User",
+                    "newReport": "New Report",
+                    "refresh": "Refresh",
+                    "support": "Support"
+                },
+                "lbl": {
+                    "activeSessions": "Active Sessions",
+                    "conversionRate": "Conversion Rate",
+                    "customer": "Customer",
+                    "orderId": "Order ID",
+                    "orders": "Orders",
+                    "pendingTasks": "Pending Tasks",
+                    "quickActions": "Quick Actions",
+                    "recentActivity": "Recent Activity",
+                    "recentOrders": "Recent Orders",
+                    "revenue": "Revenue",
+                    "salesOverview": "Sales Overview",
+                    "status": "Status",
+                    "title": "Dashboard Overview",
+                    "total": "Total",
+                    "totalUsers": "Total Users",
+                    "userGrowth": "User Growth"
+                },
+                "msg": {
+                    "areaChartPlaceholder": "Area Chart Placeholder",
+                    "barChartPlaceholder": "Bar Chart Placeholder",
+                    "welcome": "Welcome back! Here's what's happening today."
+                }
+            }
         },
         "pages": {
             "comingSoon": "Coming soon...",
@@ -250,7 +970,82 @@
             "dontHaveAccount": "Don't have an account?",
             "signUp": "Sign up",
             "rememberMe": "Remember me",
-            "loggingIn": "Signing in..."
+            "loggingIn": "Signing in...",
+            "global": {
+                "btn": {
+                    "changePassword": "Change Password",
+                    "logout": "Logout",
+                    "resetPassword": "Reset Password"
+                },
+                "msg": {
+                    "logoutSuccess": "Logout successful"
+                }
+            },
+            "login": {
+                "btn": {
+                    "createAccount": "Create account",
+                    "forgotPassword": "Forgot Password?",
+                    "login": "Login",
+                    "signInWithFacebook": "Sign in with Facebook",
+                    "signInWithGoogle": "Sign in with Google"
+                },
+                "err": {
+                    "failed": "Login failed",
+                    "invalidCredentials": "Invalid username or password",
+                    "passwordRequired": "Please enter your password",
+                    "usernameRequired": "Please enter your username"
+                },
+                "lbl": {
+                    "noAccount": "Don't have an account?",
+                    "orContinueWith": "Or continue with",
+                    "password": "Password",
+                    "rememberMe": "Remember me",
+                    "subtitle": "Sign in to your account",
+                    "title": "Welcome back",
+                    "username": "Username"
+                },
+                "msg": {
+                    "loggingIn": "Logging in...",
+                    "success": "Login successful"
+                },
+                "ph": {
+                    "password": "Enter your password",
+                    "username": "Enter your username"
+                }
+            },
+            "register": {
+                "btn": {
+                    "login": "Login",
+                    "register": "Register"
+                },
+                "err": {
+                    "confirmPasswordRequired": "Please confirm your password",
+                    "failed": "Registration failed. Please try again.",
+                    "fullNameRequired": "Please enter your full name",
+                    "passwordMinLength": "Password must be at least 6 characters",
+                    "passwordsDoNotMatch": "Passwords do not match",
+                    "usernameMinLength": "Username must be at least 3 characters"
+                },
+                "lbl": {
+                    "agreeToTerms": "I agree to the Terms and Conditions",
+                    "alreadyHaveAccount": "Already have an account?",
+                    "confirmPassword": "Confirm Password",
+                    "email": "Email",
+                    "fullName": "Full Name",
+                    "password": "Password",
+                    "subtitle": "Join us today",
+                    "username": "Username"
+                },
+                "msg": {
+                    "termsRequired": "You must agree to the terms and conditions"
+                },
+                "ph": {
+                    "confirmPassword": "Re-enter your password",
+                    "fullName": "Enter your full name",
+                    "password": "Enter your password",
+                    "username": "Enter your username"
+                }
+            }
         },
         "users": {
             "add": "Add User",
@@ -283,8 +1078,8 @@
                 "delete": "Delete Role",
                 "deleteConfirmTitle": "Delete Role",
                 "deleteConfirm": "Are you sure you want to delete this role? This action cannot be undone.",
-                "usersCount": "{{count}} users",
-                "permsCount": "{{count}} perms",
+                "usersCount": "{change} users",
+                "permsCount": "{change} perms",
                 "form": {
                     "name": "Role Name",
                     "namePlaceholder": "e.g. Project Manager",
@@ -461,6 +1256,51 @@
             "deleteConfirmTitle": "Delete Task",
             "deleteConfirm": "Are you sure you want to delete this task?",
             "searchPlaceholder": "Search tasks..."
+        },
+        "home": {
+            "landing": {
+                "btn": {
+                    "learnMore": "Learn More"
+                },
+                "lbl": {
+                    "coursesDesc": "Manage curriculum and course schedules",
+                    "coursesTitle": "Course Management",
+                    "studentsDesc": "Manage student information, grades and activities",
+                    "studentsTitle": "Student Management",
+                    "teachersDesc": "Manage profiles, teaching schedules and research",
+                    "teachersTitle": "Teacher Management",
+                    "title": "UniManage - University Management System"
+                }
+            }
+        },
+        "system": {
+            "users": {
+                "btn": {
+                    "add": "Add User",
+                    "cancel": "Cancel",
+                    "changePassword": "Change Password",
+                    "delete": "Delete",
+                    "edit": "Edit",
+                    "save": "Save"
+                },
+                "fields": {
+                    "createdAt": "Created At",
+                    "email": "Email",
+                    "employeeCode": "Employee Code",
+                    "password": "Password",
+                    "role": "Role",
+                    "status": "Status",
+                    "username": "Username"
+                },
+                "msg": {
+                    "changePasswordDev": "Change password: Feature under development for user {username}",
+                    "createSuccess": "User created successfully",
+                    "deleteConfirm": "Are you sure you want to delete this user?",
+                    "deleteSuccess": "User deleted successfully",
+                    "updateSuccess": "User updated successfully"
+                },
+                "title": "User Management"
+            }
         }
     }
 }
