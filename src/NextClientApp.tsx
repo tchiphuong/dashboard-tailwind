@@ -23,9 +23,11 @@ function PathSync({ targetPath }: Readonly<{ targetPath?: string }>) {
     return null;
 }
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export default function NextClientApp({ pathname }: Readonly<{ pathname?: string }>) {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={basePath}>
             <PathSync targetPath={pathname} />
             <App />
         </BrowserRouter>
