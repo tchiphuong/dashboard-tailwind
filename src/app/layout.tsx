@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { IntlProvider } from './intl-provider';
-import { getLocale, getMessages } from 'next-intl/server';
 import { Providers } from './providers';
+import viMessages from '../locales/vi.json';
 import '../index.css';
 
 const inter = Inter({
@@ -16,10 +16,11 @@ export const metadata: Metadata = {
     description: 'React dashboard converted to Next.js',
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-    const locale = await getLocale();
-    const messages = await getMessages();
+const rawMessages = viMessages as Record<string, unknown>;
+const messages = (rawMessages.translation || rawMessages) as Record<string, string>;
+const locale = 'vi';
 
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html
             lang={locale}
